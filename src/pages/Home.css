@@ -1,0 +1,128 @@
+/* Home.css */
+
+.home-title {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.summary-cards {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+.home-container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-title {
+  font-size: 1.6rem;
+  color: #b0001c;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.summary-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  width: 160px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: 0.2s;
+  color: #b0001c;
+}
+
+.summary-card:hover,
+.summary-card.active {
+  border-color: currentColor;
+  background: #fff6f6;
+}
+
+.summary-value {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.summary-label {
+  font-size: 0.9rem;
+}
+
+.charts-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.chart-box {
+  padding: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chart-box h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.summary-card {
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 0 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+}
+
+.summary-card.active {
+  background-color: #eee;
+}
+
+.summary-card .value {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.charts-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.charts-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.chart-box {
+  width: 280px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  user-select: none;
+  cursor: pointer;
+}
+
+.chart-box h4 {
+  text-align: center;
+  margin-bottom: 10px;
+}

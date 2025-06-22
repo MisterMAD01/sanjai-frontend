@@ -1,0 +1,78 @@
+/* src/pages/Admin/ManageMember.css */
+
+.manage-member-page {
+  padding: 2rem;
+}
+
+.manage-member-title {
+  font-size: 2rem;
+  color: #b0001c;
+  margin-bottom: 1rem;
+}
+
+.manage-member-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  flex: 1;
+  max-width: 300px;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button-group {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.button-group button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background: #b0001c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button-group button:hover {
+  background: #930019;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.manage-member-footer {
+  margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-input {
+    margin-bottom: 0.75rem;
+    max-width: 100%;
+  }
+  .button-group {
+    justify-content: flex-start;
+  }
+}

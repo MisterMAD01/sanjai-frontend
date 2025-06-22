@@ -1,0 +1,141 @@
+/* src/components/User/myprofile/MyProfileuserEditModal.css */
+
+.mem-edit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.mem-edit-modal {
+  background: #fff;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  padding: 1.5rem;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.mem-edit-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #666;
+}
+.mem-edit-close:hover {
+  color: #000;
+}
+
+/* Avatar preview */
+.mem-avatar-wrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1rem;
+  cursor: pointer;
+}
+.mem-avatar-img,
+.mem-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #888;
+}
+.mem-avatar-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  text-align: center;
+  font-size: 0.75rem;
+  padding: 2px;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+.mem-file-input {
+  display: none;
+}
+
+.mem-edit-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.mem-edit-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.mem-edit-form input[type="text"],
+.mem-edit-form input[type="email"],
+.mem-edit-form input[type="password"] {
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.mem-edit-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.mem-save-btn,
+.mem-cancel-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.mem-save-btn {
+  background: #b0001c;
+  color: #fff;
+}
+.mem-save-btn:hover {
+  background: #930019;
+}
+
+.mem-cancel-btn {
+  background: #ccc;
+  color: #333;
+}
+.mem-cancel-btn:hover {
+  background: #b0b0b0;
+}
+
+@media (max-width: 480px) {
+  .mem-edit-buttons {
+    flex-direction: column-reverse;
+  }
+  .mem-edit-buttons button {
+    width: 100%;
+  }
+}

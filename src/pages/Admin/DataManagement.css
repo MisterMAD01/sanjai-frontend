@@ -1,0 +1,272 @@
+/* ===== Base Styles ===== */
+.data-management-page {
+  padding: 2rem;
+  font-family: "Prompt", sans-serif;
+  color: #333;
+}
+
+.data-management-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #b0001c;
+  margin-bottom: 1.5rem;
+}
+
+/* ===== Data Card ===== */
+.data-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+/* ===== Header (Summary + Import) ===== */
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+.summary-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+/* ===== Summary Cards ===== */
+.summary-cards {
+  display: flex;
+  gap: 1rem;
+}
+/* ===== Summary Cards ===== */
+.summary-cards .card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border: none; /* เอาเส้นขอบออกเมื่อไม่ถูกเลือก */
+  border-radius: 12px;
+  background: #f7f7f7;
+  cursor: pointer;
+  min-width: 200px;
+  transition: transform 0.1s, border 0.2s;
+}
+
+.summary-cards .card:hover {
+  transform: translateY(-2px);
+}
+
+/* เมื่อเลือก ให้ขอบแดง */
+.summary-cards .card.selected {
+  border: 2px solid #b0001c;
+}
+
+/* Icon */
+.card-icon {
+  width: 3rem;
+  height: 3rem;
+  background: #e1f5fe;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #0288d1;
+  flex-shrink: 0;
+}
+
+/* Content 2 แถว */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.card-title {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+.card-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  margin-top: 0.25rem;
+}
+
+/* ===== Import & Export Buttons ===== */
+.data-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s;
+  color: #fff;
+}
+.data-btn.import {
+  background: #b0001c;
+}
+.data-btn.import:hover {
+  background: #930019;
+  opacity: 0.9;
+}
+.data-btn.export {
+  background: #28a745;
+}
+.data-btn.export:hover {
+  background: #1e7e34;
+  opacity: 0.9;
+}
+
+/* ===== Filters ===== */
+.filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.filter-section label {
+  font-size: 0.95rem;
+  color: #333;
+}
+.filter-section select {
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f9f9f9;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.filter-section select:focus {
+  outline: none;
+  border-color: #b0001c;
+  box-shadow: 0 0 0 2px rgba(176, 0, 28, 0.2);
+}
+
+/* ===== Logs ===== */
+.log-section {
+  margin-top: 2rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+.log-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+  color: #444;
+}
+.log-empty {
+  font-style: italic;
+  color: #888;
+}
+.log-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.log-list li {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .summary-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .filter-section {
+    flex-direction: column;
+  }
+}
+/* Styles for DataManagement component */
+.data-management-page {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.data-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.data-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.data-btn.import {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.data-btn.import:hover {
+  background-color: #1565c0;
+}
+
+.data-btn.export {
+  background-color: #388e3c;
+  color: #fff;
+}
+
+.data-btn.export:hover {
+  background-color: #2e7d32;
+}
+
+/* Clear history button styling */
+.data-btn.clear {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.data-btn.clear:hover {
+  background-color: #1565c0;
+}
+
+/* Log section layout */
+.log-section {
+  margin-top: 2rem;
+}
+
+.log-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.log-list {
+  list-style-type: none;
+  padding-left: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.log-list li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.log-empty {
+  color: #777;
+  font-style: italic;
+}

@@ -1,0 +1,131 @@
+/* src/components/ImportExcelModal.css */
+
+.import-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.import-modal {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: "Prompt", sans-serif;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.import-modal h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
+  color: #b0001c;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group select,
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f9f9f9;
+  transition: border-color 0.2s;
+}
+
+.form-group select:focus,
+.form-group input[type="file"]:focus {
+  outline: none;
+  border-color: #b0001c;
+  box-shadow: 0 0 0 2px rgba(176, 0, 28, 0.2);
+}
+
+.preview-section {
+  margin-top: 1rem;
+  /* enable horizontal scroll for table only */
+  overflow-x: auto;
+}
+
+.preview-section h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+.preview-table {
+  /* block-level to allow overflow scroll */
+  display: block;
+  min-width: max-content;
+  border-collapse: collapse;
+}
+
+.preview-table th,
+.preview-table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.preview-table th {
+  background-color: #f7f7f7;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.modal-buttons .data-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+  transition: background-color 0.2s;
+}
+
+.modal-buttons .data-btn.import {
+  background: #b0001c;
+}
+
+.modal-buttons .data-btn.import:hover {
+  background: #930019;
+}
+
+.modal-buttons .data-btn:not(.import) {
+  background: #888;
+}
+
+.modal-buttons .data-btn:not(.import):hover {
+  background: #666;
+}

@@ -1,0 +1,128 @@
+/* src/components/Admin/UserFormModal.css */
+
+.ufm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 2rem;
+  z-index: 1000;
+}
+
+.ufm-modal {
+  background: #fff;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+}
+
+.ufm-close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #555;
+}
+.ufm-close-btn:hover {
+  color: #000;
+}
+
+.ufm-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.ufm-form h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #b0001c;
+}
+
+.ufm-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+}
+.ufm-form input,
+.ufm-form select {
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.ufm-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.ufm-save-btn {
+  padding: 0.6rem 1.4rem;
+  background: #b0001c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.ufm-save-btn:hover {
+  background: #930019;
+}
+
+.ufm-cancel-btn {
+  padding: 0.6rem 1.4rem;
+  background: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.ufm-cancel-btn:hover {
+  background: #b0b0b0;
+}
+
+@media (max-width: 480px) {
+  .ufm-form {
+    gap: 0.75rem;
+  }
+  .ufm-buttons {
+    flex-direction: column-reverse;
+  }
+  .ufm-buttons button {
+    width: 100%;
+  }
+}
+/* ในไฟล์ UserFormModal.css หรือไฟล์ CSS ร่วมกัน (ufm- prefix) */
+
+/* ให้ label ของ checkbox มีการจัดการเลย์เอาต์ */
+.ufm-form .ufm-checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #333;
+  gap: 0.5rem; /* ระยะห่างข้อความกับ checkbox */
+  margin-bottom: 1rem;
+}
+
+/* ขนาดและสไตล์ของ checkbox */
+.ufm-form .ufm-checkbox input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: #b0001c; /* สีเช็คเมื่อเลือก */
+  cursor: pointer;
+}

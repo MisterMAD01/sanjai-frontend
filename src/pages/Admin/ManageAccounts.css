@@ -1,0 +1,137 @@
+/* Wrapper around page */
+.manage-accounts-page {
+  padding: 2rem;
+}
+
+/* Title outside the card */
+.manage-accounts-title {
+  font-size: 2rem;
+  color: #b0001c;
+  margin-bottom: 1.5rem;
+}
+
+/* Main card container */
+.manage-accounts-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+/* Controls row: search + buttons */
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Make search input flexible */
+.controls-row .search-input {
+  flex: 1;
+  max-width: 300px;
+}
+
+/* Search input styling */
+.search-input {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.search-input:focus {
+  outline: none;
+  border-color: #b0001c;
+  box-shadow: 0 0 0 2px rgba(176, 0, 28, 0.2);
+}
+
+/* Button group styling */
+.button-group {
+  display: flex;
+  gap: 1rem;
+}
+.button-group button {
+  padding: 0.6rem 1.4rem;
+  background: #b0001c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.button-group button:hover {
+  background: #930019;
+}
+
+/* Table wrapper */
+.table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+/* Footer */
+.manage-accounts-footer {
+  text-align: right;
+}
+
+/* Responsive: stack controls vertically */
+@media (max-width: 768px) {
+  .controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .controls-row .search-input {
+    max-width: 100%;
+    margin-bottom: 0.75rem;
+  }
+  .button-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .button-group button {
+    flex: 1;
+  }
+  .table-wrapper {
+    margin-bottom: 1rem;
+  }
+}
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: #b0001c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.action-button:hover {
+  background: #930019;
+}
+
+/* You can customize per-button colors if desired: */
+.action-button.import {
+  background: #007bff;
+}
+.action-button.import:hover {
+  background: #0056b3;
+}
+
+.action-button.export {
+  background: #28a745;
+}
+.action-button.export:hover {
+  background: #1e7e34;
+}

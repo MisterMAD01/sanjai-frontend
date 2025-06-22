@@ -1,0 +1,121 @@
+/* src/pages/user/ManageDocuments.css */
+
+/* Wrapper around page */
+.manage-documents-page {
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+/* Page title */
+.manage-documents-title {
+  font-size: 2rem;
+  color: #b0001c;
+  margin-bottom: 1.5rem;
+}
+
+/* Main card */
+.manage-documents-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+/* Controls row: search on left, buttons on right */
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Search input styling */
+.search-input {
+  flex: 1;
+  max-width: 300px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.search-input:focus {
+  outline: none;
+  border-color: #b0001c;
+  box-shadow: 0 0 0 2px rgba(176, 0, 28, 0.2);
+}
+
+/* Group the two action buttons */
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* “จัดการเอกสารทั้งหมด” button — red */
+.button-group .manage-all-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  background: #b0001c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.button-group .manage-all-button:hover {
+  background: #930019;
+}
+
+/* “ส่งเอกสาร” button — blue */
+.button-group .upload-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.button-group .upload-button:hover {
+  background: #0056b3;
+}
+
+/* Document table wrapper */
+.document-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+/* Loading state */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #555;
+}
+
+/* Responsive: stack on narrow screens */
+@media (max-width: 768px) {
+  .controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-input {
+    max-width: 100%;
+    margin-bottom: 0.75rem;
+  }
+  .button-group {
+    flex-direction: column;
+  }
+  .button-group .manage-all-button,
+  .button-group .upload-button {
+    width: 100%;
+  }
+}

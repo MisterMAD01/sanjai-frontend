@@ -1,0 +1,61 @@
+/* Container รวมทั้ง 3 ตาราง */
+.member-table-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+/* แต่ละกล่องตาราง */
+.member-table-section {
+  flex: 1;
+  min-width: 300px;
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* หัวแต่ละตาราง */
+.member-table-section h3 {
+  margin-bottom: 12px;
+  color: #b0001c;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* ตารางหลัก */
+.member-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* ✅ กระจายคอลัมน์เท่ากัน */
+}
+
+/* หัวตารางและข้อมูล */
+.member-table th,
+.member-table td {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
+/* สีหัวตาราง */
+.member-table th {
+  background-color: #b0001c;
+  color: white;
+  font-weight: 600;
+}
+
+/* สลับสีแถวข้อมูล */
+.member-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover แถว */
+.member-table tbody tr:hover {
+  background-color: #f3f3f3;
+  transition: background 0.2s ease-in-out;
+}

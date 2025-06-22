@@ -1,0 +1,189 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #b0001c; /* 🔴 แดงเข้ม */
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: width 0.3s ease, transform 0.3s ease;
+  overflow: hidden;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+}
+
+/* ย่อ Sidebar ให้เล็กลงเหลือ 60px */
+.sidebar.collapsed {
+  width: 60px;
+}
+
+/* ซ่อนข้อความเมื่อ collapsed */
+.sidebar.collapsed .sidebar-site-name,
+.sidebar.collapsed .section-title,
+.sidebar.collapsed .sidebar-footer-info {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-menu button {
+  justify-content: center;
+  padding: 0.65rem 0.5rem;
+}
+.mobile-toggle-btn {
+  display: none;
+}
+/* Mobile - toggle */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .mobile-toggle-btn {
+    display: block;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    font-size: 1.8rem;
+    color: #b0001c;
+
+    padding: 6px 12px;
+    border-radius: 6px;
+    z-index: 1000;
+    cursor: pointer;
+  }
+}
+
+/* Logo + ชื่อสมาคม */
+.sidebar-logo-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.sidebar-logo-img {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background-color: white;
+  object-fit: cover;
+}
+
+.sidebar-site-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+/* เมนู */
+.sidebar-menu {
+  flex-grow: 1;
+  padding: 0 0.5rem;
+  overflow-y: auto;
+}
+
+.sidebar-menu-group {
+  margin-bottom: 1rem;
+}
+
+.section-title11 {
+  font-size: 0.75rem;
+  color: #ffeef1;
+  margin: 0.5rem 1rem;
+  text-transform: uppercase;
+}
+
+.sidebar-menu button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: white;
+  padding: 0.65rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-menu button:hover {
+  background-color: white;
+  color: #b0001c;
+}
+
+.sidebar-menu button.active {
+  background-color: white;
+  color: #b0001c;
+  font-weight: bold;
+}
+
+/* Footer - โปรไฟล์ผู้ใช้ */
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #930019;
+  gap: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-footer-avatar,
+.sidebar-footer-avatar-initial {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  background-color: white;
+  color: #b0001c;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
+}
+
+.sidebar-footer-info {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
+.sidebar-footer-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.sidebar-logout-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  margin-top: 4px;
+  transition: color 0.2s;
+}
+
+.sidebar-logout-btn:hover {
+  color: #ffeef1;
+}

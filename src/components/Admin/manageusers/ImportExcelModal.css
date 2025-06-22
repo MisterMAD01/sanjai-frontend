@@ -1,0 +1,94 @@
+/* src/components/Admin/manageusers/ImportExcelModal.css */
+
+/* Overlay */
+.iex-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center; /* กึ่งกลางแนวตั้ง */
+  z-index: 1000;
+  padding: 1rem;
+}
+
+/* Modal container */
+.iex-modal {
+  background: #fff;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px; /* ตาม inline style */
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  max-height: 80vh; /* สูงสุดไม่เกิน 80% ของ viewport */
+  overflow-y: auto; /* เลื่อนภายในได้ */
+}
+
+/* Title */
+.iex-modal h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #b0001c;
+  font-size: 1.25rem;
+}
+
+/* File input */
+.iex-modal input[type="file"] {
+  width: 100%;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Button row */
+.iex-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* Buttons */
+.iex-buttons button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.iex-buttons button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Cancel button */
+.iex-buttons button:first-child {
+  background: #ccc;
+  color: #333;
+}
+.iex-buttons button:first-child:hover:not(:disabled) {
+  background: #b0b0b0;
+}
+
+/* Upload button */
+.iex-buttons button:last-child {
+  background: #b0001c;
+  color: #fff;
+}
+.iex-buttons button:last-child:hover:not(:disabled) {
+  background: #930019;
+}
+
+/* Close when clicking overlay */
+.modal-overlay,
+.iex-overlay {
+  display: none; /* hide default, will use .iex-overlay in JSX */
+}

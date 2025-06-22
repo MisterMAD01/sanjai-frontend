@@ -1,0 +1,206 @@
+/* src/components/Member/MemberTable.css */
+
+/* Container + heading */
+.mmt-container {
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+.mmt-container .mmt-title {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  color: #b0001c;
+  font-weight: 600;
+}
+
+/* Table with full grid lines */
+.mmt-table {
+  width: 100%;
+  border-collapse: collapse; /* รวมเส้นกริด */
+}
+
+.mmt-table th {
+  padding: 0.75rem 1rem;
+  background: #fafafa;
+  color: #333;
+  font-weight: 600;
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.mmt-table td {
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: #555;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  vertical-align: middle;
+}
+
+/* Header background */
+.mmt-table th {
+  background: #fafafa;
+  color: #333;
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Hover แถว */
+.mmt-table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+/* Avatar circle */
+.mmt-avatar {
+  width: 32px;
+  height: 32px;
+  background: #b0001c;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+/* Actions cell */
+.mmt-actions {
+  white-space: nowrap;
+}
+
+/* Icon buttons */
+.mmt-btn {
+  background: none;
+  border: none;
+  margin-right: 0.5rem;
+  padding: 0.25rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.mmt-btn:last-child {
+  margin-right: 0;
+}
+.mmt-btn.view {
+  color: #007bff;
+}
+.mmt-btn.view:hover {
+  color: #0056b3;
+}
+.mmt-btn.edit {
+  color: #ffc107;
+}
+.mmt-btn.edit:hover {
+  color: #e0a800;
+}
+.mmt-btn.delete {
+  color: #b0001c;
+}
+.mmt-btn.delete:hover {
+  color: #930019;
+}
+
+/* No-data message */
+.mmt-no-data {
+  padding: 1rem;
+  text-align: center;
+  color: #555;
+}
+
+/* Confirm-delete modal (shared) */
+.confirm-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.confirm-modal {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.confirm-modal h4 {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  color: #b0001c;
+}
+.confirm-modal p {
+  margin: 0 0 1.25rem;
+  color: #333;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+.cancel-btn {
+  padding: 0.5rem 1rem;
+  background: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.cancel-btn:hover {
+  background: #b0b0b0;
+}
+.delete-btn.confirm {
+  padding: 0.5rem 1rem;
+  background: #b0001c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.delete-btn.confirm:hover {
+  background: #930019;
+}
+
+/* Responsive: stack buttons on small screens */
+/* Responsive adjustments for mobile devices */
+@media (max-width: 768px) {
+  /* Shrink container paddings */
+  .mmt-container {
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+  }
+
+  /* Reduce table cell padding and font sizes */
+  .mmt-table th,
+  .mmt-table td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  /* Smaller avatar */
+  .mmt-avatar {
+    width: 24px;
+    height: 24px;
+    font-size: 0.875rem;
+  }
+
+  /* Action buttons: slightly larger touch area */
+  .mmt-btn {
+    padding: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  /* Stack action buttons vertically */
+  .mmt-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* Table wrapper: allow horizontal scroll if still too wide */
+  .mmt-container {
+    overflow-x: auto;
+  }
+}

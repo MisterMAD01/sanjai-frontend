@@ -1,0 +1,31 @@
+/* src/components/common/AlertBanner.css */
+.ab-banner {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  z-index: 2000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+.ab-success {
+  background: #28a745;
+}
+.ab-error {
+  background: #dc3545;
+}
+.ab-info {
+  background: #007bff;
+}
+.ab-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  margin-left: 1rem;
+  cursor: pointer;
+}

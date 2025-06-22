@@ -1,0 +1,122 @@
+/* พื้นหลัง */
+.login-bg {
+  min-height: 100vh;
+  background: linear-gradient(to right, #fff8f0, #ffe3e3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Kanit", sans-serif;
+}
+
+/* กล่อง login */
+.login-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+}
+
+/* โลโก้และชื่อระบบ */
+.login-logo-area {
+  margin-bottom: 24px;
+}
+
+.login-logo-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #b0001c;
+  margin-bottom: 10px;
+}
+
+.login-app-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: #b0001c;
+}
+
+.login-app-desc {
+  font-size: 14px;
+  color: #888;
+}
+
+/* หัวข้อ */
+.login-title {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 24px;
+}
+
+/* ช่องกรอก */
+.login-input-wrapper {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 12px 40px 12px 36px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: border 0.2s;
+}
+
+.login-input:focus {
+  border-color: #b0001c;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(176, 0, 28, 0.1);
+}
+
+.login-input-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 14px;
+}
+
+.login-input-eye {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #999;
+  font-size: 14px;
+}
+
+/* ปุ่มเข้าสู่ระบบ */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #b0001c;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-btn:hover {
+  background-color: #9c0019;
+}
+
+.login-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* ข้อความผิดพลาด */
+.login-message {
+  margin-top: 16px;
+  color: red;
+  font-size: 14px;
+}

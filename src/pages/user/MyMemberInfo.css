@@ -1,0 +1,140 @@
+/* src/pages/user/MyMemberInfo.css */
+
+/* หน้า wrapper */
+.mmi-page {
+  padding: 2rem;
+}
+
+/* หัวข้อหลัก (ยังอยู่นอกกรอบ) */
+.mmi-title {
+  font-size: 2rem;
+  color: #b0001c;
+  margin-bottom: 1.5rem;
+}
+
+/* กรอบใหญ่ห่อทั้งข้อมูล */
+.mmi-card {
+  background: #fff; /* พื้นหลังขาว */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* ขอบบางๆ */
+  border-radius: 10px; /* มุมโค้ง */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* เงาเบาๆ */
+  overflow: hidden;
+  padding: 1.5rem; /* ระยะรอบนอก */
+}
+
+/* Header avatar/name/ID */
+.mmi-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.mmi-avatar {
+  width: 80px;
+  height: 80px;
+  background: #b0001c;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+.mmi-header-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.mmi-name {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #333;
+}
+
+.mmi-id {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Body grid: 3 คอลัมน์บน desktop */
+.mmi-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+/* Section card เล็ก (ข้างในกรอบใหญ่) */
+.mmi-section {
+  /* เอา background, border ของ section เล็กออก */
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  position: relative;
+}
+
+/* Section heading ลอยเหนือกรอบใหญ่ */
+.mmi-section h3 {
+  font-size: 1.25rem;
+  color: #b0001c;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mmi-icon {
+  color: #b0001c;
+  font-size: 1.3rem;
+}
+
+/* ข้อความภายใน */
+.mmi-section p {
+  margin: 0.4rem 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Footer ปุ่มแก้ไข */
+.mmi-footer {
+  margin-top: 2rem;
+  text-align: right;
+}
+
+.mmi-edit-btn {
+  padding: 0.6rem 1.4rem;
+  background: #b0001c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mmi-edit-btn:hover {
+  background: #930019;
+}
+
+/* Error message */
+.mmi-error {
+  color: #c00;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Responsive: พับเป็นคอลัมน์เดียวบนมือถือ */
+@media (max-width: 768px) {
+  .mmi-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .mmi-body {
+    grid-template-columns: 1fr;
+  }
+}

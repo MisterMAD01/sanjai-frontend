@@ -1,0 +1,94 @@
+/* src/components/cropImage.css */
+
+/* Overlay ทึบพื้นหลังขณะครอป */
+.cropper-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+/* Container สำหรับตัวครอป */
+.cropper-container {
+  position: relative;
+  width: 90vw;
+  max-width: 400px;
+  height: 90vw;
+  max-height: 400px;
+  background: #222;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* แถบควบคุม (zoom slider + ปุ่ม) */
+.cropper-controls {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* Slider zoom */
+.cropper-controls input[type="range"] {
+  width: 120px;
+  -webkit-appearance: none;
+  height: 4px;
+  background: #555;
+  border-radius: 2px;
+  outline: none;
+}
+.cropper-controls input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border: 2px solid #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.cropper-controls input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border: 2px solid #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* ปุ่มใช้รูป และ ยกเลิก */
+.cropper-btn,
+.cropper-cancel {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cropper-btn {
+  background: #28a745;
+  color: #fff;
+}
+.cropper-btn:hover:not(:disabled) {
+  background: #218838;
+}
+
+.cropper-cancel {
+  background: #dc3545;
+  color: #fff;
+}
+.cropper-cancel:hover:not(:disabled) {
+  background: #c82333;
+}
+
+/* ป้องกันการเลือกข้อความโดยไม่ตั้งใจ */
+.cropper-overlay,
+.cropper-container,
+.cropper-controls {
+  user-select: none;
+}
