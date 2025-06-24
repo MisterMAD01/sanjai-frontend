@@ -1,15 +1,12 @@
 // src/pages/Admin/ManageAccounts.jsx
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUserPlus,
-  faFileImport,
-  faFileExport,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-import * as XLSX from "xlsx";
 
 import api from "../../api";
+import { UserContext } from "../../contexts/UserContext";
 import UserFormModal from "../../components/Admin/manageusers/UserFormModal";
 import UserEditFormModal from "../../components/Admin/manageusers/UserEditFormModal";
 import UserViewModal from "../../components/Admin/manageusers/UserViewModal";
@@ -19,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./ManageAccounts.css";
 
 export default function ManageAccounts() {
+  const { user: currentUser, loadingUser } = useContext(UserContext);
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
@@ -35,7 +33,7 @@ export default function ManageAccounts() {
     setLoading(true);
     try {
       const resp = await api.get("/api/admin/users");
-      setAccounts(resp.data);
+      setAccounts(resp.data || []);
     } catch (err) {
       console.error(err);
       toast.error("ไม่สามารถดึงข้อมูลบัญชีได้");
@@ -44,46 +42,19 @@ export default function ManageAccounts() {
     }
   };
 
-  const filtered = accounts.filter((u) =>
+  if (loadingUser) {
+    return <p className="loading">กำลังโหลดข้อมูลผู้ใช้...</p>;
+  }
+
+  // 1) กรองตามคำค้นหา (username)
+  const searched = accounts.filter((u) =>
     (u.username || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleExport = () => {
-    if (filtered.length === 0) {
-      toast.info("ไม่มีข้อมูลสำหรับส่งออก");
-      return;
-    }
-    const headers = [
-      "user_id",
-      "username",
-      "email",
-      "role",
-      "approved",
-      "member_id",
-      "created_at",
-      "updated_at",
-    ];
-    const rows = filtered.map((u) =>
-      headers.map((h) => {
-        let v = u[h];
-        if (h === "approved") v = u.approved ? "yes" : "no";
-        return `"${String(v ?? "")}"`;
-      })
-    );
-    const csvContent =
-      headers.join(",") + "\n" + rows.map((r) => r.join(",")).join("\n");
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "users_export.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-
-    toast.success("ส่งออกข้อมูลสำเร็จ");
-  };
+  // 2) ตัดบัญชีของตัวเองออก
+  const myUserId =
+    currentUser.user_id?.toString() || currentUser.id?.toString() || "";
+  const filtered = searched.filter((u) => u.user_id.toString() !== myUserId);
 
   const handleDelete = async (id) => {
     if (!window.confirm("คุณแน่ใจหรือไม่ว่าต้องการลบบัญชีนี้?")) return;
@@ -134,19 +105,12 @@ export default function ManageAccounts() {
           />
           <div className="button-group">
             <button
-              type="button"
               className="action-button add-user"
               onClick={() => setIsAdding(true)}
             >
               <FontAwesomeIcon icon={faUserPlus} /> เพิ่มผู้ใช้
             </button>
-            <button
-              type="button"
-              className="action-button export"
-              onClick={handleExport}
-            >
-              <FontAwesomeIcon icon={faFileExport} /> ส่งออกข้อมูล
-            </button>
+            {/* ปุ่มส่งออกถูกลบออกแล้ว */}
           </div>
         </div>
 
@@ -175,6 +139,7 @@ export default function ManageAccounts() {
           handleCancel={() => setIsAdding(false)}
         />
       )}
+
       {showImport && (
         <ImportExcelModal
           onClose={() => setShowImport(false)}
@@ -184,6 +149,7 @@ export default function ManageAccounts() {
           }}
         />
       )}
+
       {editing && (
         <UserEditFormModal
           user={editing}
@@ -194,6 +160,7 @@ export default function ManageAccounts() {
           handleCancel={() => setEditing(null)}
         />
       )}
+
       {viewing && (
         <UserViewModal
           user={viewing}

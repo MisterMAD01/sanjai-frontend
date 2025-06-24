@@ -1,0 +1,148 @@
+/* src/components/User/myprofile/cropImage.css or wherever you prefer to put it */
+
+/* Overlay for the cropper when active */
+.cropper-overlay {
+  position: fixed; /* Or 'absolute' if within a specific positioned parent */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8); /* Dark semi-transparent background */
+  display: flex;
+  flex-direction: column; /* Arrange content vertically */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it's on top of other content */
+  padding: 20px; /* Add some padding around the content */
+  box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+/* Container for the Cropper component */
+.cropper-container {
+  position: relative; /* Essential for react-easy-crop */
+  width: 100%;
+  max-width: 500px; /* Max width for the cropper area */
+  height: 0;
+  padding-bottom: 100%; /* Makes the container square (1:1 aspect ratio) */
+  background-color: #333; /* Background for the cropper area */
+  border-radius: 8px; /* Slightly rounded corners */
+  overflow: hidden; /* Important to contain the cropper */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  margin-bottom: 20px; /* Space between cropper and controls */
+}
+
+/* Style for the Cropper component itself (inherits from .react-easy-crop-container) */
+.react-easy-crop-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Additional styling if needed, but react-easy-crop handles most */
+}
+
+/* Controls section (zoom slider and buttons) */
+.cropper-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px; /* Max width for controls */
+  background-color: #ffffff; /* White background for controls */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  gap: 15px; /* Space between control elements */
+}
+
+/* Zoom slider styling */
+.cropper-controls input[type="range"] {
+  width: 80%;
+  -webkit-appearance: none; /* Remove default styling */
+  appearance: none;
+  height: 8px;
+  border-radius: 5px;
+  background: #ddd;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.cropper-controls input[type="range"]:hover {
+  opacity: 1;
+}
+
+.cropper-controls input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #007bff; /* Primary color for thumb */
+  cursor: grab;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.cropper-controls input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #007bff; /* Primary color for thumb */
+  cursor: grab;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.cropper-controls input[type="range"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Buttons styling */
+.cropper-btn,
+.cropper-cancel {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+  width: 100%; /* Make buttons full width in controls */
+}
+
+.cropper-btn {
+  background-color: #28a745; /* Green for confirm */
+  color: white;
+}
+
+.cropper-btn:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.cropper-cancel {
+  background-color: #dc3545; /* Red for cancel */
+  color: white;
+}
+
+.cropper-cancel:hover:not(:disabled) {
+  background-color: #c82333;
+}
+
+.cropper-btn:disabled,
+.cropper-cancel:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .cropper-container {
+    max-width: 90vw; /* Adjust for smaller screens */
+    padding-bottom: 90vw;
+  }
+
+  .cropper-controls {
+    max-width: 90vw;
+    padding: 15px;
+  }
+}

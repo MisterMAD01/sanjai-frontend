@@ -1,4 +1,3 @@
-// src/components/Member/MemberEditModal.jsx
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
@@ -210,6 +209,16 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
               </select>
             </label>
             <label>
+              รุ่นที่
+              <input
+                type="number"
+                name="graduation_year"
+                value={formData.graduation_year}
+                onChange={handleChange}
+                disabled={submitting}
+              />
+            </label>
+            <label>
               ประเภทสมาชิก
               <select
                 name="type"
@@ -321,16 +330,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
               <input
                 name="school"
                 value={formData.school}
-                onChange={handleChange}
-                disabled={submitting}
-              />
-            </label>
-            <label>
-              ปีที่จบ
-              <input
-                type="number"
-                name="graduation_year"
-                value={formData.graduation_year}
                 onChange={handleChange}
                 disabled={submitting}
               />

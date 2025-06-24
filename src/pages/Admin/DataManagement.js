@@ -101,6 +101,8 @@ export default function DataManagement() {
       const newLog = {
         filename: `${type}_export_${ts.slice(0, 10)}.xlsx`,
         count: summary[type],
+        performed_by:
+          res?.config?.headers?.Authorization /* or however you get username */,
         created_at: ts,
       };
       setExportLogs((prev) => [newLog, ...prev]);
@@ -122,20 +124,18 @@ export default function DataManagement() {
     types.forEach(downloadFile);
   };
 
-  const handleImportSuccess = (type, count) => {
+  const handleImportSuccess = (type, count, performedBy) => {
     const ts = new Date().toISOString();
     const newLog = {
       filename: `import_${type}_${ts.slice(0, 10)}.xlsx`,
       count,
+      performed_by: performedBy,
       created_at: ts,
     };
     setImportLogs((prev) => [newLog, ...prev]);
     setShowImportModal(false);
     toast.success(`นำเข้า ${type} สำเร็จ (${count} รายการ)`);
   };
-
-  const clearImportLogs = () => setImportLogs([]);
-  const clearExportLogs = () => setExportLogs([]);
 
   return (
     <div className="data-management-page">
@@ -183,7 +183,9 @@ export default function DataManagement() {
       {showImportModal && (
         <ImportExcelModal
           onClose={() => setShowImportModal(false)}
-          onSuccess={handleImportSuccess}
+          onSuccess={(type, count) =>
+            handleImportSuccess(type, count /* passed performedBy from modal */)
+          }
         />
       )}
 
@@ -243,9 +245,6 @@ export default function DataManagement() {
           <h3>
             <FontAwesomeIcon icon={faClock} /> ประวัติการนำเข้า
           </h3>
-          <button className="data-btn clear" onClick={clearImportLogs}>
-            เคลียร์ประวัติการนำเข้า
-          </button>
         </div>
         {importLogs.length === 0 ? (
           <p className="log-empty">ยังไม่มีรายการนำเข้า</p>
@@ -253,8 +252,8 @@ export default function DataManagement() {
           <ul className="log-list">
             {importLogs.map((log, i) => (
               <li key={i}>
-                📥 {log.filename} — {log.count} รายการ —{" "}
-                {new Date(log.created_at).toLocaleString("th-TH")}
+                📥 นำเข้าโดย <strong>{log.performed_by}</strong> — {log.count}{" "}
+                รายการ — {new Date(log.created_at).toLocaleString("th-TH")}
               </li>
             ))}
           </ul>
@@ -264,9 +263,6 @@ export default function DataManagement() {
           <h3>
             <FontAwesomeIcon icon={faClock} /> ประวัติการส่งออก
           </h3>
-          <button className="data-btn clear" onClick={clearExportLogs}>
-            เคลียร์ประวัติการส่งออก
-          </button>
         </div>
         {exportLogs.length === 0 ? (
           <p className="log-empty">ยังไม่มีรายการส่งออก</p>
@@ -274,8 +270,8 @@ export default function DataManagement() {
           <ul className="log-list">
             {exportLogs.map((log, i) => (
               <li key={i}>
-                📤 {log.filename} — {log.count} รายการ —{" "}
-                {new Date(log.created_at).toLocaleString("th-TH")}
+                📤 ส่งออกโดย <strong>{log.performed_by}</strong> — {log.count}{" "}
+                รายการ — {new Date(log.created_at).toLocaleString("th-TH")}
               </li>
             ))}
           </ul>

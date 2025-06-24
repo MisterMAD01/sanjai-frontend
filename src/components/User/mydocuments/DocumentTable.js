@@ -1,11 +1,7 @@
-// DocumentTable.jsx
+// src/components/User/mydocuments/DocumentTable.jsx
 import React from "react";
 import PropTypes from "prop-types";
 import "./DocumentTable.css";
-
-// FontAwesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faDownload } from "@fortawesome/free-solid-svg-icons";
 
 const DocumentTable = ({ documents, onDetail, onDownload }) => {
   return (
@@ -14,6 +10,7 @@ const DocumentTable = ({ documents, onDetail, onDownload }) => {
         <tr>
           <th>ลำดับ</th>
           <th>ชื่อเอกสาร</th>
+          <th>ผู้ส่ง</th>
           <th>วันที่ส่ง</th>
           <th>การจัดการ</th>
         </tr>
@@ -24,28 +21,27 @@ const DocumentTable = ({ documents, onDetail, onDownload }) => {
             <tr key={doc.id}>
               <td>{idx + 1}</td>
               <td>{doc.title}</td>
+              <td>{doc.sender || "-"}</td>
               <td>{new Date(doc.uploadDate).toLocaleDateString("th-TH")}</td>
               <td className="doc-action-group">
                 <button
-                  className="icon-btn detail"
+                  className="action-btn detail"
                   onClick={() => onDetail(doc)}
-                  aria-label="ดูรายละเอียด"
                 >
-                  <FontAwesomeIcon icon={faEye} />
+                  ดูรายละเอียด
                 </button>
                 <button
-                  className="icon-btn download"
+                  className="action-btn download"
                   onClick={() => onDownload(doc)}
-                  aria-label="ดาวน์โหลด"
                 >
-                  <FontAwesomeIcon icon={faDownload} />
+                  ดาวน์โหลด
                 </button>
               </td>
             </tr>
           ))
         ) : (
           <tr>
-            <td colSpan="4" className="no-doc">
+            <td colSpan="5" className="no-doc">
               ไม่มีเอกสาร
             </td>
           </tr>
@@ -60,6 +56,7 @@ DocumentTable.propTypes = {
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       title: PropTypes.string.isRequired,
+      sender: PropTypes.string,
       uploadDate: PropTypes.string.isRequired,
     })
   ).isRequired,

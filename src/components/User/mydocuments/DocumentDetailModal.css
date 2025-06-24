@@ -1,4 +1,5 @@
 /* DocumentDetailModal.css */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -24,6 +25,7 @@
 .modal-header {
   padding: 1rem;
   border-bottom: 1px solid #eee;
+  text-align: center; /* Center header text */
 }
 
 .modal-header h4 {
@@ -44,8 +46,8 @@
 .modal-footer {
   padding: 1rem;
   display: flex;
-  justify-content: center; /* กึ่งกลาง */
-  gap: 0.5rem; /* ลดระยะห่างระหว่างปุ่ม */
+  justify-content: center;
+  gap: 0.5rem;
   border-top: 1px solid #eee;
 }
 
@@ -61,7 +63,7 @@
   transition: background 0.2s;
 }
 
-.btn-close-modal:hover {
+.btn-close-modal1:hover {
   background: #5a6268;
 }
 

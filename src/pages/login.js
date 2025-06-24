@@ -80,8 +80,8 @@ function Login() {
       <div className="login-container">
         <div className="login-logo-area">
           <img src={logo} alt="Logo" className="login-logo-img" />
-          <div className="login-app-name">ระบบสมาชิกสมาคมสานใจไทยสู่ใจใต้</div>
-          <div className="login-app-desc">สำหรับเจ้าหน้าที่และผู้ดูแลระบบ</div>
+          <div className="login-app-name">ระบบสมาชิกสมาคมสานใจไทย สู่ใจใต้</div>
+          <div className="login-app-desc">สำนักงานสาขาจังหวัดนราธิวาส</div>
         </div>
 
         <h2 className="login-title">เข้าสู่ระบบ</h2>

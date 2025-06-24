@@ -1,4 +1,3 @@
-// src/components/MyProfileUsername.jsx
 import React, { useEffect, useState } from "react";
 import { FaUser, FaUserCheck, FaCalendarAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -13,7 +12,6 @@ export default function ProfileUsername() {
   const [loading, setLoading] = useState(true);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
-  // Load profile on mount
   useEffect(() => {
     const loadProfile = async () => {
       try {
@@ -29,11 +27,9 @@ export default function ProfileUsername() {
     loadProfile();
   }, []);
 
-  // Update profile fields
-  const handleUpdate = async (updatedFields) => {
+  const handleUpdate = async (updatedProfileData) => {
     try {
-      const res = await api.put("/api/user/me", updatedFields);
-      setProfile(res.data.profile);
+      setProfile(updatedProfileData);
       toast.success("อัปเดตข้อมูลเรียบร้อยแล้ว");
     } catch (err) {
       console.error("Update error:", err);
@@ -46,12 +42,23 @@ export default function ProfileUsername() {
   if (loading) return <div className="pgu-loading">กำลังโหลด...</div>;
   if (!profile) return null;
 
-  const avatarInitial = (profile.full_name?.charAt(0) || "-").toUpperCase();
-  const createdAt = profile.created_at
-    ? new Date(profile.created_at).toLocaleString("th-TH")
+  const {
+    full_name,
+    member_id,
+    username,
+    role,
+    email,
+    approved,
+    created_at,
+    updated_at,
+  } = profile;
+
+  const avatarInitial = (full_name?.trim().charAt(0) || "-").toUpperCase();
+  const formattedCreatedAt = created_at
+    ? new Date(created_at).toLocaleString("th-TH")
     : "-";
-  const updatedAt = profile.updated_at
-    ? new Date(profile.updated_at).toLocaleString("th-TH")
+  const formattedUpdatedAt = updated_at
+    ? new Date(updated_at).toLocaleString("th-TH")
     : "-";
 
   return (
@@ -62,8 +69,10 @@ export default function ProfileUsername() {
         <header className="pgu-header">
           <div className="pgu-avatar">{avatarInitial}</div>
           <div className="pgu-header-info">
-            <h2 className="pgu-name">{profile.full_name}</h2>
-            <p className="pgu-id">USER ID: {profile.user_id}</p>
+            <h2 className="pgu-name">{full_name}</h2>
+            <p className="pgu-id">
+              <strong>รหัสสมาชิก:</strong> {member_id || "-"}
+            </p>
           </div>
         </header>
 
@@ -74,13 +83,13 @@ export default function ProfileUsername() {
               <FaUser className="pgu-icon" /> ข้อมูลบัญชี
             </h2>
             <p>
-              <strong>ชื่อผู้ใช้:</strong> {profile.username}
+              <strong>ชื่อผู้ใช้:</strong> {username}
             </p>
             <p>
-              <strong>บทบาท:</strong> {profile.role}
+              <strong>บทบาท:</strong> {role}
             </p>
             <p>
-              <strong>อีเมล:</strong> {profile.email || "-"}
+              <strong>อีเมล:</strong> {email || "-"}
             </p>
           </section>
 
@@ -89,10 +98,7 @@ export default function ProfileUsername() {
               <FaUserCheck className="pgu-icon" /> ข้อมูลสมาชิก
             </h2>
             <p>
-              <strong>รหัสสมาชิก:</strong> {profile.member_id || "-"}
-            </p>
-            <p>
-              <strong>อนุมัติ:</strong> {profile.approved ? "ใช่" : "ไม่ใช่"}
+              <strong>อนุมัติ:</strong> {approved ? "ใช่" : "ไม่ใช่"}
             </p>
           </section>
 
@@ -101,10 +107,10 @@ export default function ProfileUsername() {
               <FaCalendarAlt className="pgu-icon" /> ประวัติเวลา
             </h2>
             <p>
-              <strong>สร้างเมื่อ:</strong> {createdAt}
+              <strong>สร้างเมื่อ:</strong> {formattedCreatedAt}
             </p>
             <p>
-              <strong>อัปเดตเมื่อ:</strong> {updatedAt}
+              <strong>อัปเดตเมื่อ:</strong> {formattedUpdatedAt}
             </p>
           </section>
         </div>

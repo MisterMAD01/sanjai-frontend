@@ -1,30 +1,33 @@
 // src/pages/Admin/ManageMember.jsx
-import React, { useState, useEffect } from "react";
-import {
-  faUserPlus,
-  faFileImport,
-  faFileExport,
-} from "@fortawesome/free-solid-svg-icons";
+
+import React, { useState, useEffect, useContext } from "react";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as XLSX from "xlsx";
-import { toast } from "react-toastify";
 
 import api from "../../api";
+import { UserContext } from "../../contexts/UserContext";
+import AlertBanner from "../../components/common/AlertBanner";
 import MemberFormModal from "../../components/Admin/managemembers/MemberFormModal";
 import ImportExcelModal from "./ImportExcelModal";
 import MemberTable from "../../components/Admin/managemembers/MemberTable";
 import MemberViewModal from "../../components/Admin/managemembers/MemberViewModal";
 import MemberEditModal from "../../components/Admin/managemembers/MemberEditModal";
+import "react-toastify/dist/ReactToastify.css";
 import "./ManageMember.css";
 
 export default function ManageMember() {
+  const { user: currentUser, loadingUser } = useContext(UserContext);
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [alert, setAlert] = useState({ type: "", message: "" });
+
   const [showAddModal, setShowAddModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
   const [showViewModal, setShowViewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -35,84 +38,58 @@ export default function ManageMember() {
     setLoading(true);
     try {
       const res = await api.get("/api/members");
-      setMembers(res.data);
+      setMembers(res.data || []);
     } catch (err) {
       console.error(err);
-      toast.error("ไม่สามารถโหลดข้อมูลสมาชิกได้");
+      setAlert({
+        type: "error",
+        message: "ไม่สามารถโหลดข้อมูลสมาชิกได้ กรุณาลองใหม่",
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  const filtered = members.filter((m) =>
-    m.full_name?.toLowerCase().includes(searchTerm.toLowerCase())
+  if (loadingUser) {
+    return <p className="loading">กำลังโหลดข้อมูลผู้ใช้...</p>;
+  }
+
+  // 1) กรองตามคำค้นหา: ใช้ full_name หรือ member_id
+  const searched = members.filter((m) => {
+    const text = (m.full_name || m.member_id || "").toLowerCase();
+    return text.includes(searchTerm.toLowerCase());
+  });
+
+  // 2) ตัดสมาชิกตัวเองออก
+  const myMemberId =
+    currentUser.member_id?.toString() || currentUser.memberId?.toString() || "";
+  const filtered = searched.filter(
+    (m) => m.member_id.toString() !== myMemberId
   );
-
-  const handleExport = () => {
-    if (filtered.length === 0) {
-      toast.info("ไม่มีข้อมูลสำหรับส่งออก");
-      return;
-    }
-
-    const ws = XLSX.utils.json_to_sheet(filtered, {
-      header: [
-        "member_id",
-        "prefix",
-        "full_name",
-        "nickname",
-        "id_card",
-        "birthday",
-        "age",
-        "gender",
-        "religion",
-        "medical_conditions",
-        "allergy_history",
-        "address",
-        "phone",
-        "facebook",
-        "instagram",
-        "line_id",
-        "school",
-        "graduation_year",
-        "gpa",
-        "type",
-        "district",
-      ],
-    });
-
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Members");
-    const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const blob = new Blob([wbout], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "members_export.xlsx";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    toast.success("ส่งออกข้อมูลสำเร็จ");
-  };
 
   const handleDelete = async (id) => {
     if (!window.confirm("คุณแน่ใจว่าต้องการลบสมาชิกนี้?")) return;
-
     try {
       await api.delete(`/api/members/${id}`);
-      toast.success("ลบสมาชิกสำเร็จ");
+      setAlert({ type: "success", message: "ลบสมาชิกสำเร็จ" });
       fetchMembers();
     } catch (err) {
       console.error(err);
-      toast.error("ไม่สามารถลบสมาชิกได้");
+      const msg =
+        err.response?.data?.error ||
+        "ไม่สามารถลบสมาชิกได้ กรุณาลองใหม่อีกครั้ง";
+      setAlert({ type: "error", message: msg });
     }
   };
 
   return (
     <div className="manage-member-page">
+      <AlertBanner
+        type={alert.type}
+        message={alert.message}
+        onClose={() => setAlert({ type: "", message: "" })}
+      />
+
       <h2 className="manage-member-title">จัดการสมาชิก</h2>
 
       <div className="manage-member-card">
@@ -124,22 +101,12 @@ export default function ManageMember() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-
           <div className="button-group">
             <button
-              type="button"
               className="action-button add-member"
               onClick={() => setShowAddModal(true)}
             >
               <FontAwesomeIcon icon={faUserPlus} /> เพิ่มสมาชิก
-            </button>
-
-            <button
-              type="button"
-              className="action-button export"
-              onClick={handleExport}
-            >
-              <FontAwesomeIcon icon={faFileExport} /> ส่งออกข้อมูล
             </button>
           </div>
         </div>
@@ -147,20 +114,18 @@ export default function ManageMember() {
         {loading ? (
           <p>กำลังโหลดข้อมูล...</p>
         ) : (
-          <div className="table-wrapper">
-            <MemberTable
-              members={filtered}
-              onView={(m) => {
-                setSelectedMember(m);
-                setShowViewModal(true);
-              }}
-              onEdit={(m) => {
-                setSelectedMember(m);
-                setShowEditModal(true);
-              }}
-              onDelete={handleDelete}
-            />
-          </div>
+          <MemberTable
+            members={filtered}
+            onView={(m) => {
+              setSelectedMember(m);
+              setShowViewModal(true);
+            }}
+            onEdit={(m) => {
+              setSelectedMember(m);
+              setShowEditModal(true);
+            }}
+            onDelete={handleDelete}
+          />
         )}
       </div>
 
@@ -169,6 +134,7 @@ export default function ManageMember() {
           onClose={() => setShowAddModal(false)}
           onSuccess={() => {
             setShowAddModal(false);
+            setAlert({ type: "success", message: "เพิ่มสมาชิกสำเร็จ" });
             fetchMembers();
           }}
         />
@@ -177,8 +143,12 @@ export default function ManageMember() {
       {showImportModal && (
         <ImportExcelModal
           onClose={() => setShowImportModal(false)}
-          onSuccess={() => {
+          onSuccess={(count) => {
             setShowImportModal(false);
+            setAlert({
+              type: "success",
+              message: `นำเข้า ${count} รายการสำเร็จ`,
+            });
             fetchMembers();
           }}
         />
@@ -197,6 +167,7 @@ export default function ManageMember() {
           onClose={() => setShowEditModal(false)}
           onSuccess={() => {
             setShowEditModal(false);
+            setAlert({ type: "success", message: "แก้ไขสมาชิกสำเร็จ" });
             fetchMembers();
           }}
         />

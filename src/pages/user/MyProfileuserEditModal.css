@@ -39,44 +39,35 @@
   color: #000;
 }
 
-/* Avatar preview */
+/* Avatar Initial and Name */
 .mem-avatar-wrapper {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 1rem;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
 }
-.mem-avatar-img,
+
 .mem-avatar-placeholder {
-  width: 100%;
-  height: 100%;
+  width: 80px;
+  height: 80px;
+  background: #b0001c;
+  color: #fff;
   border-radius: 50%;
-  object-fit: cover;
-  background: #eee;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
-  color: #888;
-}
-.mem-avatar-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.4);
-  color: #fff;
-  text-align: center;
-  font-size: 0.75rem;
-  padding: 2px;
-  border-bottom-left-radius: 50%;
-  border-bottom-right-radius: 50%;
-}
-.mem-file-input {
-  display: none;
+  font-size: 2.5rem;
 }
 
+.mem-avatar-name {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Form */
 .mem-edit-form {
   display: grid;
   gap: 1rem;
@@ -99,6 +90,7 @@
   border-radius: 4px;
 }
 
+/* Buttons */
 .mem-edit-buttons {
   display: flex;
   justify-content: flex-end;

@@ -1,4 +1,5 @@
-// src/components/Member/MemberTable.jsx
+// src/components/Admin/managemembers/MemberTable.jsx
+
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import MemberViewModal from "./MemberViewModal";
@@ -12,13 +13,9 @@ const getInitials = (name) => {
   return name.trim().charAt(0).toUpperCase();
 };
 
-function MemberTable({ members, onDelete, onView, onEdit }) {
+export default function MemberTable({ members, onView, onEdit, onDelete }) {
   const [viewMember, setViewMember] = useState(null);
   const [deleteMember, setDeleteMember] = useState(null);
-
-  if (!members || members.length === 0) {
-    return <p className="mmt-no-data">ไม่มีสมาชิกในระบบ</p>;
-  }
 
   return (
     <div className="mmt-container">
@@ -36,41 +33,47 @@ function MemberTable({ members, onDelete, onView, onEdit }) {
           </tr>
         </thead>
         <tbody>
-          {members.map((m) => (
-            <tr key={m.member_id}>
-              <td>
-                <div className="mmt-avatar">{getInitials(m.full_name)}</div>
-              </td>
-              <td>{m.member_id}</td>
-              <td>{`${m.prefix ?? ""}${m.full_name ?? "-"}`.trim()}</td>
-              <td>{m.nickname || "-"}</td>
-              <td>{m.graduation_year || "-"}</td>
-              <td>{m.district || "-"}</td>
-              <td className="mmt-actions">
-                <button
-                  onClick={() => setViewMember(m)}
-                  className="mmt-btn view"
-                  title="ดู"
-                >
-                  <FaEye />
-                </button>
-                <button
-                  onClick={() => onEdit(m)}
-                  className="mmt-btn edit"
-                  title="แก้ไข"
-                >
-                  <FaEdit />
-                </button>
-                <button
-                  onClick={() => setDeleteMember(m)}
-                  className="mmt-btn delete"
-                  title="ลบ"
-                >
-                  <FaTrashAlt />
-                </button>
-              </td>
+          {members.length > 0 ? (
+            members.map((m, idx) => (
+              <tr key={m.member_id || idx}>
+                <td>
+                  <div className="mmt-avatar">{getInitials(m.full_name)}</div>
+                </td>
+                <td>{m.member_id || "-"}</td>
+                <td>{`${m.prefix ?? ""}${m.full_name ?? "-"}`.trim()}</td>
+                <td>{m.nickname || "-"}</td>
+                <td>{m.graduation_year || "-"}</td>
+                <td>{m.district || "-"}</td>
+                <td className="mmt-actions">
+                  <button
+                    onClick={() => setViewMember(m)}
+                    className="mmt-btn view"
+                    title="ดู"
+                  >
+                    <FaEye />
+                  </button>
+                  <button
+                    onClick={() => onEdit(m)}
+                    className="mmt-btn edit"
+                    title="แก้ไข"
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    onClick={() => setDeleteMember(m)}
+                    className="mmt-btn delete"
+                    title="ลบ"
+                  >
+                    <FaTrashAlt />
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7" className="mmt-no-data-cell"></td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
@@ -83,24 +86,24 @@ function MemberTable({ members, onDelete, onView, onEdit }) {
       )}
 
       {/* Confirm Delete Modal */}
-      <ConfirmDeleteModal
-        isOpen={!!deleteMember}
-        title={deleteMember?.full_name}
-        onConfirm={() => {
-          onDelete(deleteMember.member_id);
-          setDeleteMember(null);
-        }}
-        onCancel={() => setDeleteMember(null)}
-      />
+      {deleteMember && (
+        <ConfirmDeleteModal
+          isOpen={!!deleteMember}
+          title={deleteMember.full_name}
+          onConfirm={() => {
+            onDelete(deleteMember.member_id);
+            setDeleteMember(null);
+          }}
+          onCancel={() => setDeleteMember(null)}
+        />
+      )}
     </div>
   );
 }
 
 MemberTable.propTypes = {
   members: PropTypes.array.isRequired,
-  onDelete: PropTypes.func.isRequired,
   onView: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
-
-export default MemberTable;

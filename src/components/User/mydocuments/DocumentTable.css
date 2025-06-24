@@ -120,3 +120,17 @@
 .icon-btn.download:hover {
   color: #1e7e34;
 }
+.action-btn {
+  background: none;
+  border: none;
+  color: #b0001c;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.95rem;
+}
+.action-btn.detail:hover {
+  text-decoration: underline;
+}
+.action-btn.download:hover {
+  text-decoration: underline;
+}

@@ -1,4 +1,3 @@
-// src/pages/user/MemberEditModal.js
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./MemberEditModal.css";
@@ -20,7 +19,7 @@ const fieldLabels = {
   instagram: "Instagram",
   line_id: "Line ID",
   school: "โรงเรียน",
-  graduation_year: "ปีที่จบ",
+  // graduation_year removed as per request
   gpa: "GPA",
   type: "ประเภทสมาชิก",
 };
@@ -52,7 +51,7 @@ const sections = [
   {
     key: "education",
     title: "ข้อมูลการศึกษา",
-    fields: ["school", "graduation_year", "gpa"],
+    fields: ["school", /* "graduation_year", */ "gpa"],
   },
 ];
 
@@ -102,7 +101,7 @@ export default function MemberEditModal({ member, onClose, onSave }) {
     }
     let type = "text";
     if (field === "birthday") type = "date";
-    if (["age", "graduation_year", "gpa"].includes(field)) type = "number";
+    if (["age", "gpa"].includes(field)) type = "number";
     return <input {...common} type={type} className="member-edit-input" />;
   };
 
@@ -120,7 +119,8 @@ export default function MemberEditModal({ member, onClose, onSave }) {
             {formData.full_name?.charAt(0).toUpperCase() || "-"}
           </div>
           <div className="member-edit-type">
-            ประเภท: {member.type || "-"} ({member.graduation_year || "-"})
+            ประเภท: {member.type || "-"}
+            {/* removed graduation_year display */}
           </div>
           <div className="member-edit-district">
             อำเภอ: {member.district || "-"}
@@ -173,3 +173,9 @@ export default function MemberEditModal({ member, onClose, onSave }) {
     </div>
   );
 }
+
+MemberEditModal.propTypes = {
+  member: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+};

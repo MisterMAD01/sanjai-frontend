@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+// src/components/Layout/Sidebar.jsx
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import "./Sidebar.css";
@@ -21,7 +22,36 @@ const Sidebar = ({ role, collapsed }) => {
   const { user, logout } = useContext(UserContext);
 
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const toggleMobileSidebar = () => setIsMobileOpen(!isMobileOpen);
+  const sidebarRef = useRef(null);
+
+  const toggleMobileSidebar = () => {
+    setIsMobileOpen((open) => !open);
+  };
+
+  const handleClose = () => {
+    if (isMobileOpen) setIsMobileOpen(false);
+  };
+
+  const handleNavigate = (path) => {
+    navigate(path);
+    handleClose();
+  };
+
+  // ปิด sidebar เมื่อคลิกนอกพื้นที่ (เฉพาะมือถือ/iPad)
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        isMobileOpen &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(e.target) &&
+        e.target.closest(".mobile-toggle-btn") === null
+      ) {
+        setIsMobileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isMobileOpen]);
 
   const isActive = (path) => location.pathname.startsWith(path);
   const getInitial = (name) =>
@@ -30,16 +60,21 @@ const Sidebar = ({ role, collapsed }) => {
   const handleLogout = () => {
     logout();
     navigate("/login");
+    handleClose();
   };
 
   return (
     <>
-      {/* Toggle Button for Mobile */}
-      <div className="mobile-toggle-btn" onClick={toggleMobileSidebar}>
-        {isMobileOpen ? "<" : ">"}
-      </div>
+      {/* Toggle Button for Mobile & iPad: แสดงเฉพาะตอนเมนูปิด */}
+      {!isMobileOpen && (
+        <div className="mobile-toggle-btn" onClick={toggleMobileSidebar}>
+          {/* ใช้ Unicode Hamburger */}
+          เมนู ☰
+        </div>
+      )}
 
       <div
+        ref={sidebarRef}
         className={`sidebar ${collapsed ? "collapsed" : ""} ${
           isMobileOpen ? "open" : ""
         }`}
@@ -56,13 +91,14 @@ const Sidebar = ({ role, collapsed }) => {
           )}
         </div>
 
-        {/* Main Menu */}
+        {/* Menu */}
         <nav className="sidebar-menu">
+          {/* Main Menu */}
           <div className="sidebar-menu-group">
             {!collapsed && <p className="section-title11">เมนูหลัก</p>}
 
             <button
-              onClick={() => navigate("/home")}
+              onClick={() => handleNavigate("/home")}
               className={isActive("/home") ? "active" : ""}
               title="หน้าหลัก"
             >
@@ -70,18 +106,18 @@ const Sidebar = ({ role, collapsed }) => {
               {!collapsed && "หน้าหลัก"}
             </button>
 
-            {role === "user" && (
+            {(role === "user" || role === "admin") && (
               <>
                 <button
-                  onClick={() => navigate("/my-documents")}
+                  onClick={() => handleNavigate("/my-documents")}
                   className={isActive("/my-documents") ? "active" : ""}
                   title="เอกสารของฉัน"
                 >
                   <FontAwesomeIcon icon={faFileAlt} />
-                  {!collapsed && " เอกสารของฉัน"}
+                  {!collapsed && "เอกสารของฉัน"}
                 </button>
                 <button
-                  onClick={() => navigate("/my-member-info")}
+                  onClick={() => handleNavigate("/my-member-info")}
                   className={isActive("/my-member-info") ? "active" : ""}
                   title="ข้อมูลสมาชิกของฉัน"
                 >
@@ -90,51 +126,57 @@ const Sidebar = ({ role, collapsed }) => {
                 </button>
               </>
             )}
-
-            {role === "admin" && (
-              <>
-                <button
-                  onClick={() => navigate("/manage-users")}
-                  className={isActive("/manage-users") ? "active" : ""}
-                  title="จัดการผู้ใช้"
-                >
-                  <FontAwesomeIcon icon={faUserCog} />
-                  {!collapsed && "จัดการผู้ใช้"}
-                </button>
-                <button
-                  onClick={() => navigate("/manage-members")}
-                  className={isActive("/manage-members") ? "active" : ""}
-                  title="จัดการสมาชิก"
-                >
-                  <FontAwesomeIcon icon={faUsers} />
-                  {!collapsed && "จัดการสมาชิก"}
-                </button>
-                <button
-                  onClick={() => navigate("/manage-documents")}
-                  className={isActive("/manage-documents") ? "active" : ""}
-                  title="จัดการเอกสาร"
-                >
-                  <FontAwesomeIcon icon={faFileAlt} />
-                  {!collapsed && "จัดการเอกสาร"}
-                </button>
-                <button
-                  onClick={() => navigate("/data-management")}
-                  className={isActive("/data-management") ? "active" : ""}
-                  title="จัดการข้อมูล"
-                >
-                  <FontAwesomeIcon icon={faDatabase} />
-                  {!collapsed && "จัดการข้อมูล"}
-                </button>
-              </>
-            )}
           </div>
+
+          {/* Admin Menu */}
+          {role === "admin" && (
+            <div className="sidebar-menu-group">
+              {!collapsed && <p className="section-title11">เมนูแอดมิน</p>}
+
+              <button
+                onClick={() => handleNavigate("/manage-users")}
+                className={isActive("/manage-users") ? "active" : ""}
+                title="จัดการผู้ใช้"
+              >
+                <FontAwesomeIcon icon={faUserCog} />
+                {!collapsed && "จัดการผู้ใช้"}
+              </button>
+
+              <button
+                onClick={() => handleNavigate("/manage-members")}
+                className={isActive("/manage-members") ? "active" : ""}
+                title="จัดการสมาชิก"
+              >
+                <FontAwesomeIcon icon={faUsers} />
+                {!collapsed && "จัดการสมาชิก"}
+              </button>
+
+              <button
+                onClick={() => handleNavigate("/manage-documents")}
+                className={isActive("/manage-documents") ? "active" : ""}
+                title="จัดการเอกสาร"
+              >
+                <FontAwesomeIcon icon={faFileAlt} />
+                {!collapsed && "จัดการเอกสาร"}
+              </button>
+
+              <button
+                onClick={() => handleNavigate("/data-management")}
+                className={isActive("/data-management") ? "active" : ""}
+                title="จัดการข้อมูล"
+              >
+                <FontAwesomeIcon icon={faDatabase} />
+                {!collapsed && "จัดการข้อมูล"}
+              </button>
+            </div>
+          )}
 
           {/* My Menu */}
           <div className="sidebar-menu-group">
             {!collapsed && <p className="section-title11">เมนูของฉัน</p>}
 
             <button
-              onClick={() => navigate("/my-profile")}
+              onClick={() => handleNavigate("/my-profile")}
               className={isActive("/my-profile") ? "active" : ""}
               title="โปรไฟล์"
             >
@@ -142,7 +184,7 @@ const Sidebar = ({ role, collapsed }) => {
               {!collapsed && "โปรไฟล์"}
             </button>
             <button
-              onClick={() => navigate("/settings")}
+              onClick={() => handleNavigate("/settings")}
               className={isActive("/settings") ? "active" : ""}
               title="การตั้งค่า"
             >
