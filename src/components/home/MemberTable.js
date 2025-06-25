@@ -42,7 +42,7 @@ const MemberTable = ({ members = [], selectedType = "ทั้งหมด" }) =
       : members.filter((m) => m.type === selectedType);
 
   const byDistrict = groupBy(filtered, "district");
-  const byGeneration = groupBy(filtered, "generation");
+  const byGeneration = groupBy(filtered, "graduation_year");
   const byGender = groupBy(filtered, "gender");
 
   return (

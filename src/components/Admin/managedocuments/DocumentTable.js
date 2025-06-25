@@ -1,4 +1,3 @@
-// DocumentTable.jsx
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DocumentDetailModal from "./DocumentDetailModal";
@@ -33,18 +32,22 @@ const DocumentTable = ({ documents, onDelete }) => {
         <table className="document-table">
           <thead>
             <tr>
+              <th>ลำดับ</th>
               <th>ชื่อเอกสาร</th>
-              <th>สมาชิก</th>
+              <th>ผู้ส่ง</th>
+              <th>ผู้รับ</th>
               <th>วันที่ส่ง</th>
               <th>การจัดการ</th>
             </tr>
           </thead>
           <tbody>
             {documents.length > 0 ? (
-              documents.map((doc) => (
+              documents.map((doc, index) => (
                 <tr key={doc.id}>
+                  <td>{index + 1}</td>
                   <td>{doc.title}</td>
-                  <td>{doc.memberName}</td>
+                  <td>{doc.sender || "-"}</td>
+                  <td>{doc.recipient || "-"}</td>
                   <td>
                     {new Date(doc.uploadDate).toLocaleDateString("th-TH")}
                   </td>
@@ -68,7 +71,7 @@ const DocumentTable = ({ documents, onDelete }) => {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="no-doc">
+                <td colSpan="6" className="no-doc">
                   ไม่มีเอกสาร
                 </td>
               </tr>
@@ -101,7 +104,8 @@ DocumentTable.propTypes = {
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       title: PropTypes.string.isRequired,
-      memberName: PropTypes.string,
+      sender: PropTypes.string,
+      recipient: PropTypes.string,
       uploadDate: PropTypes.string.isRequired,
     })
   ).isRequired,

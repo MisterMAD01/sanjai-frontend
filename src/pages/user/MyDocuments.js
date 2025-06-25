@@ -1,4 +1,3 @@
-// src/components/user/MyDocuments.jsx
 import React, { useEffect, useState, useContext } from "react";
 import DocumentDetailModal from "../../components/User/mydocuments/DocumentDetailModal";
 import DocumentTable from "../../components/User/mydocuments/DocumentTable";
@@ -30,12 +29,14 @@ const MyDocuments = () => {
         const res = await fetch(`${API}/api/my-documents`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
+
         if (!res.ok) {
           const errorData = await res.json();
           throw new Error(
             `Error ${res.status}: ${errorData.message || res.statusText}`
           );
         }
+
         const data = await res.json();
         const raw = data.documents || data;
         const normalized = raw.map((doc) => ({
@@ -65,23 +66,27 @@ const MyDocuments = () => {
       toast.warn("ไม่พบไฟล์สำหรับดาวน์โหลด.");
       return;
     }
+
     try {
-      const res = await fetch(`${API}/api/my-documents/download/${doc.id}`, {
+      const res = await fetch(`${API}/api/my-documents/${doc.id}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(
-          `Download failed: ${res.status} - ${
-            errorData.message || res.statusText
-          }`
-        );
+        const contentType = res.headers.get("content-type");
+        let message = `Download failed (${res.status})`;
+        if (contentType && contentType.includes("application/json")) {
+          const err = await res.json();
+          message += `: ${err.message || res.statusText}`;
+        }
+        throw new Error(message);
       }
+
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
-      a.href = url;
       const ext = doc.filePath.split(".").pop();
+      a.href = url;
       a.download = `${doc.title || `document-${doc.id}`}.${ext}`;
       document.body.appendChild(a);
       a.click();
@@ -102,7 +107,6 @@ const MyDocuments = () => {
     <div className="my-documents-container">
       <h2 className="page-title">เอกสารของฉัน</h2>
 
-      {/* แสดงตารางเปล่าเมื่อ documents = [] */}
       <DocumentTable
         documents={documents}
         onDetail={setSelectedDoc}
@@ -117,6 +121,7 @@ const MyDocuments = () => {
               ? `${API}/uploads/${selectedDoc.filePath}`
               : null,
           }}
+          accessToken={accessToken}
           onClose={() => setSelectedDoc(null)}
         />
       )}

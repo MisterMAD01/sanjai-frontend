@@ -1,7 +1,4 @@
-/* src/components/Admin/managedocuments/ManageAllModal.css */
-
-/* Modal overlay & container (unchanged) */
-.modal-overlay {
+.mam-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,131 +10,128 @@
   justify-content: center;
   z-index: 1000;
 }
-.modal-content.manage-all {
+
+.mam-modal-content.mam-manage-all {
   background: #fff;
   border-radius: 8px;
   width: 90%;
-  max-width: 700px;
+  max-width: 900px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Header */
-.modal-header {
+.mam-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 1rem;
   border-bottom: 1px solid #eee;
 }
-.modal-header h4 {
+.mam-modal-header h4 {
   margin: 0;
   font-size: 1.25rem;
   color: #b0001c;
 }
+.mam-bulk-header-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
 
-/* Body & table (unchanged) */
-.modal-body {
+/* Body */
+.mam-modal-body {
   padding: 1rem;
   flex: 1;
   overflow-y: auto;
 }
-.table-wrapper {
+.mam-table-wrapper {
   overflow-x: auto;
 }
-.manage-all-table {
+.mam-manage-all-table {
   width: 100%;
   border-collapse: collapse;
 }
-.manage-all-table th,
-.manage-all-table td {
+.mam-manage-all-table th,
+.mam-manage-all-table td {
   padding: 0.5rem 0.75rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   text-align: left;
 }
-.manage-all-table th:first-child,
-.manage-all-table td:first-child {
-  width: 2rem;
-}
-.manage-all-table tr:hover {
+.mam-manage-all-table tr:hover {
   background: #f9f9f9;
 }
-.no-doc {
+.mam-no-doc {
   text-align: center;
   color: #888;
   padding: 1rem 0;
   font-style: italic;
 }
 
-/* Footer with bulk actions and close */
-.modal-footer {
-  padding: 0.75rem 1rem;
-  border-top: 1px solid #eee;
+/* Footer */
+.mam-modal-footer {
+  padding: 1rem 0; /* ✅ ปรับให้ไม่มี padding ขวาเกินจำเป็น */
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+  flex-direction: row;
 }
 
-/* Bulk-actions container in footer */
-.bulk-actions-footer {
-  display: flex;
-  gap: 0.5rem;
-}
-
-/* Bulk buttons */
-.bulk-btn {
+/* Buttons */
+.mam-bulk-btn {
   padding: 0.4rem 0.75rem;
   background: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 4px;
   cursor: pointer;
-  transition: background 0.2s;
   font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
-.bulk-btn:disabled {
+.mam-bulk-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
-.bulk-btn:not(:disabled):hover {
+.mam-bulk-btn:not(:disabled):hover {
   background: #e0e0e0;
 }
 
-/* Delete-selected overrides */
-.delete-selected {
+.mam-delete-selected {
   background: #b0001c;
   border-color: #b0001c;
   color: #fff;
 }
-.delete-selected:not(:disabled):hover {
+.mam-delete-selected:not(:disabled):hover {
   background: #930019;
 }
 
-/* Close button in footer */
-.btn-close {
+.mam-btn-close {
   padding: 0.5rem 1rem;
   background: #6c757d;
   color: #fff;
   border: none;
   border-radius: 4px;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: background 0.2s;
-  font-size: 0.9rem;
 }
-.btn-close:hover {
+.mam-btn-close:hover {
   background: #5a6268;
 }
 
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 600px) {
-  .modal-footer {
-    flex-direction: column-reverse;
-    align-items: stretch;
+  .mam-modal-header,
+  .mam-bulk-header-buttons {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  .bulk-actions-footer {
-    justify-content: stretch;
-    flex-wrap: wrap;
-  }
-  .bulk-actions-footer .bulk-btn,
-  .btn-close {
-    width: 100%;
+
+  .mam-modal-footer {
+    flex-direction: column;
   }
 }

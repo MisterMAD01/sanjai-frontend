@@ -18,7 +18,6 @@ export default function UserFormModal({ handleSave, handleCancel }) {
   const [loadingMembers, setLoadingMembers] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  // Fetch members not yet linked to a user
   useEffect(() => {
     (async () => {
       setLoadingMembers(true);
@@ -81,7 +80,7 @@ export default function UserFormModal({ handleSave, handleCancel }) {
   }));
 
   return (
-    <div className="ufm-overlay" onClick={submitting ? null : handleCancel}>
+    <div className="ufm-overlay">
       <div className="ufm-modal" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
@@ -144,7 +143,7 @@ export default function UserFormModal({ handleSave, handleCancel }) {
           </label>
 
           <label>
-            รหัสสมาชิก (ผูกกับสมาชิก):
+            เลขที่สมาชิก (ผูกกับสมาชิก):
             <Select
               options={memberOptions}
               onChange={handleSelectChange}

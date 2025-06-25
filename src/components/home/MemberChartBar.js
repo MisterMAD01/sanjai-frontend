@@ -67,7 +67,7 @@ const ChartBox = ({ title, data }) => {
 // 🔧 ส่วนแสดงกราฟรวม
 const MemberChartBar = ({ members = [] }) => {
   const byDistrict = groupBy(members, "district");
-  const byGeneration = groupBy(members, "generation");
+  const byGeneration = groupBy(members, "graduation_year");
   const byGender = groupBy(members, "gender");
 
   return (

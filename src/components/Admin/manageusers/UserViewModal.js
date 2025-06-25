@@ -1,4 +1,3 @@
-// src/components/Admin/manageusers/UserViewModal.jsx
 import React from "react";
 import PropTypes from "prop-types";
 import "./UserViewModal.css"; // reusing modal styles
@@ -13,7 +12,7 @@ export default function UserViewModal({
   if (!user) return null;
 
   return (
-    <div className="ufm-overlay" onClick={onClose}>
+    <div className="ufm-overlay">
       <div
         className="ufm-modal user-view-modal"
         onClick={(e) => e.stopPropagation()}

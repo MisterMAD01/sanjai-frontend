@@ -46,18 +46,18 @@
   margin: 0.5rem 0;
 }
 
-/* ส่วนท้าย ปุ่ม */
+/* ส่วนท้าย */
 .ddm-modal-footer {
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   display: flex;
-  justify-content: center;
-  gap: 0.5rem;
+  justify-content: flex-end; /* ปุ่มไปชิดขวา */
+  align-items: center;
   border-top: 1px solid #eee;
 }
 
-/* ปุ่ม ปิด (สีเทา) */
+/* ปุ่มปิด */
 .ddm-btn-close {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
   font-size: 0.95rem;
   border: none;
   border-radius: 4px;
@@ -68,19 +68,4 @@
 }
 .ddm-btn-close:hover {
   background: #5a6268;
-}
-
-/* ปุ่ม ดาวน์โหลด (สีแดง) */
-.ddm-btn-download {
-  padding: 0.5rem 1rem;
-  font-size: 0.95rem;
-  border: none;
-  border-radius: 4px;
-  background: #b0001c;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.ddm-btn-download:hover {
-  background: #930019;
 }

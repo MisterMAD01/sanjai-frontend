@@ -3,12 +3,12 @@ import "./UploadFormModal.css";
 
 const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState(""); // 🔸 รายละเอียด
+  const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const [selectedIds, setSelectedIds] = useState([]);
   const [filter, setFilter] = useState({
     district: "",
-    generation: "",
+    graduation_year: "",
     type: "",
   });
 
@@ -20,8 +20,8 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
     const matchDistrict = filter.district
       ? m.district === filter.district
       : true;
-    const matchGeneration = filter.generation
-      ? m.generation === filter.generation
+    const matchGeneration = filter.graduation_year
+      ? String(m.graduation_year) === filter.graduation_year
       : true;
     const matchType = filter.type ? m.type === filter.type : true;
     return matchDistrict && matchGeneration && matchType;
@@ -47,7 +47,7 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
     selectedIds.forEach((id) => {
       const formData = new FormData();
       formData.append("title", title);
-      formData.append("description", description); // ✅ ส่งรายละเอียด
+      formData.append("description", description);
       formData.append("file", file);
       formData.append("memberId", id);
       onSubmit(formData);
@@ -61,7 +61,6 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
       <div className="upload-modal">
         <h3>อัปโหลดเอกสาร</h3>
         <form onSubmit={handleSubmit}>
-          {/* 🔹 ชื่อเอกสาร */}
           <input
             type="text"
             placeholder="ชื่อเอกสาร"
@@ -69,7 +68,6 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
             onChange={(e) => setTitle(e.target.value)}
           />
 
-          {/* 🔹 รายละเอียด */}
           <textarea
             placeholder="รายละเอียดเอกสาร (ถ้ามี)"
             value={description}
@@ -77,10 +75,8 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
             rows={3}
           />
 
-          {/* 🔹 ไฟล์ */}
           <input type="file" onChange={(e) => setFile(e.target.files[0])} />
 
-          {/* 🔹 ฟิลเตอร์ */}
           <div className="filter-row">
             <select
               value={filter.district}
@@ -97,14 +93,14 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
             </select>
 
             <select
-              value={filter.generation}
+              value={filter.graduation_year}
               onChange={(e) =>
-                setFilter({ ...filter, generation: e.target.value })
+                setFilter({ ...filter, graduation_year: e.target.value })
               }
             >
               <option value="">-- ทุกรุ่น --</option>
-              {unique("generation").map((v) => (
-                <option key={v} value={v}>
+              {unique("graduation_year").map((v) => (
+                <option key={v} value={String(v)}>
                   {v}
                 </option>
               ))}
@@ -123,7 +119,6 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
             </select>
           </div>
 
-          {/* 🔹 ปุ่มควบคุมการเลือก */}
           <div className="select-controls">
             <button type="button" onClick={selectAll}>
               เลือกทั้งหมด
@@ -136,7 +131,6 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
             </span>
           </div>
 
-          {/* 🔹 ตารางสมาชิก */}
           <div className="member-table-scroll">
             <table className="member-checkbox-table">
               <thead>
@@ -160,7 +154,7 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
                     </td>
                     <td>{m.full_name}</td>
                     <td>{m.district || "-"}</td>
-                    <td>{m.generation || "-"}</td>
+                    <td>{m.graduation_year || "-"}</td>
                     <td>{m.type || "-"}</td>
                   </tr>
                 ))}
@@ -168,7 +162,6 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
             </table>
           </div>
 
-          {/* 🔹 ปุ่มส่ง */}
           <div className="form-buttons">
             <button type="submit">ส่ง</button>
             <button type="button" onClick={onClose}>

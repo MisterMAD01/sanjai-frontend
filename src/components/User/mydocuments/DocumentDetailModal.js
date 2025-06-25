@@ -1,30 +1,21 @@
-// src/components/user/DocumentDetailModal.jsx
 import React from "react";
+import PropTypes from "prop-types";
 import "./DocumentDetailModal.css";
 
 const DocumentDetailModal = ({ document, onClose }) => {
   if (!document) return null;
-  const { title, description, sender, senderType, uploadDate, fileUrl } =
-    document;
+
+  const { title, description, sender, senderType, uploadDate } = document;
+
   const senderDisplay = sender
     ? senderType
       ? `${sender} (${senderType})`
       : sender
     : "-";
 
-  const handleDownload = () => {
-    if (!fileUrl) return;
-    const link = document.createElement("a");
-    link.href = fileUrl;
-    link.download = "";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
-    <div className="ddm-modal-overlay" onClick={onClose}>
-      <div className="ddm-modal-content" onClick={(e) => e.stopPropagation()}>
+    <div className="ddm-modal-overlay">
+      <div className="ddm-modal-content">
         <header className="ddm-modal-header">
           <h4 className="ddm-modal-title">รายละเอียดเอกสาร</h4>
         </header>
@@ -47,17 +38,15 @@ const DocumentDetailModal = ({ document, onClose }) => {
           <button className="ddm-btn-close" onClick={onClose}>
             ปิด
           </button>
-          <button
-            className="ddm-btn-download"
-            onClick={handleDownload}
-            disabled={!fileUrl}
-          >
-            ดาวน์โหลด
-          </button>
         </footer>
       </div>
     </div>
   );
+};
+
+DocumentDetailModal.propTypes = {
+  document: PropTypes.object,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default DocumentDetailModal;

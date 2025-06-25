@@ -20,7 +20,6 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
   const [loadingMembers, setLoadingMembers] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  // Load user into form when opening
   useEffect(() => {
     if (user) {
       setFormData({
@@ -34,7 +33,6 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
     }
   }, [user]);
 
-  // Fetch available members for linking
   useEffect(() => {
     (async () => {
       setLoadingMembers(true);
@@ -91,7 +89,7 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
   }));
 
   return (
-    <div className="ufm-overlay" onClick={submitting ? null : handleCancel}>
+    <div className="ufm-overlay">
       <div className="ufm-modal" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
