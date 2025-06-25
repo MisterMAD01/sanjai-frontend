@@ -18,8 +18,9 @@ const fieldLabels = {
   facebook: "Facebook",
   instagram: "Instagram",
   line_id: "Line ID",
+  status: "สถานะปัจจุบัน",
   school: "สถาบัน/ที่ทำงาน",
-  // graduation_year removed as per request
+  department: "ระดับชั้น/ตำแหน่ง",
   gpa: "GPA",
   type: "ประเภทสมาชิก",
 };
@@ -51,7 +52,7 @@ const sections = [
   {
     key: "education",
     title: "ข้อมูลสถานศึกษา/ที่ทำงาน",
-    fields: ["school", "gpa"],
+    fields: ["status", "school", "department", "gpa"],
   },
 ];
 

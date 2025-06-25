@@ -106,6 +106,8 @@ export default function MemberFormModal({ onClose, onSuccess }) {
         gpa: "",
         type: "",
         district: "",
+        status: "",
+        department: "",
       });
     } catch (err) {
       console.error("Create member error:", err);
@@ -353,6 +355,16 @@ export default function MemberFormModal({ onClose, onSuccess }) {
           <fieldset className="mfm-section">
             <legend>ข้อมูลสถานศึกษา/ที่ทำงาน</legend>
             <label>
+              สถานะปัจจุบัน
+              <input
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                disabled={submitting}
+              />
+            </label>
+
+            <label>
               สถาบัน/ที่ทำงาน
               <input
                 name="school"
@@ -361,7 +373,15 @@ export default function MemberFormModal({ onClose, onSuccess }) {
                 disabled={submitting}
               />
             </label>
-
+            <label>
+              ระดับชั้น/ตำแหน่ง
+              <input
+                name="department"
+                value={formData.department}
+                onChange={handleChange}
+                disabled={submitting}
+              />
+            </label>
             <label>
               GPA
               <input

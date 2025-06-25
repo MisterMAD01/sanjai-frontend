@@ -32,7 +32,6 @@ export default function MyMemberInfo() {
   const handleUpdate = async (updatedFields) => {
     try {
       const res = await api.put("/api/my-member", updatedFields);
-      // API returns { member: {...}, message: ... }
       setMember(res.data.member);
       toast.success(res.data.message || "อัปเดตข้อมูลสำเร็จ");
     } catch (e) {
@@ -168,7 +167,13 @@ export default function MyMemberInfo() {
               <FaSchool className="mmi-icon" /> ข้อมูลสถานศึกษา/ทำงาน
             </h3>
             <p>
+              <strong>สถานะปัจจุบัน:</strong> {display(member.status)}
+            </p>
+            <p>
               <strong>สถาบัน/ที่ทำงาน:</strong> {display(member.school)}
+            </p>
+            <p>
+              <strong>ระดับชั้น/ตำแหน่ง:</strong> {display(member.department)}
             </p>
             <p>
               <strong>GPA:</strong> {display(member.gpa)}

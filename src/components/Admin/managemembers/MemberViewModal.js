@@ -92,7 +92,13 @@ export default function MemberViewModal({ member, onClose, onEdit }) {
           <div className="mv-section">
             <h4>ข้อมูลการศึกษา/ที่ทำงาน</h4>
             <p>
+              <strong>สถานะปัจจุบัน:</strong> {member.status || "-"}
+            </p>
+            <p>
               <strong>สถาบัน/ที่ทำงาน:</strong> {member.school || "-"}
+            </p>
+            <p>
+              <strong>ตำแหน่ง/ระดับชั้น:</strong> {member.department || "-"}
             </p>
             <p>
               <strong>GPA:</strong> {formatGPA(member.gpa)}

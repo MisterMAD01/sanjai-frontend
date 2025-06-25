@@ -82,6 +82,7 @@ export default function ProfileUsername() {
             <h2>
               <FaUser className="pgu-icon" /> ข้อมูลบัญชี
             </h2>
+
             <p>
               <strong>ชื่อผู้ใช้:</strong> {username}
             </p>
@@ -98,6 +99,9 @@ export default function ProfileUsername() {
               <FaUserCheck className="pgu-icon" /> ข้อมูลสมาชิก
             </h2>
             <p>
+              <strong>ชื่อ–นามสกุล:</strong> {full_name || "-"}
+            </p>
+            <p>
               <strong>สถานะการอนุมัติใช้บัญชี้:</strong>{" "}
               {approved ? "อนุมัติแล้ว" : "ยังไม่อนุมัติ"}
             </p>
@@ -107,6 +111,7 @@ export default function ProfileUsername() {
             <h2>
               <FaCalendarAlt className="pgu-icon" /> ประวัติเวลา
             </h2>
+
             <p>
               <strong>สร้างเมื่อ:</strong> {formattedCreatedAt}
             </p>

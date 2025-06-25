@@ -54,6 +54,8 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
     gpa: "",
     type: "",
     district: "",
+    status: "",
+    department: "",
   });
   const [submitting, setSubmitting] = useState(false);
 
@@ -306,10 +308,26 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
           <fieldset className="mfm-section">
             <legend>ข้อมูลสถานศึกษา/ที่ทำงาน</legend>
             <label>
+              สถานะปัจจุบัน
+              <input
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
               สถาบัน/ที่ทำงาน
               <input
                 name="school"
                 value={formData.school}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              ระดับชั้น/ตำแหน่ง
+              <input
+                name="department"
+                value={formData.department}
                 onChange={handleChange}
               />
             </label>
