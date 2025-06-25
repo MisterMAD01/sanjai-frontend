@@ -42,7 +42,7 @@ export default function UserViewModal({
             )}
           </p>
           <p>
-            <strong>รหัสสมาชิกที่เชื่อมโยง:</strong> {user.member_id || "-"}
+            <strong>เลขที่สมาชิกที่เชื่อมโยง:</strong> {user.member_id || "-"}
           </p>
           <p>
             <strong>สร้างเมื่อ:</strong>{" "}

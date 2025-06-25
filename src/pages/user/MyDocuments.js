@@ -94,9 +94,6 @@ const MyDocuments = () => {
     }
   };
 
-  if (loadingUser || loading) {
-    return <p className="loading">กำลังโหลดเอกสาร...</p>;
-  }
   if (error) {
     return <p className="error-message">{error}</p>;
   }

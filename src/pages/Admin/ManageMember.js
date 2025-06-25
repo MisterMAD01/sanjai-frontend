@@ -1,9 +1,6 @@
-// src/pages/Admin/ManageMember.jsx
-
 import React, { useState, useEffect, useContext } from "react";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import api from "../../api";
 import { UserContext } from "../../contexts/UserContext";
 import AlertBanner from "../../components/common/AlertBanner";
@@ -19,15 +16,12 @@ export default function ManageMember() {
   const { user: currentUser, loadingUser } = useContext(UserContext);
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const [alert, setAlert] = useState({ type: "", message: "" });
-
   const [showAddModal, setShowAddModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
   const [showViewModal, setShowViewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -50,25 +44,17 @@ export default function ManageMember() {
     }
   };
 
-  if (loadingUser) {
-    return <p className="loading">กำลังโหลดข้อมูลผู้ใช้...</p>;
-  }
+  if (loadingUser) return <p className="loading">กำลังโหลดข้อมูลผู้ใช้...</p>;
 
-  // 1) กรองตามคำค้นหา: ใช้ full_name หรือ member_id
   const searched = members.filter((m) => {
-    const text = (m.full_name || m.member_id || "").toLowerCase();
-    return text.includes(searchTerm.toLowerCase());
+    const txt = (m.full_name || m.member_id || "").toLowerCase();
+    return txt.includes(searchTerm.toLowerCase());
   });
 
-  // 2) ตัดสมาชิกตัวเองออก
-  const myMemberId =
-    currentUser.member_id?.toString() || currentUser.memberId?.toString() || "";
-  const filtered = searched.filter(
-    (m) => m.member_id.toString() !== myMemberId
-  );
+  const myId = (currentUser.member_id || currentUser.memberId || "").toString();
+  const filtered = searched.filter((m) => m.member_id.toString() !== myId);
 
   const handleDelete = async (id) => {
-    if (!window.confirm("คุณแน่ใจว่าต้องการลบสมาชิกนี้?")) return;
     try {
       await api.delete(`/api/members/${id}`);
       setAlert({ type: "success", message: "ลบสมาชิกสำเร็จ" });
@@ -89,9 +75,7 @@ export default function ManageMember() {
         message={alert.message}
         onClose={() => setAlert({ type: "", message: "" })}
       />
-
       <h2 className="manage-member-title">จัดการสมาชิก</h2>
-
       <div className="manage-member-card">
         <div className="controls-row">
           <input
@@ -128,7 +112,6 @@ export default function ManageMember() {
           />
         )}
       </div>
-
       {showAddModal && (
         <MemberFormModal
           onClose={() => setShowAddModal(false)}
@@ -139,7 +122,6 @@ export default function ManageMember() {
           }}
         />
       )}
-
       {showImportModal && (
         <ImportExcelModal
           onClose={() => setShowImportModal(false)}
@@ -153,11 +135,16 @@ export default function ManageMember() {
           }}
         />
       )}
-
       {showViewModal && selectedMember && (
         <MemberViewModal
           member={selectedMember}
           onClose={() => setShowViewModal(false)}
+          onEdit={(m) => {
+            console.log("🔁 เปิด Edit modal สำหรับ:", m);
+            setShowViewModal(false);
+            setSelectedMember(m);
+            setShowEditModal(true);
+          }}
         />
       )}
 

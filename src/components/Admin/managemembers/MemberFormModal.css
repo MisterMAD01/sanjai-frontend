@@ -1,4 +1,4 @@
-/* Overlay behind modal */
+/* Overlay พื้นหลัง */
 .mfm-overlay {
   position: fixed;
   top: 0;
@@ -13,89 +13,82 @@
   z-index: 1000;
 }
 
-/* Modal box */
+/* กล่อง modal */
 .mfm-modal {
   background: #fff;
-  border-radius: 10px;
   width: 90%;
-  max-width: 800px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  position: relative;
+  max-width: 600px;
   max-height: calc(100vh - 4rem);
   overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  padding: 1.5rem;
 }
 
-/* Close button */
+/* ปุ่มปิดมุมบนขวา */
 .mfm-close-btn {
   position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
+  top: 0.5rem;
+  right: 0.5rem;
   background: none;
   border: none;
   font-size: 1.5rem;
-  cursor: pointer;
   color: #555;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 .mfm-close-btn:hover {
   color: #000;
 }
 
-/* Title */
-.mfm-modal h2 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  color: #b0001c;
+/* หัวข้อ modal */
+.mfm-modal > h2 {
+  margin: 0 0 1rem;
   font-size: 1.5rem;
+  color: #b0001c;
+  text-align: center;
 }
 
-/* Form grid */
+/* ฟอร์มหลัก */
 .mfm-form {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
-/* Fieldset section */
+/* แต่ละส่วน (fieldset) */
 .mfm-section {
   border: 1px solid #ddd;
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 1rem;
 }
 .mfm-section legend {
-  padding: 0 0.5rem;
   font-weight: 600;
   color: #b0001c;
-  margin-bottom: 0.75rem;
+  padding: 0 0.5rem;
 }
 
-/* Labels and inputs */
+/* ป้ายกำกับและอินพุต */
 .mfm-section label {
   display: flex;
   flex-direction: column;
   font-size: 0.95rem;
   color: #333;
-  margin-bottom: 0.75rem;
 }
-.mfm-section input,
-.mfm-section textarea,
-.mfm-section select {
+.mfm-section label input,
+.mfm-section label select,
+.mfm-section label textarea {
   margin-top: 0.25rem;
   padding: 0.5rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.mfm-section textarea {
-  resize: vertical;
-  min-height: 3rem;
-}
 
-/* Submit button */
+/* ปุ่ม submit */
 .mfm-form button[type="submit"] {
-  grid-column: 1 / -1;
-  justify-self: end;
-  padding: 0.6rem 1.4rem;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
   background: #b0001c;
   color: #fff;
   border: none;
@@ -104,17 +97,24 @@
   cursor: pointer;
   transition: background 0.2s;
 }
-.mfm-form button[type="submit"]:hover {
+.mfm-form button[type="submit"]:hover:not(:disabled) {
   background: #930019;
 }
+.mfm-form button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
-/* Responsive fallback */
-@media (max-width: 600px) {
+/* ปรับขนาดบนหน้าจอแคบ */
+@media (max-width: 480px) {
+  .mfm-modal {
+    width: 95%;
+    padding: 1rem;
+  }
   .mfm-form {
-    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
   .mfm-form button[type="submit"] {
     width: 100%;
-    justify-self: stretch;
   }
 }

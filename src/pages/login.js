@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/login.css";
@@ -39,7 +39,15 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { refreshAccessTokenAndLoadUser } = useContext(UserContext);
+  const { refreshAccessTokenAndLoadUser, accessToken, loadingUser } =
+    useContext(UserContext);
+
+  // หากมี token อยู่แล้ว ให้รีไดเร็คไป /home
+  useEffect(() => {
+    if (!loadingUser && accessToken) {
+      navigate("/home", { replace: true });
+    }
+  }, [loadingUser, accessToken, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,7 +71,7 @@ function Login() {
       localStorage.setItem("role", decoded?.role);
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
-      await refreshAccessTokenAndLoadUser(); // ✅ โหลด user หลัง login
+      await refreshAccessTokenAndLoadUser();
 
       navigate("/home");
     } catch (error) {

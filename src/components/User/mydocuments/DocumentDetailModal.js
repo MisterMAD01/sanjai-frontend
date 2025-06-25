@@ -4,38 +4,31 @@ import "./DocumentDetailModal.css";
 
 const DocumentDetailModal = ({ document, onClose }) => {
   if (!document) return null;
-
-  // สมมติว่า document มีฟิลด์ sender (ชื่อเต็ม) และ senderType (ประเภทผู้ส่ง)
   const { title, description, sender, senderType, uploadDate, fileUrl } =
     document;
-
-  // สร้างข้อความสำหรับแสดงผู้ส่ง
   const senderDisplay = sender
     ? senderType
       ? `${sender} (${senderType})`
       : sender
     : "-";
 
-  // ฟังก์ชันดาวน์โหลดไฟล์
   const handleDownload = () => {
     if (!fileUrl) return;
-    const link = window.document.createElement("a");
+    const link = document.createElement("a");
     link.href = fileUrl;
-    // ถ้าต้องการระบุชื่อไฟล์ ช่วยเติมนามสกุล เช่น:
-    // link.download = `${title || "document"}.pdf`;
     link.download = "";
-    window.document.body.appendChild(link);
+    document.body.appendChild(link);
     link.click();
-    window.document.body.removeChild(link);
+    document.body.removeChild(link);
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <header className="modal-header">
-          <h4>รายละเอียดเอกสาร</h4>
+    <div className="ddm-modal-overlay" onClick={onClose}>
+      <div className="ddm-modal-content" onClick={(e) => e.stopPropagation()}>
+        <header className="ddm-modal-header">
+          <h4 className="ddm-modal-title">รายละเอียดเอกสาร</h4>
         </header>
-        <div className="modal-body">
+        <div className="ddm-modal-body">
           <p>
             <strong>ชื่อ:</strong> {title || "-"}
           </p>
@@ -50,12 +43,12 @@ const DocumentDetailModal = ({ document, onClose }) => {
             {uploadDate ? new Date(uploadDate).toLocaleString("th-TH") : "-"}
           </p>
         </div>
-        <footer className="modal-footer">
-          <button className="btn-close-modal1" onClick={onClose}>
+        <footer className="ddm-modal-footer">
+          <button className="ddm-btn-close" onClick={onClose}>
             ปิด
           </button>
           <button
-            className="btn-view-document"
+            className="ddm-btn-download"
             onClick={handleDownload}
             disabled={!fileUrl}
           >

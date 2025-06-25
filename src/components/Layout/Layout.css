@@ -15,18 +15,3 @@
 .layout-content {
   padding: 1rem;
 }
-@media (max-width: 768px) {
-  .layout-main {
-    margin-left: 0 !important;
-  }
-
-  /* ถ้า Sidebar ถูกเปิดบนมือถือ ให้เว้น margin ไว้ */
-  .sidebar.open ~ .layout-main {
-    margin-left: 250px !important;
-  }
-
-  /* ถ้า Sidebar ยุบหรือปิด ก็ไม่ต้องมี margin-left */
-  .sidebar-collapsed .layout-main {
-    margin-left: 0 !important;
-  }
-}

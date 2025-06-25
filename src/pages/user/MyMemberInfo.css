@@ -1,25 +1,34 @@
 /* src/pages/user/MyMemberInfo.css */
 
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
 /* หน้า wrapper */
 .mmi-page {
   padding: 2rem;
 }
 
-/* หัวข้อหลัก (ยังอยู่นอกกรอบ) */
+/* หัวข้อหลัก */
 .mmi-title {
   font-size: 2rem;
   color: #b0001c;
   margin-bottom: 1.5rem;
 }
 
-/* กรอบใหญ่ห่อทั้งข้อมูล */
+/* กรอบใหญ่ห่อข้อมูล */
 .mmi-card {
-  background: #fff; /* พื้นหลังขาว */
-  border: 1px solid rgba(0, 0, 0, 0.1); /* ขอบบางๆ */
-  border-radius: 10px; /* มุมโค้ง */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* เงาเบาๆ */
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  padding: 1.5rem; /* ระยะรอบนอก */
+  padding: 1.5rem;
 }
 
 /* Header avatar/name/ID */
@@ -48,7 +57,6 @@
 }
 
 .mmi-name {
-  margin: 0;
   font-size: 1.75rem;
   color: #333;
 }
@@ -61,24 +69,25 @@
   color: #555;
 }
 
-/* Body grid: 3 คอลัมน์บน desktop */
+/* Body: flex-wrap แทน grid เพื่อให้ 3 คอลัมน์บน desktop แต่ห่อลงบรรทัดใหม่บนมือถือ */
 .mmi-body {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
 }
 
-/* Section card เล็ก (ข้างในกรอบใหญ่) */
+/* Section card เล็ก ให้ขยายตัวเท่ากัน แต่อย่างน้อย 240px */
 .mmi-section {
-  /* เอา background, border ของ section เล็กออก */
+  flex: 1 1 240px;
   background: transparent;
   border: none;
   padding: 0;
   box-shadow: none;
   position: relative;
+  /* ถ้าต้องการความสูง/ความกว้างเพิ่มเติม ปรับที่นี่ได้ */
 }
 
-/* Section heading ลอยเหนือกรอบใหญ่ */
+/* Section heading */
 .mmi-section h3 {
   font-size: 1.25rem;
   color: #b0001c;
@@ -126,15 +135,4 @@
   font-size: 1rem;
   text-align: center;
   margin-bottom: 1rem;
-}
-
-/* Responsive: พับเป็นคอลัมน์เดียวบนมือถือ */
-@media (max-width: 768px) {
-  .mmi-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .mmi-body {
-    grid-template-columns: 1fr;
-  }
 }

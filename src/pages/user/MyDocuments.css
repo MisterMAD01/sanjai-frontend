@@ -10,7 +10,6 @@
   font-size: 2rem;
   color: #b0001c;
   margin-bottom: 1.5rem;
-  text-align: left;
 }
 
 /* Optional loading state */
@@ -19,11 +18,4 @@
   color: #666;
   font-size: 1rem;
   margin: 2rem 0;
-}
-
-/* Responsive wrapper adjustments */
-@media (max-width: 768px) {
-  .page-title {
-    font-size: 1.5rem;
-  }
 }

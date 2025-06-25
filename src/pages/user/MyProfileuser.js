@@ -86,7 +86,7 @@ export default function ProfileUsername() {
               <strong>ชื่อผู้ใช้:</strong> {username}
             </p>
             <p>
-              <strong>บทบาท:</strong> {role}
+              <strong>สิทธ์การใช้งาน:</strong> {role}
             </p>
             <p>
               <strong>อีเมล:</strong> {email || "-"}
@@ -98,7 +98,8 @@ export default function ProfileUsername() {
               <FaUserCheck className="pgu-icon" /> ข้อมูลสมาชิก
             </h2>
             <p>
-              <strong>อนุมัติ:</strong> {approved ? "ใช่" : "ไม่ใช่"}
+              <strong>สถานะการอนุมัติใช้บัญชี้:</strong>{" "}
+              {approved ? "อนุมัติแล้ว" : "ยังไม่อนุมัติ"}
             </p>
           </section>
 

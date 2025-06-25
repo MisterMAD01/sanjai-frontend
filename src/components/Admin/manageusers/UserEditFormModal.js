@@ -1,9 +1,11 @@
 // src/components/Admin/manageusers/UserEditFormModal.jsx
+
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import Select from "react-select";
 import { toast } from "react-toastify";
 import api from "../../../api";
-import "./UserFormModal.css";
+import "./UserFormModal.css"; // reuse the same styling
 
 export default function UserEditFormModal({ user, handleSave, handleCancel }) {
   const [formData, setFormData] = useState({
@@ -14,8 +16,11 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
     approved: 0,
     password: "",
   });
+  const [availableMembers, setAvailableMembers] = useState([]);
+  const [loadingMembers, setLoadingMembers] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
+  // Load user into form when opening
   useEffect(() => {
     if (user) {
       setFormData({
@@ -29,6 +34,22 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
     }
   }, [user]);
 
+  // Fetch available members for linking
+  useEffect(() => {
+    (async () => {
+      setLoadingMembers(true);
+      try {
+        const res = await api.get("/api/admin/users/available-members");
+        setAvailableMembers(res.data);
+      } catch (err) {
+        console.error("Load available members error:", err);
+        toast.error("ไม่สามารถโหลดรายชื่อสมาชิกได้");
+      } finally {
+        setLoadingMembers(false);
+      }
+    })();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -37,14 +58,19 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
     }));
   };
 
+  const handleSelectChange = (option) => {
+    setFormData((prev) => ({
+      ...prev,
+      member_id: option ? option.value : "",
+    }));
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      // Prepare payload
       const payload = { ...formData };
       if (!payload.password) delete payload.password;
-
       await api.put(`/api/admin/users/${user.user_id}`, payload);
       toast.success("แก้ไขข้อมูลสำเร็จ");
       handleSave();
@@ -59,6 +85,11 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
     }
   };
 
+  const memberOptions = availableMembers.map((m) => ({
+    value: m.member_id,
+    label: `${m.member_id} — ${m.full_name} (${m.graduation_year})`,
+  }));
+
   return (
     <div className="ufm-overlay" onClick={submitting ? null : handleCancel}>
       <div className="ufm-modal" onClick={(e) => e.stopPropagation()}>
@@ -71,10 +102,10 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
           ×
         </button>
         <form className="ufm-form" onSubmit={onSubmit}>
-          <h2>แก้ไขผู้ใช้: {user.username}</h2>
+          <h2 className="ufm-title">แก้ไขผู้ใช้: {user.username}</h2>
 
-          <label>
-            ชื่อผู้ใช้:
+          <label className="ufm-label">
+            ชื่อผู้ใช้
             <input
               type="text"
               name="username"
@@ -85,8 +116,8 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
             />
           </label>
 
-          <label>
-            อีเมล:
+          <label className="ufm-label">
+            อีเมล
             <input
               type="email"
               name="email"
@@ -96,8 +127,8 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
             />
           </label>
 
-          <label>
-            รหัสผ่าน (เว้นว่างถ้าไม่เปลี่ยน):
+          <label className="ufm-label">
+            รหัสผ่าน (เว้นว่างถ้าไม่เปลี่ยน)
             <input
               type="password"
               name="password"
@@ -108,8 +139,8 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
             />
           </label>
 
-          <label>
-            สิทธิ์การใช้งาน:
+          <label className="ufm-label">
+            สิทธิ์การใช้งาน
             <select
               name="role"
               value={formData.role}
@@ -121,25 +152,16 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
             </select>
           </label>
 
-          <label>
-            รหัสสมาชิกที่เชื่อมโยง:
-            <input
-              type="text"
-              name="member_id"
-              value={formData.member_id}
-              onChange={handleChange}
-              disabled={submitting}
-            />
-          </label>
-
-          <label className="ufm-checkbox">
-            อนุมัติบัญชี:
-            <input
-              type="checkbox"
-              name="approved"
-              checked={formData.approved === 1}
-              onChange={handleChange}
-              disabled={submitting}
+          <label className="ufm-label">
+            เลขที่สมาชิกที่เชื่อมโยง
+            <Select
+              options={memberOptions}
+              onChange={handleSelectChange}
+              value={memberOptions.find((o) => o.value === formData.member_id)}
+              isClearable
+              isLoading={loadingMembers}
+              placeholder="ค้นหา/เลือกสมาชิก..."
+              isDisabled={submitting}
             />
           </label>
 
@@ -167,7 +189,17 @@ export default function UserEditFormModal({ user, handleSave, handleCancel }) {
 }
 
 UserEditFormModal.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    user_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+      .isRequired,
+    username: PropTypes.string,
+    email: PropTypes.string,
+    role: PropTypes.string,
+    member_id: PropTypes.string,
+    approved: PropTypes.bool,
+    created_at: PropTypes.string,
+    updated_at: PropTypes.string,
+  }).isRequired,
   handleSave: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
 };

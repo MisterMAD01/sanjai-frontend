@@ -7,24 +7,23 @@
   font-family: "Poppins", sans-serif;
 }
 
+/* Sidebar container: scrollable whole column */
 .sidebar {
   width: 250px;
-  background-color: #b0001c; /* แดงเข้ม */
+  background-color: #b0001c;
   color: white;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.3s ease, width 0.3s ease;
   position: fixed;
   top: 0;
   left: 0;
+  max-height: 100vh; /* เปลี่ยนจาก height เป็น max-height */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, width 0.3s ease;
   z-index: 999;
-  transform: translateX(0);
-  overflow: hidden;
+  overflow-y: auto;
 }
 
-/* ย่อ Sidebar บน desktop */
+/* Collapsed state on desktop */
 .sidebar.collapsed {
   width: 60px;
 }
@@ -38,37 +37,13 @@
   padding: 0.65rem 0.5rem;
 }
 
-/* ปุ่มเมนู (มือถือ + iPad) */
+/* Mobile toggle button (hidden) */
 .mobile-toggle-btn {
   display: none;
   user-select: none;
 }
 
-/* ซ่อน Sidebar จนกว่าจะเปิด ในหน้าจอ ≤1024px */
-@media (max-width: 1024px) {
-  .sidebar {
-    transform: translateX(-100%);
-  }
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  .mobile-toggle-btn {
-    display: block;
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    background-color: #b0001c;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 1rem;
-    z-index: 1000;
-    cursor: pointer;
-  }
-}
-
-/* Logo + ชื่อสมาคม */
+/* Logo + site name section */
 .sidebar-logo-section {
   display: flex;
   align-items: center;
@@ -89,11 +64,10 @@
   white-space: normal;
 }
 
-/* เมนู */
+/* Menu */
 .sidebar-menu {
-  flex-grow: 1;
   padding: 0 0.5rem;
-  overflow-y: auto;
+  /* no internal scroll: entire sidebar scrolls */
 }
 .sidebar-menu-group {
   margin-bottom: 1rem;
@@ -128,14 +102,16 @@
   font-weight: bold;
 }
 
-/* Footer */
+/* Footer flows with content at end */
 .sidebar-footer {
   display: flex;
   align-items: center;
   padding: 1rem;
   background-color: #930019;
   gap: 0.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 46px solid #b0001c;
+  flex: 0 0 auto;
+  width: 100%;
 }
 .sidebar-footer-avatar,
 .sidebar-footer-avatar-initial {
@@ -172,4 +148,16 @@
 }
 .sidebar-logout-btn:hover {
   color: #ffeef1;
+}
+
+/* เนื้อหาหลักเลื่อนขวาไม่ทับ sidebar */
+.main-content {
+  margin-left: 250px;
+}
+
+/* Footer ให้ทับ sidebar */
+footer {
+  position: relative; /* เพื่อให้ z-index ทำงาน */
+  z-index: 1000; /* มากกว่า .sidebar */
+  margin-left: 250px; /* เลื่อนเข้ามาเท่ากับ .sidebar */
 }

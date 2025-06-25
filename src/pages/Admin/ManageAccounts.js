@@ -12,6 +12,7 @@ import UserEditFormModal from "../../components/Admin/manageusers/UserEditFormMo
 import UserViewModal from "../../components/Admin/manageusers/UserViewModal";
 import UserTable from "../../components/Admin/manageusers/UserTable";
 import ImportExcelModal from "../../components/Admin/manageusers/ImportCsvModal";
+
 import "react-toastify/dist/ReactToastify.css";
 import "./ManageAccounts.css";
 
@@ -46,44 +47,55 @@ export default function ManageAccounts() {
     return <p className="loading">กำลังโหลดข้อมูลผู้ใช้...</p>;
   }
 
-  // 1) กรองตามคำค้นหา (username)
+  // กรองตามคำค้นหา (username)
   const searched = accounts.filter((u) =>
     (u.username || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  // 2) ตัดบัญชีของตัวเองออก
+  // ตัดบัญชีของตัวเองออก
   const myUserId =
     currentUser.user_id?.toString() || currentUser.id?.toString() || "";
   const filtered = searched.filter((u) => u.user_id.toString() !== myUserId);
 
+  // ลบบัญชีโดยตรง (ไม่ถามยืนยัน)
   const handleDelete = async (id) => {
-    if (!window.confirm("คุณแน่ใจหรือไม่ว่าต้องการลบบัญชีนี้?")) return;
     try {
       await api.delete(`/api/admin/users/${id}`);
       toast.success("ลบบัญชีสำเร็จ");
       fetchAccounts();
+      // ถ้า modal เปิดอยู่บน user เดียวกัน ให้ปิด or รีเฟรช viewing
+      if (viewing && viewing.user_id === id) {
+        setViewing(null);
+      }
     } catch (err) {
       console.error(err);
       toast.error("ไม่สามารถลบบัญชีได้");
     }
   };
 
+  // อนุมัติแล้วอัปเดต modal ทันที
   const handleApprove = async (id) => {
     try {
       await api.put(`/api/admin/users/${id}/approve`);
       toast.success("อนุมัติผู้ใช้เรียบร้อยแล้ว");
       fetchAccounts();
+      setViewing((prev) =>
+        prev && prev.user_id === id ? { ...prev, approved: true } : prev
+      );
     } catch (err) {
       console.error(err);
       toast.error("ไม่สามารถอนุมัติผู้ใช้ได้");
     }
   };
 
+  // ยกเลิกอนุมัติแล้วอัปเดต modal ทันที
   const handleRevoke = async (id) => {
     try {
       await api.put(`/api/admin/users/${id}/reject`);
       toast.success("ยกเลิกการอนุมัติเรียบร้อยแล้ว");
       fetchAccounts();
+      setViewing((prev) =>
+        prev && prev.user_id === id ? { ...prev, approved: false } : prev
+      );
     } catch (err) {
       console.error(err);
       toast.error("ไม่สามารถยกเลิกการอนุมัติได้");
@@ -110,7 +122,6 @@ export default function ManageAccounts() {
             >
               <FontAwesomeIcon icon={faUserPlus} /> เพิ่มผู้ใช้
             </button>
-            {/* ปุ่มส่งออกถูกลบออกแล้ว */}
           </div>
         </div>
 

@@ -108,10 +108,6 @@ export default function ManageDocuments() {
     doc.title.toLowerCase().includes(searchTitle.toLowerCase())
   );
 
-  if (loading) {
-    return <p className="loading">กำลังโหลดเอกสาร...</p>;
-  }
-
   return (
     <div className="manage-documents-page">
       <h2 className="manage-documents-title">จัดการเอกสาร</h2>

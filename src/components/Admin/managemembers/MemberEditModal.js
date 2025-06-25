@@ -1,8 +1,9 @@
+// MemberEditModal.jsx
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import api from "../../../api";
-import "./MemberFormModal.css"; // reuse form modal CSS
+import "./MemberFormModal.css"; // ใช้ CSS เดียวกับฟอร์มเพิ่มสมาชิก
 
 const PREFIXES = ["กรุณาเลือกคำนำหน้า", "นาย", "นางสาว", "นาง"];
 const GENDERS = ["กรุณาเลือกเพศ", "ชาย", "หญิง", "อื่นๆ"];
@@ -82,11 +83,8 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
       toast.success("อัปเดตข้อมูลสมาชิกสำเร็จ");
       onSuccess();
     } catch (err) {
-      console.error("Update member error:", err);
-      const msg =
-        err.response?.data?.message ||
-        "แก้ไขข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง";
-      toast.error(msg);
+      console.error(err);
+      toast.error(err.response?.data?.message || "แก้ไขข้อมูลไม่สำเร็จ");
     } finally {
       setSubmitting(false);
     }
@@ -103,7 +101,7 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
           ×
         </button>
         <h2>แก้ไขข้อมูลสมาชิก</h2>
-        <form onSubmit={handleSubmit} className="mfm-form">
+        <form className="mfm-form" onSubmit={handleSubmit}>
           <fieldset className="mfm-section">
             <legend>ข้อมูลทั่วไป</legend>
             <label>
@@ -117,7 +115,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 value={formData.prefix}
                 onChange={handleChange}
                 required
-                disabled={submitting}
               >
                 {PREFIXES.map((p) => (
                   <option key={p} value={p === PREFIXES[0] ? "" : p}>
@@ -133,7 +130,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 value={formData.full_name}
                 onChange={handleChange}
                 required
-                disabled={submitting}
               />
             </label>
             <label>
@@ -142,7 +138,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 name="nickname"
                 value={formData.nickname}
                 onChange={handleChange}
-                disabled={submitting}
               />
             </label>
             <label>
@@ -152,7 +147,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 value={formData.id_card}
                 onChange={handleChange}
                 maxLength={13}
-                disabled={submitting}
               />
             </label>
             <label>
@@ -162,7 +156,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 name="birthday"
                 value={formData.birthday}
                 onChange={handleChange}
-                disabled={submitting}
               />
             </label>
             <label>
@@ -173,7 +166,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 value={formData.age}
                 onChange={handleChange}
                 min={0}
-                disabled={submitting}
               />
             </label>
             <label>
@@ -183,7 +175,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 value={formData.gender}
                 onChange={handleChange}
                 required
-                disabled={submitting}
               >
                 {GENDERS.map((g) => (
                   <option key={g} value={g === GENDERS[0] ? "" : g}>
@@ -199,7 +190,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 value={formData.religion}
                 onChange={handleChange}
                 required
-                disabled={submitting}
               >
                 {RELIGIONS.map((r) => (
                   <option key={r} value={r === RELIGIONS[0] ? "" : r}>
@@ -215,7 +205,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 name="graduation_year"
                 value={formData.graduation_year}
                 onChange={handleChange}
-                disabled={submitting}
               />
             </label>
             <label>
@@ -225,7 +214,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 value={formData.type}
                 onChange={handleChange}
                 required
-                disabled={submitting}
               >
                 {MEMBER_TYPES.map((t) => (
                   <option key={t} value={t === MEMBER_TYPES[0] ? "" : t}>
@@ -241,7 +229,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 value={formData.district}
                 onChange={handleChange}
                 required
-                disabled={submitting}
               >
                 {DISTRICTS.map((d) => (
                   <option key={d} value={d === DISTRICTS[0] ? "" : d}>
@@ -260,7 +247,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 name="medical_conditions"
                 value={formData.medical_conditions}
                 onChange={handleChange}
-                disabled={submitting}
               />
             </label>
             <label>
@@ -269,7 +255,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 name="allergy_history"
                 value={formData.allergy_history}
                 onChange={handleChange}
-                disabled={submitting}
               />
             </label>
           </fieldset>
@@ -282,7 +267,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                disabled={submitting}
               />
             </label>
             <label>
@@ -291,7 +275,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                disabled={submitting}
               />
             </label>
             <label>
@@ -300,7 +283,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 name="facebook"
                 value={formData.facebook}
                 onChange={handleChange}
-                disabled={submitting}
               />
             </label>
             <label>
@@ -309,7 +291,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 name="instagram"
                 value={formData.instagram}
                 onChange={handleChange}
-                disabled={submitting}
               />
             </label>
             <label>
@@ -318,20 +299,18 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 name="line_id"
                 value={formData.line_id}
                 onChange={handleChange}
-                disabled={submitting}
               />
             </label>
           </fieldset>
 
           <fieldset className="mfm-section">
-            <legend>ข้อมูลการศึกษา</legend>
+            <legend>ข้อมูลสถานศึกษา/ที่ทำงาน</legend>
             <label>
-              โรงเรียน
+              สถาบัน/ที่ทำงาน
               <input
                 name="school"
                 value={formData.school}
                 onChange={handleChange}
-                disabled={submitting}
               />
             </label>
             <label>
@@ -342,7 +321,6 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
                 name="gpa"
                 value={formData.gpa}
                 onChange={handleChange}
-                disabled={submitting}
               />
             </label>
           </fieldset>

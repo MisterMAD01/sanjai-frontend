@@ -1,7 +1,5 @@
-/* src/components/Admin/managemembers/MemberViewModal.css */
-
 /* Overlay */
-.modal-overlay {
+.mv-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -9,152 +7,105 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: flex-start;
-  padding-top: 2rem;
-  z-index: 1000;
+  padding: 1rem;
+  z-index: 2000;
 }
 
-/* Modal container */
-.modal-box {
+/* Modal box */
+.mv-box {
   background: #fff;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 700px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  position: relative;
-  max-height: calc(100vh - 4rem);
+  width: 100%;
+  max-width: 650px;
+  max-height: calc(100vh - 2rem);
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Close button (top right) */
-.modal-close-btn {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #555;
-}
-.modal-close-btn:hover {
-  color: #000;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  position: relative;
+  padding: 1.5rem;
 }
 
 /* Header */
-.modal-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+.mv-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
-.modal-header h2 {
-  flex: 1;
-  margin: 0;
-  font-size: 1.5rem;
-  color: #b0001c;
-}
-.modal-avatar {
-  width: 48px;
-  height: 48px;
+.mv-avatar {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 0.5rem;
+  border-radius: 50%;
   background: #b0001c;
   color: #fff;
-  border-radius: 50%;
+  font-size: 1.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
-  flex-shrink: 0;
 }
-.modal-sub-id {
-  font-size: 0.9rem;
-  color: #666;
+.mv-title {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+.mv-sub-id {
+  font-size: 0.95rem;
+  color: #555;
 }
 
 /* Content grid */
-.modal-content-grid {
+.mv-content-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
   margin-bottom: 1.5rem;
 }
-.modal-section h4 {
-  margin: 0 0 0.5rem;
-  font-size: 1.1rem;
+@media (min-width: 700px) {
+  .mv-content-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Section */
+.mv-section h4 {
+  margin-bottom: 0.5rem;
   color: #b0001c;
 }
-.modal-section p {
-  margin: 0.25rem 0;
+.mv-section p {
+  margin: 0.3rem 0;
   font-size: 0.95rem;
   color: #333;
 }
-.modal-section strong {
-  color: #262626;
+.mv-section p strong {
+  display: inline-block;
+  width: 6.5rem;
+  color: #555;
 }
 
-/* Footer (buttons) */
-.modal-footer {
+/* Footer buttons */
+.mv-footer {
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
-  margin-top: auto;
 }
-
-/* Button styles */
-.modal-footer .edit-btn,
-.modal-footer .modal-close-btn {
+.mv-btn {
   padding: 0.6rem 1.2rem;
-  font-size: 1rem;
+  font-size: 0.95rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background 0.2s;
 }
-.modal-footer .edit-btn {
+.mv-btn.mv-edit {
   background: #007bff;
   color: #fff;
 }
-.modal-footer .edit-btn:hover {
-  background: #0069d9;
+.mv-edit:hover {
+  background: #0056b3;
 }
-/* Note: reuse .modal-close-btn styling for the 'ปิด' button if desired */
-.modal-footer .modal-close-btn {
+.mv-btn.mv-close {
   background: #6c757d;
   color: #fff;
 }
-.modal-footer .modal-close-btn:hover {
+.mv-btn.mv-close:hover {
   background: #5a6268;
-}
-
-/* Responsive adjustments */
-@media (max-width: 480px) {
-  .modal-content-grid {
-    grid-template-columns: 1fr;
-  }
-  .modal-footer {
-    flex-direction: column-reverse;
-  }
-  .modal-footer button {
-    width: 100%;
-  }
-}
-/* ปุ่มแก้ไขใน Modal */
-.modal-edit-btn {
-  padding: 0.6rem 1.4rem;
-  background: #b0001c;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-  margin-right: 0.5rem; /* ถ้าต้องการเว้นขวาปุ่มอื่น */
-}
-
-.modal-edit-btn:hover {
-  background: #930019;
 }

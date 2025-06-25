@@ -18,7 +18,7 @@ const fieldLabels = {
   facebook: "Facebook",
   instagram: "Instagram",
   line_id: "Line ID",
-  school: "โรงเรียน",
+  school: "สถาบัน/ที่ทำงาน",
   // graduation_year removed as per request
   gpa: "GPA",
   type: "ประเภทสมาชิก",
@@ -50,8 +50,8 @@ const sections = [
   },
   {
     key: "education",
-    title: "ข้อมูลการศึกษา",
-    fields: ["school", /* "graduation_year", */ "gpa"],
+    title: "ข้อมูลสถานศึกษา/ที่ทำงาน",
+    fields: ["school", "gpa"],
   },
 ];
 
@@ -114,7 +114,7 @@ export default function MemberEditModal({ member, onClose, onSave }) {
         <h2 className="member-edit-title">แก้ไขข้อมูลสมาชิก</h2>
 
         <div className="member-edit-header-info">
-          <div className="member-edit-id">รหัสสมาชิก: {member.member_id}</div>
+          <div className="member-edit-id">เลขที่สมาชิก: {member.member_id}</div>
           <div className="member-edit-avatar">
             {formData.full_name?.charAt(0).toUpperCase() || "-"}
           </div>

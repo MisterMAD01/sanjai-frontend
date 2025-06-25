@@ -1,6 +1,8 @@
 /* DocumentDetailModal.css */
+/* ใช้ prefix ddm- ทุกคลาส เพื่อป้องกัน clash */
 
-.modal-overlay {
+/* Overlay พื้นหลังโปร่งแสงครอบหน้าจอ */
+.ddm-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,7 +15,8 @@
   z-index: 1000;
 }
 
-.modal-content {
+/* กล่อง modal */
+.ddm-modal-content {
   background: #fff;
   border-radius: 8px;
   width: 90%;
@@ -22,28 +25,29 @@
   overflow: hidden;
 }
 
-.modal-header {
+/* ส่วนหัว */
+.ddm-modal-header {
   padding: 1rem;
   border-bottom: 1px solid #eee;
-  text-align: center; /* Center header text */
+  text-align: center;
 }
-
-.modal-header h4 {
+.ddm-modal-header .ddm-modal-title {
   margin: 0;
   font-size: 1.25rem;
   color: #333;
 }
 
-.modal-body {
+/* เนื้อหา */
+.ddm-modal-body {
   padding: 1rem;
   color: #555;
 }
-
-.modal-body p {
+.ddm-modal-body p {
   margin: 0.5rem 0;
 }
 
-.modal-footer {
+/* ส่วนท้าย ปุ่ม */
+.ddm-modal-footer {
   padding: 1rem;
   display: flex;
   justify-content: center;
@@ -52,7 +56,7 @@
 }
 
 /* ปุ่ม ปิด (สีเทา) */
-.btn-close-modal1 {
+.ddm-btn-close {
   padding: 0.5rem 1rem;
   font-size: 0.95rem;
   border: none;
@@ -62,13 +66,12 @@
   cursor: pointer;
   transition: background 0.2s;
 }
-
-.btn-close-modal1:hover {
+.ddm-btn-close:hover {
   background: #5a6268;
 }
 
-/* ปุ่ม ดูเอกสาร (สีแดง) */
-.btn-view-document {
+/* ปุ่ม ดาวน์โหลด (สีแดง) */
+.ddm-btn-download {
   padding: 0.5rem 1rem;
   font-size: 0.95rem;
   border: none;
@@ -78,7 +81,6 @@
   cursor: pointer;
   transition: background 0.2s;
 }
-
-.btn-view-document:hover {
+.ddm-btn-download:hover {
   background: #930019;
 }

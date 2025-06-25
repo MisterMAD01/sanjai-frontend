@@ -79,7 +79,7 @@ export default function MyMemberInfo() {
                 ? ` (รุ่นที่ ${member.graduation_year})`
                 : ""}
             </h2>
-            <p className="mmi-id">รหัสสมาชิก : {display(member.member_id)}</p>
+            <p className="mmi-id">เลขที่สมาชิก : {display(member.member_id)}</p>
           </div>
         </header>
 
@@ -165,13 +165,10 @@ export default function MyMemberInfo() {
           {/* Education Info */}
           <section className="mmi-section">
             <h3>
-              <FaSchool className="mmi-icon" /> ข้อมูลการศึกษา
+              <FaSchool className="mmi-icon" /> ข้อมูลสถานศึกษา/ทำงาน
             </h3>
             <p>
-              <strong>โรงเรียน:</strong> {display(member.school)}
-            </p>
-            <p>
-              <strong>ปีที่จบ:</strong> {display(member.graduation_year)}
+              <strong>สถาบัน/ที่ทำงาน:</strong> {display(member.school)}
             </p>
             <p>
               <strong>GPA:</strong> {display(member.gpa)}

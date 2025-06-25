@@ -183,19 +183,3 @@
 .member-edit-btn-submit:hover {
   background: #a10000;
 }
-
-@media (max-width: 768px) {
-  .member-edit-fields-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  }
-}
-
-@media (max-width: 480px) {
-  .member-edit-modal {
-    width: 95vw;
-    padding: 1rem;
-  }
-  .member-edit-fields-grid {
-    grid-template-columns: 1fr;
-  }
-}

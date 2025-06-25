@@ -239,6 +239,16 @@ export default function MemberFormModal({ onClose, onSuccess }) {
               </select>
             </label>
             <label>
+              รุ่นที่
+              <input
+                type="number"
+                name="graduation_year"
+                value={formData.graduation_year}
+                onChange={handleChange}
+                disabled={submitting}
+              />
+            </label>
+            <label>
               ประเภทสมาชิก
               <select
                 name="type"
@@ -341,9 +351,9 @@ export default function MemberFormModal({ onClose, onSuccess }) {
             </label>
           </fieldset>
           <fieldset className="mfm-section">
-            <legend>ข้อมูลการศึกษา</legend>
+            <legend>ข้อมูลสถานศึกษา/ที่ทำงาน</legend>
             <label>
-              โรงเรียน
+              สถาบัน/ที่ทำงาน
               <input
                 name="school"
                 value={formData.school}
@@ -351,16 +361,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
                 disabled={submitting}
               />
             </label>
-            <label>
-              ปีที่จบ
-              <input
-                type="number"
-                name="graduation_year"
-                value={formData.graduation_year}
-                onChange={handleChange}
-                disabled={submitting}
-              />
-            </label>
+
             <label>
               GPA
               <input
