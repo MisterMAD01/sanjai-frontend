@@ -162,6 +162,40 @@
 .delete-btn.confirm:hover {
   background: #930019;
 }
+.mmt-pagination {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-start; /* 👉 ถ้าต้องการอยู่มุมขวาให้ใช้ flex-end */
+  align-items: center;
+  padding-left: 1rem;
+  flex-wrap: wrap;
+}
+
+.mmt-pagination button {
+  margin: 0 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.mmt-pagination button:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+.mmt-pagination button.active {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border-color: #007bff;
+}
+
+.mmt-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 /* Responsive: stack buttons on small screens */
 /* Responsive adjustments for mobile devices */

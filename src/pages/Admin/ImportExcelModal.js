@@ -1,4 +1,3 @@
-// src/components/ImportExcelModal.js
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import { toast } from "react-toastify";
@@ -8,7 +7,6 @@ import "./ImportExcelModal.css";
 
 export default function ImportExcelModal({ onClose, onSuccess }) {
   const [file, setFile] = useState(null);
-  const [dataType, setDataType] = useState("members");
   const [loading, setLoading] = useState(false);
   const [previewHeaders, setPreviewHeaders] = useState([]);
   const [previewData, setPreviewData] = useState([]);
@@ -18,7 +16,6 @@ export default function ImportExcelModal({ onClose, onSuccess }) {
     if (!selectedFile) return;
     setFile(selectedFile);
 
-    // Read a preview
     const reader = new FileReader();
     reader.onload = (evt) => {
       try {
@@ -50,14 +47,14 @@ export default function ImportExcelModal({ onClose, onSuccess }) {
     formData.append("excelFile", file);
 
     try {
-      const res = await api.post(
-        `/api/data/import?type=${encodeURIComponent(dataType)}`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+      const res = await api.post(`/api/data/import?type=both`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      const { message, members, users } = res.data;
+      toast.success(
+        message || `นำเข้าสำเร็จ (สมาชิก ${members} / ผู้ใช้ ${users})`
       );
-      const { count, message } = res.data;
-      toast.success(message || `นำเข้า ${dataType} สำเร็จ (${count} รายการ)`);
-      onSuccess(dataType, count);
+      onSuccess("both", members + users);
     } catch (err) {
       console.error("Import error:", err);
       const msg =
@@ -72,21 +69,8 @@ export default function ImportExcelModal({ onClose, onSuccess }) {
   return (
     <div className="import-modal-overlay" onClick={loading ? null : onClose}>
       <div className="import-modal" onClick={(e) => e.stopPropagation()}>
-        <h3>นำเข้า Excel</h3>
+        <h3>นำเข้า Excel (สมาชิก + ผู้ใช้)</h3>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="dataType">ประเภทข้อมูล:</label>
-            <select
-              id="dataType"
-              value={dataType}
-              onChange={(e) => setDataType(e.target.value)}
-              disabled={loading}
-            >
-              <option value="members">สมาชิก</option>
-              <option value="users">ผู้ใช้</option>
-              <option value="both">สมาชิก + ผู้ใช้</option>
-            </select>
-          </div>
           <div className="form-group">
             <label htmlFor="excelFile">เลือกไฟล์ Excel:</label>
             <input

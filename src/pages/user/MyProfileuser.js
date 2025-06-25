@@ -71,7 +71,7 @@ export default function ProfileUsername() {
           <div className="pgu-header-info">
             <h2 className="pgu-name">{full_name}</h2>
             <p className="pgu-id">
-              <strong>รหัสสมาชิก:</strong> {member_id || "-"}
+              <strong>เลขที่สมาชิก:</strong> {member_id || "-"}
             </p>
           </div>
         </header>

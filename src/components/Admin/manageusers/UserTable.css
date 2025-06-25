@@ -156,6 +156,40 @@
 .delete-btn.confirm:hover {
   background: #930019;
 }
+/* Pagination */
+.pagination {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-start; /* ⬅️ ชี้ซ้าย */
+  align-items: center;
+  padding-left: 1rem; /* เพิ่มช่องว่างด้านซ้าย ถ้าต้องการ */
+}
+
+.pagination button {
+  margin: 0 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border-color: #007bff;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 /* Responsive: stack action buttons in narrow view */
 /* Responsive adjustments for UserTable */

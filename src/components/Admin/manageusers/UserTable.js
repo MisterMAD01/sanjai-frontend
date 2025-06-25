@@ -18,6 +18,12 @@ const UserTable = ({
   handleRevoke,
 }) => {
   const [deleteUser, setDeleteUser] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 13;
+
+  const totalPages = Math.ceil(users.length / usersPerPage);
+  const startIndex = (currentPage - 1) * usersPerPage;
+  const currentUsers = users.slice(startIndex, startIndex + usersPerPage);
 
   const confirmDelete = () => {
     handleDelete(deleteUser.user_id);
@@ -40,7 +46,7 @@ const UserTable = ({
           </tr>
         </thead>
         <tbody>
-          {users.map((u) => (
+          {currentUsers.map((u) => (
             <tr key={u.user_id}>
               <td>
                 <div className="avatar-circle">{getInitials(u.username)}</div>
@@ -88,6 +94,33 @@ const UserTable = ({
           ))}
         </tbody>
       </table>
+
+      {/* Pagination */}
+      <div className="pagination">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          ก่อนหน้า
+        </button>
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentPage(index + 1)}
+            className={currentPage === index + 1 ? "active" : ""}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+        >
+          ถัดไป
+        </button>
+      </div>
 
       {deleteUser && (
         <div className="modal-overlay">

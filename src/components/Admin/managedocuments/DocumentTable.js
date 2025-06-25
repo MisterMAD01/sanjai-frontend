@@ -12,6 +12,13 @@ const DocumentTable = ({ documents, onDelete }) => {
   const [selectedDoc, setSelectedDoc] = useState(null);
   const [docToDelete, setDocToDelete] = useState(null);
 
+  // ✅ Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const docsPerPage = 13;
+  const totalPages = Math.ceil(documents.length / docsPerPage);
+  const startIndex = (currentPage - 1) * docsPerPage;
+  const currentDocs = documents.slice(startIndex, startIndex + docsPerPage);
+
   const handleDeleteClick = (doc) => {
     setDocToDelete(doc);
   };
@@ -41,10 +48,10 @@ const DocumentTable = ({ documents, onDelete }) => {
             </tr>
           </thead>
           <tbody>
-            {documents.length > 0 ? (
-              documents.map((doc, index) => (
+            {currentDocs.length > 0 ? (
+              currentDocs.map((doc, index) => (
                 <tr key={doc.id}>
-                  <td>{index + 1}</td>
+                  <td>{startIndex + index + 1}</td>
                   <td>{doc.title}</td>
                   <td>{doc.sender || "-"}</td>
                   <td>{doc.recipient || "-"}</td>
@@ -78,6 +85,33 @@ const DocumentTable = ({ documents, onDelete }) => {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* ✅ Pagination */}
+      <div className="pagination">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          ก่อนหน้า
+        </button>
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentPage(index + 1)}
+            className={currentPage === index + 1 ? "active" : ""}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+        >
+          ถัดไป
+        </button>
       </div>
 
       {/* ดูรายละเอียด */}

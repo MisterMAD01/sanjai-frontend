@@ -17,6 +17,13 @@ export default function MemberTable({ members, onView, onEdit, onDelete }) {
   const [viewMember, setViewMember] = useState(null);
   const [deleteMember, setDeleteMember] = useState(null);
 
+  // ✅ Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const membersPerPage = 13;
+  const totalPages = Math.ceil(members.length / membersPerPage);
+  const startIndex = (currentPage - 1) * membersPerPage;
+  const currentMembers = members.slice(startIndex, startIndex + membersPerPage);
+
   return (
     <div className="mmt-container">
       <h3 className="mmt-title">สมาชิกทั้งหมด</h3>
@@ -33,8 +40,8 @@ export default function MemberTable({ members, onView, onEdit, onDelete }) {
           </tr>
         </thead>
         <tbody>
-          {members.length > 0 ? (
-            members.map((m, idx) => (
+          {currentMembers.length > 0 ? (
+            currentMembers.map((m, idx) => (
               <tr key={m.member_id || idx}>
                 <td>
                   <div className="mmt-avatar">{getInitials(m.full_name)}</div>
@@ -76,6 +83,33 @@ export default function MemberTable({ members, onView, onEdit, onDelete }) {
           )}
         </tbody>
       </table>
+
+      {/* ✅ Pagination */}
+      <div className="mmt-pagination">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          ก่อนหน้า
+        </button>
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentPage(index + 1)}
+            className={currentPage === index + 1 ? "active" : ""}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+        >
+          ถัดไป
+        </button>
+      </div>
 
       {/* View Modal */}
       {viewMember && (

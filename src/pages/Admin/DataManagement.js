@@ -1,4 +1,4 @@
-// src/components/DataManagement.jsx
+// src/components/DataManagement.js
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,7 +9,6 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-
 import api from "../../api";
 import ImportExcelModal from "./ImportExcelModal";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,16 +25,11 @@ export default function DataManagement() {
     generation: "",
     memberType: "",
   });
-  const [exportOptions, setExportOptions] = useState({
-    members: false,
-    users: false,
-  });
   const [showImportModal, setShowImportModal] = useState(false);
   const [importLogs, setImportLogs] = useState([]);
   const [exportLogs, setExportLogs] = useState([]);
   const [summary, setSummary] = useState({ members: 0, users: 0 });
 
-  // Load filter options and history on mount
   useEffect(() => {
     const load = async () => {
       try {
@@ -55,7 +49,6 @@ export default function DataManagement() {
     load();
   }, []);
 
-  // Fetch summary whenever filters change
   useEffect(() => {
     const loadSummary = async () => {
       try {
@@ -73,16 +66,16 @@ export default function DataManagement() {
   const handleFilterChange = (key, value) =>
     setFilters((prev) => ({ ...prev, [key]: value }));
 
-  const toggleExportOption = (key) =>
-    setExportOptions((prev) => ({ ...prev, [key]: !prev[key] }));
-
-  // Download one type of data
-  const downloadFile = async (type) => {
+  const downloadFile = async () => {
     try {
-      const params = new URLSearchParams({ type, ...filters }).toString();
+      const params = new URLSearchParams({
+        type: "members",
+        ...filters,
+      }).toString();
       const res = await api.get(`/api/data/export?${params}`, {
         responseType: "blob",
       });
+
       const blob = new Blob([res.data], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       });
@@ -90,66 +83,56 @@ export default function DataManagement() {
       const a = document.createElement("a");
       a.href = url;
       const date = new Date().toISOString().slice(0, 10);
-      a.download = `${type}_export_${date}.xlsx`;
+      const filename = `members_and_users_export_${date}.xlsx`;
+      a.download = filename;
       document.body.appendChild(a);
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
 
-      // record in exportLogs
       const ts = new Date().toISOString();
       const newLog = {
-        filename: `${type}_export_${ts.slice(0, 10)}.xlsx`,
-        count: summary[type],
-        performed_by:
-          res?.config?.headers?.Authorization /* or however you get username */,
+        filename,
+        count: summary.members + summary.users,
+        performed_by: "คุณ",
         created_at: ts,
       };
       setExportLogs((prev) => [newLog, ...prev]);
-      toast.success(`ส่งออก ${type} สำเร็จ`);
+      toast.success("ส่งออกสำเร็จ");
+
+      await api.post("/api/data/log-export", {
+        filename,
+        count: newLog.count,
+        performed_by: newLog.performed_by,
+      });
     } catch (err) {
       console.error("Download failed:", err);
       toast.error("เกิดข้อผิดพลาดในการส่งออก");
     }
   };
 
-  const handleExport = () => {
-    const types = [];
-    if (exportOptions.members) types.push("members");
-    if (exportOptions.users) types.push("users");
-    if (types.length === 0) {
-      toast.info("กรุณาเลือกข้อมูลที่ต้องการส่งออก");
-      return;
-    }
-    types.forEach(downloadFile);
-  };
-
-  const handleImportSuccess = (type, count, performedBy) => {
+  const handleImportSuccess = (type, count) => {
     const ts = new Date().toISOString();
     const newLog = {
       filename: `import_${type}_${ts.slice(0, 10)}.xlsx`,
       count,
-      performed_by: performedBy,
+      performed_by: "คุณ",
       created_at: ts,
     };
     setImportLogs((prev) => [newLog, ...prev]);
     setShowImportModal(false);
-    toast.success(`นำเข้า ${type} สำเร็จ (${count} รายการ)`);
+    toast.success(`นำเข้าสำเร็จ (${count} รายการ)`);
   };
 
   return (
     <div className="data-management-page">
       <h2 className="data-management-title">จัดการข้อมูล</h2>
 
-      {/* Summary & Import */}
       <div className="summary-header">
         <div>
           <h3 className="summary-title">จำนวนข้อมูลทั้งหมด</h3>
           <div className="summary-cards">
-            <div
-              className={`card ${exportOptions.members ? "selected" : ""}`}
-              onClick={() => toggleExportOption("members")}
-            >
+            <div className="card">
               <div className="card-icon">
                 <FontAwesomeIcon icon={faUsers} />
               </div>
@@ -158,10 +141,7 @@ export default function DataManagement() {
                 <div className="card-value">{summary.members}</div>
               </div>
             </div>
-            <div
-              className={`card ${exportOptions.users ? "selected" : ""}`}
-              onClick={() => toggleExportOption("users")}
-            >
+            <div className="card">
               <div className="card-icon">
                 <FontAwesomeIcon icon={faUserCircle} />
               </div>
@@ -183,13 +163,10 @@ export default function DataManagement() {
       {showImportModal && (
         <ImportExcelModal
           onClose={() => setShowImportModal(false)}
-          onSuccess={(type, count) =>
-            handleImportSuccess(type, count /* passed performedBy from modal */)
-          }
+          onSuccess={handleImportSuccess}
         />
       )}
 
-      {/* Filters */}
       <div className="filter-section">
         <div className="filter-group">
           <label>อำเภอ:</label>
@@ -235,11 +212,10 @@ export default function DataManagement() {
         </div>
       </div>
 
-      <button className="data-btn export" onClick={handleExport}>
-        <FontAwesomeIcon icon={faFileExport} /> ส่งออกข้อมูลที่เลือก
+      <button className="data-btn export" onClick={downloadFile}>
+        <FontAwesomeIcon icon={faFileExport} /> ส่งออกข้อมูล
       </button>
 
-      {/* Logs */}
       <div className="log-section">
         <div className="log-header">
           <h3>
