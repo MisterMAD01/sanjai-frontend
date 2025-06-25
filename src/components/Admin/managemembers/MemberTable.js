@@ -24,6 +24,26 @@ export default function MemberTable({ members, onView, onEdit, onDelete }) {
   const startIndex = (currentPage - 1) * membersPerPage;
   const currentMembers = members.slice(startIndex, startIndex + membersPerPage);
 
+  // ✅ Short Pagination Logic
+  const getPaginationButtons = () => {
+    const maxVisibleButtons = 5;
+    const buttons = [];
+
+    if (totalPages <= maxVisibleButtons) {
+      for (let i = 1; i <= totalPages; i++) buttons.push(i);
+    } else {
+      if (currentPage <= 3) {
+        buttons.push(1, 2, 3, "...", totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        buttons.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        buttons.push(1, "...", currentPage, "...", totalPages);
+      }
+    }
+
+    return buttons;
+  };
+
   return (
     <div className="mmt-container">
       <h3 className="mmt-title">สมาชิกทั้งหมด</h3>
@@ -78,13 +98,15 @@ export default function MemberTable({ members, onView, onEdit, onDelete }) {
             ))
           ) : (
             <tr>
-              <td colSpan="7" className="mmt-no-data-cell"></td>
+              <td colSpan="7" className="mmt-no-data-cell">
+                ไม่มีข้อมูลสมาชิก
+              </td>
             </tr>
           )}
         </tbody>
       </table>
 
-      {/* ✅ Pagination */}
+      {/* ✅ Short Pagination */}
       <div className="mmt-pagination">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -92,15 +114,23 @@ export default function MemberTable({ members, onView, onEdit, onDelete }) {
         >
           ก่อนหน้า
         </button>
-        {[...Array(totalPages)].map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentPage(index + 1)}
-            className={currentPage === index + 1 ? "active" : ""}
-          >
-            {index + 1}
-          </button>
-        ))}
+
+        {getPaginationButtons().map((btn, index) =>
+          btn === "..." ? (
+            <span key={index} className="ellipsis">
+              ...
+            </span>
+          ) : (
+            <button
+              key={index}
+              onClick={() => setCurrentPage(btn)}
+              className={currentPage === btn ? "active" : ""}
+            >
+              {btn}
+            </button>
+          )
+        )}
+
         <button
           onClick={() =>
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))

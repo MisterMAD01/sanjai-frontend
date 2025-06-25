@@ -196,45 +196,14 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+.mmt-pagination .ellipsis {
+  padding: 0 0.5rem;
+  color: #999;
+}
+
+.mmt-pagination .active {
+  background-color: #007bff;
+  color: white;
+}
 
 /* Responsive: stack buttons on small screens */
-/* Responsive adjustments for mobile devices */
-@media (max-width: 768px) {
-  /* Shrink container paddings */
-  .mmt-container {
-    margin-bottom: 1rem;
-    padding: 0 1rem;
-  }
-
-  /* Reduce table cell padding and font sizes */
-  .mmt-table th,
-  .mmt-table td {
-    padding: 0.5rem;
-    font-size: 0.85rem;
-  }
-
-  /* Smaller avatar */
-  .mmt-avatar {
-    width: 24px;
-    height: 24px;
-    font-size: 0.875rem;
-  }
-
-  /* Action buttons: slightly larger touch area */
-  .mmt-btn {
-    padding: 0.5rem;
-    font-size: 1.1rem;
-  }
-
-  /* Stack action buttons vertically */
-  .mmt-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  /* Table wrapper: allow horizontal scroll if still too wide */
-  .mmt-container {
-    overflow-x: auto;
-  }
-}

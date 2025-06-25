@@ -30,6 +30,25 @@ const UserTable = ({
     setDeleteUser(null);
   };
 
+  const getPaginationButtons = () => {
+    const maxVisibleButtons = 5;
+    const buttons = [];
+
+    if (totalPages <= maxVisibleButtons) {
+      for (let i = 1; i <= totalPages; i++) buttons.push(i);
+    } else {
+      if (currentPage <= 3) {
+        buttons.push(1, 2, 3, "...", totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        buttons.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        buttons.push(1, "...", currentPage, "...", totalPages);
+      }
+    }
+
+    return buttons;
+  };
+
   return (
     <div className="table-wrapper">
       <table className="user-table">
@@ -95,7 +114,7 @@ const UserTable = ({
         </tbody>
       </table>
 
-      {/* Pagination */}
+      {/* Pagination แบบย่อ */}
       <div className="pagination">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -103,15 +122,23 @@ const UserTable = ({
         >
           ก่อนหน้า
         </button>
-        {[...Array(totalPages)].map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentPage(index + 1)}
-            className={currentPage === index + 1 ? "active" : ""}
-          >
-            {index + 1}
-          </button>
-        ))}
+
+        {getPaginationButtons().map((btn, index) =>
+          btn === "..." ? (
+            <span key={index} className="ellipsis">
+              ...
+            </span>
+          ) : (
+            <button
+              key={index}
+              onClick={() => setCurrentPage(btn)}
+              className={currentPage === btn ? "active" : ""}
+            >
+              {btn}
+            </button>
+          )
+        )}
+
         <button
           onClick={() =>
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
@@ -122,6 +149,7 @@ const UserTable = ({
         </button>
       </div>
 
+      {/* Modal ยืนยันการลบ */}
       {deleteUser && (
         <div className="modal-overlay">
           <div className="modal small">

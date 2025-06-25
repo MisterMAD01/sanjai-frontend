@@ -30,6 +30,7 @@ const MEMBER_TYPES = [
   "สามัญ",
   "ทั่วไป",
 ];
+const STATUS_OPTIONS = ["กรุณาเลือกสถานะ", "ทำงาน", "กำลังศึกษา/นักเรียน"];
 
 export default function MemberEditModal({ member, onClose, onSuccess }) {
   const [formData, setFormData] = useState({
@@ -309,11 +310,18 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
             <legend>ข้อมูลสถานศึกษา/ที่ทำงาน</legend>
             <label>
               สถานะปัจจุบัน
-              <input
+              <select
                 name="status"
-                value={formData.status}
+                value={formData.STATUS_OPTIONS}
                 onChange={handleChange}
-              />
+                required
+              >
+                {STATUS_OPTIONS.map((d) => (
+                  <option key={d} value={d === STATUS_OPTIONS[0] ? "" : d}>
+                    {d}
+                  </option>
+                ))}
+              </select>
             </label>
             <label>
               สถาบัน/ที่ทำงาน
