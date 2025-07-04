@@ -19,3 +19,22 @@
   font-size: 1rem;
   margin: 2rem 0;
 }
+.md-search-container {
+  margin: 1rem 0;
+  text-align: right;
+}
+.md-search-input {
+  padding: 0.5rem;
+  width: 240px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.md-search-input:focus {
+  border-color: #b0001c;
+  outline: none;
+}
+.loading-message {
+  text-align: center;
+  margin-top: 2rem;
+  color: #666;
+}

@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { FaCheckSquare, FaSquare, FaTrash, FaTimes } from "react-icons/fa";
+import {
+  FaCheckSquare,
+  FaSquare,
+  FaTrash,
+  FaTimes,
+  FaSearch,
+} from "react-icons/fa";
 import "./ManageAllModal.css";
 
 export default function ManageAllModal({
@@ -8,15 +14,36 @@ export default function ManageAllModal({
   onClose,
   onDeleteSelected,
 }) {
+  const [searchTerm, setSearchTerm] = useState("");
   const [selected, setSelected] = useState(new Set());
   const [submitting, setSubmitting] = useState(false);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const docsPerPage = 10;
+
   useEffect(() => {
     setSelected(new Set());
-  }, [documents]);
+    setCurrentPage(1);
+  }, [documents, searchTerm]);
 
-  const allIds = documents.map((d) => d.id);
-  const allSelected = selected.size === documents.length;
+  // Filter by search term
+  const filteredDocs = documents.filter((doc) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      doc.title.toLowerCase().includes(term) ||
+      (doc.description || "").toLowerCase().includes(term) ||
+      (doc.sender || "").toLowerCase().includes(term) ||
+      (doc.recipient || "").toLowerCase().includes(term)
+    );
+  });
+
+  const totalPages = Math.ceil(filteredDocs.length / docsPerPage);
+  const startIndex = (currentPage - 1) * docsPerPage;
+  const currentDocs = filteredDocs.slice(startIndex, startIndex + docsPerPage);
+
+  const allIds = currentDocs.map((d) => d.id);
+  const allSelected = allIds.every((id) => selected.has(id));
 
   const toggleOne = (id) => {
     setSelected((prev) => {
@@ -26,16 +53,25 @@ export default function ManageAllModal({
     });
   };
 
-  const selectAll = () => setSelected(new Set(allIds));
+  const selectAll = () => {
+    setSelected((prev) => {
+      const copy = new Set(prev);
+      allIds.forEach((id) => copy.add(id));
+      return copy;
+    });
+  };
+
   const clearAll = () => setSelected(new Set());
 
   const handleDelete = async () => {
-    if (selected.size === 0) return;
-    if (!window.confirm(`ลบเอกสารที่เลือก (${selected.size} รายการ)?`)) return;
+    const toDelete = Array.from(selected);
+    if (toDelete.length === 0) return;
+    if (!window.confirm(`ลบเอกสารที่เลือก (${toDelete.length} รายการ)?`))
+      return;
 
     setSubmitting(true);
     try {
-      await onDeleteSelected(Array.from(selected));
+      await onDeleteSelected(toDelete);
       clearAll();
     } catch (err) {
       console.error("Bulk delete error:", err);
@@ -44,8 +80,23 @@ export default function ManageAllModal({
     }
   };
 
+  const getPaginationButtons = () => {
+    const maxVisible = 5;
+    const buttons = [];
+    if (totalPages <= maxVisible) {
+      for (let i = 1; i <= totalPages; i++) buttons.push(i);
+    } else if (currentPage <= 3) {
+      buttons.push(1, 2, 3, "...", totalPages);
+    } else if (currentPage >= totalPages - 2) {
+      buttons.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+    } else {
+      buttons.push(1, "...", currentPage, "...", totalPages);
+    }
+    return buttons;
+  };
+
   return (
-    <div className="mam-modal-overlay">
+    <div className="mam-modal-overlay" onClick={onClose}>
       <div
         className="mam-modal-content mam-manage-all"
         onClick={(e) => e.stopPropagation()}
@@ -56,17 +107,27 @@ export default function ManageAllModal({
             <button
               className="mam-bulk-btn"
               onClick={selectAll}
-              disabled={allSelected}
+              disabled={allSelected || submitting}
             >
               <FaCheckSquare /> เลือกทั้งหมด
             </button>
             <button
               className="mam-bulk-btn"
               onClick={clearAll}
-              disabled={selected.size === 0}
+              disabled={selected.size === 0 || submitting}
             >
               <FaSquare /> ยกเลิกเลือก
             </button>
+          </div>
+          <div className="mam-search-container">
+            <FaSearch className="mam-search-icon" />
+            <input
+              type="text"
+              placeholder="ค้นหา…"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="mam-search-input"
+            />
           </div>
         </header>
 
@@ -75,7 +136,14 @@ export default function ManageAllModal({
             <table className="mam-manage-all-table">
               <thead>
                 <tr>
-                  <th></th>
+                  <th>
+                    <input
+                      type="checkbox"
+                      checked={allSelected}
+                      onChange={() => (allSelected ? clearAll() : selectAll())}
+                      disabled={submitting}
+                    />
+                  </th>
                   <th>ลำดับ</th>
                   <th>ชื่อเอกสาร</th>
                   <th>รายละเอียด</th>
@@ -85,8 +153,8 @@ export default function ManageAllModal({
                 </tr>
               </thead>
               <tbody>
-                {documents.length > 0 ? (
-                  documents.map((doc, idx) => (
+                {currentDocs.length > 0 ? (
+                  currentDocs.map((doc, idx) => (
                     <tr key={doc.id}>
                       <td>
                         <input
@@ -96,7 +164,7 @@ export default function ManageAllModal({
                           disabled={submitting}
                         />
                       </td>
-                      <td>{idx + 1}</td>
+                      <td>{startIndex + idx + 1}</td>
                       <td>{doc.title}</td>
                       <td>{doc.description || "-"}</td>
                       <td>{doc.sender || "-"}</td>
@@ -109,13 +177,44 @@ export default function ManageAllModal({
                 ) : (
                   <tr>
                     <td colSpan="7" className="mam-no-doc">
-                      ไม่มีเอกสาร
+                      ไม่พบเอกสารตามเงื่อนไข
                     </td>
                   </tr>
                 )}
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="mam-pagination">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            ก่อนหน้า
+          </button>
+          {getPaginationButtons().map((b, i) =>
+            b === "..." ? (
+              <span key={i} className="ellipsis">
+                …
+              </span>
+            ) : (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(b)}
+                className={currentPage === b ? "active" : ""}
+              >
+                {b}
+              </button>
+            )
+          )}
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            ถัดไป
+          </button>
         </div>
 
         <footer className="mam-modal-footer">

@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import api from "../../../api";
 import "./MemberFormModal.css"; // ใช้ CSS เดียวกับฟอร์มเพิ่มสมาชิก
 
-const PREFIXES = ["กรุณาเลือกคำนำหน้า", "นาย", "นางสาว", "นาง"];
 const GENDERS = ["กรุณาเลือกเพศ", "ชาย", "หญิง", "อื่นๆ"];
 const RELIGIONS = ["กรุณาเลือกศาสนา", "พุทธ", "คริสต์", "อิสลาม", "อื่นๆ"];
 const DISTRICTS = [
@@ -67,8 +66,11 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
         birthday: member.birthday
           ? new Date(member.birthday).toISOString().slice(0, 10)
           : "",
+        gender: member.gender || "",
+        religion: member.religion || "",
         type: member.type || "",
         district: member.district || "",
+        status: member.status || "",
       });
     }
   }, [member]);
@@ -93,6 +95,26 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
     }
   };
 
+  // Helper to render dropdown options and preserve unknown status
+  const renderStatusOptions = () => {
+    const opts = [];
+    // If current status is not in predefined list and not empty, show it first
+    if (formData.status && !STATUS_OPTIONS.includes(formData.status)) {
+      opts.push(
+        <option key="current" value={formData.status}>
+          {formData.status}
+        </option>
+      );
+    }
+    return opts.concat(
+      STATUS_OPTIONS.map((s) => (
+        <option key={s} value={s === STATUS_OPTIONS[0] ? "" : s}>
+          {s}
+        </option>
+      ))
+    );
+  };
+
   return (
     <div className="mfm-overlay" onClick={submitting ? null : onClose}>
       <div className="mfm-modal" onClick={(e) => e.stopPropagation()}>
@@ -113,18 +135,13 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
             </label>
             <label>
               คำนำหน้า
-              <select
+              <input
+                type="text"
                 name="prefix"
                 value={formData.prefix}
                 onChange={handleChange}
                 required
-              >
-                {PREFIXES.map((p) => (
-                  <option key={p} value={p === PREFIXES[0] ? "" : p}>
-                    {p}
-                  </option>
-                ))}
-              </select>
+              />
             </label>
             <label>
               ชื่อ–นามสกุล
@@ -312,15 +329,11 @@ export default function MemberEditModal({ member, onClose, onSuccess }) {
               สถานะปัจจุบัน
               <select
                 name="status"
-                value={formData.STATUS_OPTIONS}
+                value={formData.status}
                 onChange={handleChange}
                 required
               >
-                {STATUS_OPTIONS.map((d) => (
-                  <option key={d} value={d === STATUS_OPTIONS[0] ? "" : d}>
-                    {d}
-                  </option>
-                ))}
+                {renderStatusOptions()}
               </select>
             </label>
             <label>

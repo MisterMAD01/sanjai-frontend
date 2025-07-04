@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./MemberEditModal.css";
 
 const fieldLabels = {
+  prefix: "คำนำหน้า",
   full_name: "ชื่อ-นามสกุล",
   nickname: "ชื่อเล่น",
   id_card: "เลขบัตรประชาชน",
@@ -30,6 +31,7 @@ const sections = [
     key: "general",
     title: "ข้อมูลทั่วไป",
     fields: [
+      "prefix",
       "full_name",
       "nickname",
       "id_card",
@@ -60,6 +62,7 @@ const options = {
   gender: ["ชาย", "หญิง", "อื่นๆ"],
   religion: ["พุทธ", "คริสต์", "อิสลาม", "ฮินดู", "อื่นๆ"],
   type: ["กิติมศักดิ์", "สามัญ", "ทั่วไป"],
+  status: ["ทำงาน", "กำลังศึกษา/นักเรียน"],
 };
 
 export default function MemberEditModal({ member, onClose, onSave }) {
@@ -119,10 +122,7 @@ export default function MemberEditModal({ member, onClose, onSave }) {
           <div className="member-edit-avatar">
             {formData.full_name?.charAt(0).toUpperCase() || "-"}
           </div>
-          <div className="member-edit-type">
-            ประเภท: {member.type || "-"}
-            {/* removed graduation_year display */}
-          </div>
+          <div className="member-edit-type">ประเภท: {member.type || "-"}</div>
           <div className="member-edit-district">
             อำเภอ: {member.district || "-"}
           </div>
