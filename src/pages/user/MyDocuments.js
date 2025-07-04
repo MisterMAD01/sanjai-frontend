@@ -1,3 +1,5 @@
+// src/pages/user/MyDocuments.jsx
+
 import React, { useEffect, useState, useContext } from "react";
 import DocumentDetailModal from "../../components/User/mydocuments/DocumentDetailModal";
 import DocumentTable from "../../components/User/mydocuments/DocumentTable";
@@ -10,10 +12,12 @@ const API = process.env.REACT_APP_API;
 const MyDocuments = () => {
   const { accessToken, loadingUser } = useContext(UserContext);
   const [documents, setDocuments] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedDoc, setSelectedDoc] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fetch docs
   useEffect(() => {
     if (!accessToken && !loadingUser) {
       setError("ไม่พบสิทธิ์การเข้าถึง กรุณาเข้าสู่ระบบ.");
@@ -29,14 +33,12 @@ const MyDocuments = () => {
         const res = await fetch(`${API}/api/my-documents`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-
         if (!res.ok) {
           const errorData = await res.json();
           throw new Error(
             `Error ${res.status}: ${errorData.message || res.statusText}`
           );
         }
-
         const data = await res.json();
         const raw = data.documents || data;
         const normalized = raw.map((doc) => ({
@@ -44,7 +46,6 @@ const MyDocuments = () => {
           title: doc.title,
           description: doc.description ?? "-",
           sender: doc.sender,
-          senderType: doc.senderType ?? doc.sender_type ?? "",
           uploadDate: doc.uploadDate ?? doc.upload_date,
           filePath: doc.filePath ?? doc.file_path,
         }));
@@ -61,34 +62,33 @@ const MyDocuments = () => {
     fetchDocuments();
   }, [accessToken, loadingUser]);
 
+  // Filter by search term
+  const filteredDocs = documents.filter((doc) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      doc.title.toLowerCase().includes(term) ||
+      doc.description.toLowerCase().includes(term) ||
+      (doc.sender || "").toLowerCase().includes(term)
+    );
+  });
+
   const handleDownload = async (doc) => {
     if (!doc.filePath) {
       toast.warn("ไม่พบไฟล์สำหรับดาวน์โหลด.");
       return;
     }
-
     try {
       const res = await fetch(`${API}/api/my-documents/${doc.id}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-
-      if (!res.ok) {
-        const contentType = res.headers.get("content-type");
-        let message = `Download failed (${res.status})`;
-        if (contentType && contentType.includes("application/json")) {
-          const err = await res.json();
-          message += `: ${err.message || res.statusText}`;
-        }
-        throw new Error(message);
-      }
-
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      const a = window.document.createElement("a");
       const ext = doc.filePath.split(".").pop();
       a.href = url;
       a.download = `${doc.title || `document-${doc.id}`}.${ext}`;
-      document.body.appendChild(a);
+      window.document.body.appendChild(a);
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
@@ -99,6 +99,9 @@ const MyDocuments = () => {
     }
   };
 
+  if (loading) {
+    return <p className="loading-message">กำลังโหลดเอกสารของฉัน…</p>;
+  }
   if (error) {
     return <p className="error-message">{error}</p>;
   }
@@ -107,18 +110,28 @@ const MyDocuments = () => {
     <div className="my-documents-container">
       <h2 className="page-title">เอกสารของฉัน</h2>
 
+      <div className="md-search-container">
+        <input
+          type="text"
+          className="md-search-input"
+          placeholder=" ค้นหาเอกสาร..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
       <DocumentTable
-        documents={documents}
+        documents={filteredDocs}
         onDetail={setSelectedDoc}
         onDownload={handleDownload}
       />
 
       {selectedDoc && (
         <DocumentDetailModal
-          document={{
+          doc={{
             ...selectedDoc,
             fileUrl: selectedDoc.filePath
-              ? `${API}/uploads/${selectedDoc.filePath}`
+              ? `${API}/api/my-documents/${selectedDoc.id}`
               : null,
           }}
           accessToken={accessToken}

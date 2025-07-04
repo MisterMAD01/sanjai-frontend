@@ -1,3 +1,5 @@
+// src/components/DocumentTable.jsx
+
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DocumentDetailModal from "./DocumentDetailModal";
@@ -8,45 +10,37 @@ import "./DocumentTable.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
-const DocumentTable = ({ documents, onDelete }) => {
+export default function DocumentTable({ documents, onDelete }) {
   const [selectedDoc, setSelectedDoc] = useState(null);
   const [docToDelete, setDocToDelete] = useState(null);
 
-  // ✅ Pagination state
+  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const docsPerPage = 13;
   const totalPages = Math.ceil(documents.length / docsPerPage);
   const startIndex = (currentPage - 1) * docsPerPage;
   const currentDocs = documents.slice(startIndex, startIndex + docsPerPage);
 
-  const handleDeleteClick = (doc) => {
-    setDocToDelete(doc);
-  };
-
+  const handleDeleteClick = (doc) => setDocToDelete(doc);
   const confirmDelete = () => {
     onDelete(docToDelete.id);
     setDocToDelete(null);
   };
+  const cancelDelete = () => setDocToDelete(null);
 
-  const cancelDelete = () => {
-    setDocToDelete(null);
-  };
-
-  // ✅ Short Pagination Buttons
+  // Short pagination buttons
   const getPaginationButtons = () => {
-    const maxVisibleButtons = 5;
+    const maxVisible = 5;
     const buttons = [];
 
-    if (totalPages <= maxVisibleButtons) {
+    if (totalPages <= maxVisible) {
       for (let i = 1; i <= totalPages; i++) buttons.push(i);
+    } else if (currentPage <= 3) {
+      buttons.push(1, 2, 3, "...", totalPages);
+    } else if (currentPage >= totalPages - 2) {
+      buttons.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
     } else {
-      if (currentPage <= 3) {
-        buttons.push(1, 2, 3, "...", totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        buttons.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
-      } else {
-        buttons.push(1, "...", currentPage, "...", totalPages);
-      }
+      buttons.push(1, "...", currentPage, "...", totalPages);
     }
 
     return buttons;
@@ -69,9 +63,9 @@ const DocumentTable = ({ documents, onDelete }) => {
           </thead>
           <tbody>
             {currentDocs.length > 0 ? (
-              currentDocs.map((doc, index) => (
+              currentDocs.map((doc, idx) => (
                 <tr key={doc.id}>
-                  <td>{startIndex + index + 1}</td>
+                  <td>{startIndex + idx + 1}</td>
                   <td>{doc.title}</td>
                   <td>{doc.sender || "-"}</td>
                   <td>{doc.recipient || "-"}</td>
@@ -107,42 +101,38 @@ const DocumentTable = ({ documents, onDelete }) => {
         </table>
       </div>
 
-      {/* ✅ Pagination แบบย่อ */}
       <div className="pagination">
         <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
         >
           ก่อนหน้า
         </button>
 
-        {getPaginationButtons().map((btn, index) =>
-          btn === "..." ? (
-            <span key={index} className="ellipsis">
-              ...
+        {getPaginationButtons().map((b, i) =>
+          b === "..." ? (
+            <span key={i} className="ellipsis">
+              …
             </span>
           ) : (
             <button
-              key={index}
-              onClick={() => setCurrentPage(btn)}
-              className={currentPage === btn ? "active" : ""}
+              key={i}
+              onClick={() => setCurrentPage(b)}
+              className={currentPage === b ? "active" : ""}
             >
-              {btn}
+              {b}
             </button>
           )
         )}
 
         <button
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
+          onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
           disabled={currentPage === totalPages}
         >
           ถัดไป
         </button>
       </div>
 
-      {/* ดูรายละเอียด */}
       {selectedDoc && (
         <DocumentDetailModal
           document={selectedDoc}
@@ -150,7 +140,6 @@ const DocumentTable = ({ documents, onDelete }) => {
         />
       )}
 
-      {/* ยืนยันลบ */}
       <ConfirmDeleteModal
         isOpen={!!docToDelete}
         title={docToDelete?.title}
@@ -159,7 +148,7 @@ const DocumentTable = ({ documents, onDelete }) => {
       />
     </div>
   );
-};
+}
 
 DocumentTable.propTypes = {
   documents: PropTypes.arrayOf(
@@ -173,5 +162,3 @@ DocumentTable.propTypes = {
   ).isRequired,
   onDelete: PropTypes.func.isRequired,
 };
-
-export default DocumentTable;

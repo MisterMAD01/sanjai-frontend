@@ -1,10 +1,11 @@
+// src/components/Admin/managedocuments/MemberFormModal.jsx
+
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import api from "../../../api";
 import "./MemberFormModal.css";
 
-const PREFIXES = ["กรุณาเลือกคำนำหน้า", "นาย", "นางสาว", "นาง"];
 const GENDERS = ["กรุณาเลือกเพศ", "ชาย", "หญิง", "อื่นๆ"];
 const RELIGIONS = ["กรุณาเลือกศาสนา", "พุทธ", "คริสต์", "อิสลาม", "อื่นๆ"];
 const DISTRICTS = [
@@ -29,6 +30,7 @@ const MEMBER_TYPES = [
   "สามัญ",
   "ทั่วไป",
 ];
+const STATUS_OPTIONS = ["กรุณาเลือกสถานะ", "ทำงาน", "กำลังศึกษา/นักเรียน"];
 
 export default function MemberFormModal({ onClose, onSuccess }) {
   const [formData, setFormData] = useState({
@@ -53,6 +55,8 @@ export default function MemberFormModal({ onClose, onSuccess }) {
     gpa: "",
     type: "",
     district: "",
+    status: "",
+    department: "",
   });
   const [submitting, setSubmitting] = useState(false);
 
@@ -63,8 +67,8 @@ export default function MemberFormModal({ onClose, onSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simple validation
-    const requiredFields = [
+    // Validate required
+    const req = [
       "member_id",
       "prefix",
       "full_name",
@@ -72,9 +76,10 @@ export default function MemberFormModal({ onClose, onSuccess }) {
       "religion",
       "type",
       "district",
+      "status",
     ];
-    for (const field of requiredFields) {
-      if (!formData[field]) {
+    for (let f of req) {
+      if (!formData[f]) {
         toast.warn("กรุณากรอกข้อมูลให้ครบถ้วน");
         return;
       }
@@ -84,35 +89,10 @@ export default function MemberFormModal({ onClose, onSuccess }) {
       await api.post("/api/members", formData);
       toast.success("เพิ่มสมาชิกใหม่สำเร็จ");
       onSuccess();
-      setFormData({
-        member_id: "",
-        prefix: "",
-        full_name: "",
-        nickname: "",
-        id_card: "",
-        birthday: "",
-        age: "",
-        gender: "",
-        religion: "",
-        medical_conditions: "",
-        allergy_history: "",
-        address: "",
-        phone: "",
-        facebook: "",
-        instagram: "",
-        line_id: "",
-        school: "",
-        graduation_year: "",
-        gpa: "",
-        type: "",
-        district: "",
-        status: "",
-        department: "",
-      });
+      onClose();
     } catch (err) {
-      console.error("Create member error:", err);
-      const msg = err.response?.data?.message || "ไม่สามารถเพิ่มสมาชิกได้";
-      toast.error(msg);
+      console.error(err);
+      toast.error(err.response?.data?.message || "ไม่สามารถเพิ่มสมาชิกได้");
     } finally {
       setSubmitting(false);
     }
@@ -132,6 +112,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
         <form onSubmit={handleSubmit} className="mfm-form">
           <fieldset className="mfm-section">
             <legend>ข้อมูลทั่วไป</legend>
+
             <label>
               รหัสสมาชิก
               <input
@@ -142,22 +123,19 @@ export default function MemberFormModal({ onClose, onSuccess }) {
                 disabled={submitting}
               />
             </label>
+
             <label>
               คำนำหน้า
-              <select
+              <input
+                type="text"
                 name="prefix"
                 value={formData.prefix}
                 onChange={handleChange}
                 required
                 disabled={submitting}
-              >
-                {PREFIXES.map((p) => (
-                  <option key={p} value={p === PREFIXES[0] ? "" : p}>
-                    {p}
-                  </option>
-                ))}
-              </select>
+              />
             </label>
+
             <label>
               ชื่อ–นามสกุล
               <input
@@ -168,6 +146,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
                 disabled={submitting}
               />
             </label>
+
             <label>
               ชื่อเล่น
               <input
@@ -177,6 +156,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
                 disabled={submitting}
               />
             </label>
+
             <label>
               เลขบัตรประชาชน
               <input
@@ -187,6 +167,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
                 disabled={submitting}
               />
             </label>
+
             <label>
               วันเกิด
               <input
@@ -197,6 +178,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
                 disabled={submitting}
               />
             </label>
+
             <label>
               อายุ
               <input
@@ -208,6 +190,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
                 disabled={submitting}
               />
             </label>
+
             <label>
               เพศ
               <select
@@ -224,6 +207,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
                 ))}
               </select>
             </label>
+
             <label>
               ศาสนา
               <select
@@ -240,6 +224,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
                 ))}
               </select>
             </label>
+
             <label>
               รุ่นที่
               <input
@@ -250,6 +235,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
                 disabled={submitting}
               />
             </label>
+
             <label>
               ประเภทสมาชิก
               <select
@@ -266,6 +252,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
                 ))}
               </select>
             </label>
+
             <label>
               อำเภอ
               <select
@@ -283,6 +270,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
               </select>
             </label>
           </fieldset>
+
           <fieldset className="mfm-section">
             <legend>ข้อมูลสุขภาพ</legend>
             <label>
@@ -304,6 +292,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
               />
             </label>
           </fieldset>
+
           <fieldset className="mfm-section">
             <legend>ข้อมูลติดต่อ</legend>
             <label>
@@ -352,18 +341,25 @@ export default function MemberFormModal({ onClose, onSuccess }) {
               />
             </label>
           </fieldset>
+
           <fieldset className="mfm-section">
             <legend>ข้อมูลสถานศึกษา/ที่ทำงาน</legend>
             <label>
               สถานะปัจจุบัน
-              <input
+              <select
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
+                required
                 disabled={submitting}
-              />
+              >
+                {STATUS_OPTIONS.map((s) => (
+                  <option key={s} value={s === STATUS_OPTIONS[0] ? "" : s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
             </label>
-
             <label>
               สถาบัน/ที่ทำงาน
               <input
@@ -394,6 +390,7 @@ export default function MemberFormModal({ onClose, onSuccess }) {
               />
             </label>
           </fieldset>
+
           <button type="submit" disabled={submitting}>
             {submitting ? "กำลังบันทึก..." : "เพิ่มสมาชิก"}
           </button>

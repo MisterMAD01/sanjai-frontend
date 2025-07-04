@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import "./UploadFormModal.css";
 
 const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
@@ -34,8 +35,8 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
   };
 
   const selectAll = () => {
-    const allIds = filtered.map((m) => m.member_id);
-    setSelectedIds(allIds);
+    const all = filtered.map((m) => m.member_id);
+    setSelectedIds(all);
   };
 
   const clearAll = () => setSelectedIds([]);
@@ -49,7 +50,7 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
       formData.append("title", title);
       formData.append("description", description);
       formData.append("file", file);
-      formData.append("memberId", id);
+      formData.append("recipientId", id);
       onSubmit(formData);
     });
 
@@ -57,8 +58,8 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
   };
 
   return (
-    <div className="upload-modal-overlay">
-      <div className="upload-modal">
+    <div className="upload-modal-overlay" onClick={onClose}>
+      <div className="upload-modal" onClick={(e) => e.stopPropagation()}>
         <h3>อัปโหลดเอกสาร</h3>
         <form onSubmit={handleSubmit}>
           <input
@@ -66,6 +67,7 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
             placeholder="ชื่อเอกสาร"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            required
           />
 
           <textarea
@@ -75,7 +77,11 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
             rows={3}
           />
 
-          <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+          <input
+            type="file"
+            onChange={(e) => setFile(e.target.files[0])}
+            required
+          />
 
           <div className="filter-row">
             <select
@@ -172,6 +178,23 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
       </div>
     </div>
   );
+};
+
+UploadFormModal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  members: PropTypes.arrayOf(
+    PropTypes.shape({
+      member_id: PropTypes.string.isRequired,
+      full_name: PropTypes.string,
+      district: PropTypes.string,
+      graduation_year: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]),
+      type: PropTypes.string,
+    })
+  ),
 };
 
 export default UploadFormModal;
