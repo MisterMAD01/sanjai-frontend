@@ -108,21 +108,6 @@ const EditActivityModal = ({ formData, setFormData, onSubmit, onClose }) => {
             </p>
           )}
 
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              name="register_open"
-              checked={!!formData.register_open}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  register_open: e.target.checked,
-                })
-              }
-            />
-            เปิดรับสมัคร
-          </label>
-
           <button type="submit" className="activity-btn create">
             {formData.id ? "บันทึกการแก้ไข" : "สร้างกิจกรรม"}
           </button>

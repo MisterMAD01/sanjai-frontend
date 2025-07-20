@@ -51,22 +51,24 @@
 
 .button-group button {
   padding: 0.6rem 1.2rem;
-  background: #b0001c;
+  background: #007bff; /* เปลี่ยนจาก #b0001c เป็นสีฟ้าน้ำทะเล */
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.25s, transform 0.15s;
 }
 
 .button-group button:hover:not(:disabled) {
-  background: #930019;
+  background: #0056b3; /* สีเข้มขึ้นเมื่อ hover */
+  transform: scale(1.03); /* เพิ่มเอฟเฟกต์ขยายเล็กน้อย */
 }
 
 .button-group button:disabled {
-  background: #ccc;
+  background: #ced4da;
   cursor: not-allowed;
+  color: #6c757d;
 }
 
 /* Modal */
