@@ -1,4 +1,3 @@
-/* Container รวมทั้ง 3 ตาราง */
 .member-table-container {
   display: flex;
   flex-wrap: wrap;
@@ -6,7 +5,6 @@
   margin-top: 30px;
 }
 
-/* แต่ละกล่องตาราง */
 .member-table-section {
   flex: 1;
   min-width: 300px;
@@ -17,7 +15,6 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-/* หัวแต่ละตาราง */
 .member-table-section h3 {
   margin-bottom: 12px;
   color: #b0001c;
@@ -25,14 +22,36 @@
   font-weight: bold;
 }
 
-/* ตารางหลัก */
 .member-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; /* ✅ กระจายคอลัมน์เท่ากัน */
+  table-layout: fixed;
 }
 
-/* หัวตารางและข้อมูล */
+.member-table thead,
+.member-table tbody {
+  display: block;
+}
+
+.member-table thead tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.member-table tbody {
+  max-height: 320px; /* ประมาณ 10 แถว */
+  overflow-y: auto;
+  display: block;
+  width: 100%;
+}
+
+.member-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
 .member-table th,
 .member-table td {
   padding: 10px 12px;
@@ -40,9 +59,10 @@
   text-align: center;
   font-size: 0.95rem;
   word-break: break-word;
+  width: 33.33%; /* กำหนดให้แต่ละคอลัมน์เท่ากัน 3 คอลัมน์ */
+  box-sizing: border-box;
 }
 
-/* สีหัวตาราง */
 .member-table th {
   background-color: #b0001c;
   color: white;

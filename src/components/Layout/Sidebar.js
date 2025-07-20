@@ -14,6 +14,7 @@ import {
   faUserCircle,
   faDatabase,
   faCog,
+  faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = ({ role, collapsed }) => {
@@ -124,6 +125,14 @@ const Sidebar = ({ role, collapsed }) => {
                   <FontAwesomeIcon icon={faUsers} />
                   {!collapsed && "ข้อมูลสมาชิกของฉัน"}
                 </button>
+                <button
+                  onClick={() => handleNavigate("/my-Activity")}
+                  className={isActive("/my-Activity") ? "active" : ""}
+                  title="ข้อมูลสมาชิกของฉัน"
+                >
+                  <FontAwesomeIcon icon={faCalendarAlt} />
+                  {!collapsed && "กิจกรรมของฉัน"}
+                </button>
               </>
             )}
           </div>
@@ -159,7 +168,14 @@ const Sidebar = ({ role, collapsed }) => {
                 <FontAwesomeIcon icon={faFileAlt} />
                 {!collapsed && "จัดการเอกสาร"}
               </button>
-
+              <button
+                onClick={() => handleNavigate("/manage-Activity")}
+                className={isActive("/manage-Activity") ? "active" : ""}
+                title="จัดการกิจกรรม"
+              >
+                <FontAwesomeIcon icon={faCalendarAlt} />
+                {!collapsed && "จัดการกิจกรรม"}
+              </button>
               <button
                 onClick={() => handleNavigate("/data-management")}
                 className={isActive("/data-management") ? "active" : ""}

@@ -1,0 +1,196 @@
+.activity-page {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  color: #333;
+}
+
+.activity-page h1 {
+  font-size: 2rem;
+  color: #b0001c;
+  margin-bottom: 1.5rem;
+}
+
+.activity-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.activity-card h2,
+.activity-card h3,
+.activity-card h4 {
+  color: #b0001c;
+  margin-bottom: 1rem;
+}
+
+.activity-form label {
+  display: block;
+  margin: 0.6rem 0 0.3rem 0;
+  font-weight: 600;
+}
+
+.activity-form input[type="text"],
+.activity-form input[type="date"],
+.activity-form textarea,
+.activity-form input[type="file"] {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.activity-form input[type="text"]:focus,
+.activity-form input[type="date"]:focus,
+.activity-form textarea:focus,
+.activity-form input[type="file"]:focus {
+  outline: none;
+  border-color: #b0001c;
+  box-shadow: 0 0 0 2px rgba(176, 0, 28, 0.2);
+}
+
+.activity-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.activity-btn {
+  padding: 0.6rem 1.4rem;
+  background: #b0001c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+}
+
+.activity-btn:hover {
+  background: #930019;
+}
+
+.activity-btn.create {
+  margin-bottom: 1rem;
+}
+
+.applicant-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+.applicant-section ul {
+  list-style: inside disc;
+  padding-left: 1rem;
+}
+
+.applicant-section p {
+  font-style: italic;
+  color: #666;
+}
+
+img {
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .activity-card {
+    padding: 1rem;
+  }
+
+  .activity-btn {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 6px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-width: 36px;
+  font-size: 14px;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #4caf50;
+  color: white;
+  border-color: #4caf50;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pagination button.active,
+.pagination button.active:hover {
+  background-color: #2196f3;
+  color: white;
+  border-color: #2196f3;
+  font-weight: bold;
+  cursor: default;
+}

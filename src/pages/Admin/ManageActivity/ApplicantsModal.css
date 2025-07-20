@@ -1,0 +1,108 @@
+.applicant-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.applicant-modal-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 6px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.applicant-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.applicant-modal-search {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-bottom: 1rem;
+}
+
+.applicant-modal-search:focus {
+  outline: none;
+  border-color: #b0001c;
+  box-shadow: 0 0 0 2px rgba(176, 0, 28, 0.2);
+}
+
+.applicant-modal-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  flex-wrap: wrap;
+}
+
+.applicant-modal-pagination button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-width: 36px;
+  font-size: 14px;
+}
+
+.applicant-modal-pagination button:hover:not(:disabled) {
+  background-color: #4caf50;
+  color: white;
+  border-color: #4caf50;
+}
+
+.applicant-modal-pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.applicant-modal-pagination button.active,
+.applicant-modal-pagination button.active:hover {
+  background-color: #2196f3;
+  color: white;
+  border-color: #2196f3;
+  font-weight: bold;
+  cursor: default;
+}
+.applicant-modal-download-btn {
+  padding: 0.6rem 1.4rem;
+  background-color: #b0001c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.applicant-modal-download-btn:hover {
+  background-color: #930019;
+}
