@@ -77,3 +77,35 @@
 .eam-create {
   margin-bottom: 1rem;
 }
+@media (max-width: 600px) {
+  .eam-modal-overlay {
+    margin-top: 4rem;
+  }
+  .eam-modal-content {
+    padding: 16px 20px;
+    width: 95%;
+    margin-top: 4rem;
+  }
+
+  .eam-activity-form label {
+    font-size: 0.95rem;
+  }
+
+  .eam-activity-form input[type="text"],
+  .eam-activity-form input[type="date"],
+  .eam-activity-form textarea,
+  .eam-activity-form input[type="file"] {
+    font-size: 0.95rem;
+    padding: 0.45rem 0.65rem;
+  }
+
+  .eam-activity-btn {
+    width: 100%;
+    margin-right: 0;
+    margin-top: 0.75rem;
+  }
+
+  .eam-create {
+    margin-bottom: 0.75rem;
+  }
+}

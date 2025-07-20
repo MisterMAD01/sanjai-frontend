@@ -203,3 +203,60 @@
   outline: none;
   border-color: #b0001c;
 }
+@media (max-width: 600px) {
+  .mam-modal-content.mam-manage-all {
+    width: 95%;
+    padding: 1rem 0.75rem;
+    max-height: 90vh;
+    margin-top: 4rem;
+  }
+
+  .mam-modal-header h4 {
+    text-align: center;
+    width: 100%;
+  }
+
+  .mam-bulk-header-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .mam-modal-body {
+    padding: 0.5rem;
+  }
+
+  .mam-modal-footer {
+    padding: 1rem 0.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mam-pagination {
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    padding: 0.5rem;
+  }
+
+  .mam-search-container {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding: 0.5rem 0;
+  }
+
+  .mam-search-input {
+    width: 100%;
+  }
+
+  .mam-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .mam-manage-all-table th,
+  .mam-manage-all-table td {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
+}

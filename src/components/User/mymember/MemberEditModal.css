@@ -183,3 +183,32 @@
 .member-edit-btn-submit:hover {
   background: #a10000;
 }
+
+/* Responsive สำหรับหน้าจอขนาดเล็ก */
+@media (max-width: 768px) {
+  .member-edit-modal {
+    width: 95%; /* กินพื้นที่หน้าจอมากขึ้น */
+    max-width: 95vw; /* จำกัดไม่เกิน 95% ของ viewport width */
+    max-height: 90vh; /* สูงสุดไม่เกิน 90% ของ viewport height */
+    margin: 0 3rem; /* เว้นขอบซ้ายขวานิดหน่อย */
+    margin-top: 4rem;
+    overflow-y: auto; /* เลื่อนใน modal ถ้าเนื้อหายาว */
+    padding: 1rem; /* ลด padding เล็กน้อย */
+  }
+
+  .member-edit-avatar {
+    grid-row: 1 / 3;
+    grid-column: 1 / 2;
+    margin-right: 1rem;
+  }
+
+  /* ปรับปุ่ม tab ให้ยืดเต็มและเลื่อนแนวนอน */
+  .member-edit-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .member-edit-tab-btn {
+    flex: none;
+    min-width: 100px;
+  }
+}

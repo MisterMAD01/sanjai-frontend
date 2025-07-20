@@ -66,14 +66,6 @@ const Sidebar = ({ role, collapsed }) => {
 
   return (
     <>
-      {/* Toggle Button for Mobile & iPad: แสดงเฉพาะตอนเมนูปิด */}
-      {!isMobileOpen && (
-        <div className="mobile-toggle-btn" onClick={toggleMobileSidebar}>
-          {/* ใช้ Unicode Hamburger */}
-          เมนู ☰
-        </div>
-      )}
-
       <div
         ref={sidebarRef}
         className={`sidebar ${collapsed ? "collapsed" : ""} ${

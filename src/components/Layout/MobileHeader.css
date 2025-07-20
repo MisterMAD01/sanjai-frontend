@@ -1,0 +1,95 @@
+.mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* ชิดซ้ายทั้งหมด */
+  background-color: #b0001c;
+  color: white;
+  padding: 0 16px; /* ระยะซ้ายขวา */
+  height: 60px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+  gap: 12px; /* เว้นระยะระหว่างปุ่มเมนู กับ title */
+}
+
+.mobile-menu-btn {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.mobile-header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* ระยะระหว่างโลโก้กับข้อความ */
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap; /* ป้องกันข้อความตัดบรรทัด */
+}
+
+.mobile-logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.mobile-profile {
+  position: relative;
+  cursor: pointer;
+  margin-left: auto; /* ดันโปรไฟล์ไปชิดขวา */
+}
+
+.mobile-profile-avatar,
+.mobile-profile-initial {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: white;
+  color: #b0001c;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.mobile-profile-dropdown {
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background: white;
+  color: #b0001c;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+  z-index: 1200;
+}
+
+.mobile-profile-dropdown button {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #b0001c;
+}
+
+.mobile-profile-dropdown button:hover {
+  background-color: #f0f0f0;
+}
+
+/* ซ่อนไปในหน้าจอ desktop */
+@media (min-width: 769px) {
+  .mobile-header {
+    display: none;
+  }
+}

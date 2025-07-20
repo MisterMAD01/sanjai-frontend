@@ -229,8 +229,11 @@ const ManageActivityPage = () => {
           style={{
             padding: "6px 10px",
             fontSize: 16,
-            flexGrow: 1,
-            maxWidth: 300,
+            width: "100%", // เต็มพื้นที่พ่อ container
+            maxWidth: "100%", // ไม่เกิน 100%
+            boxSizing: "border-box",
+            borderRadius: "4px",
+            border: "1px solid #ccc",
           }}
         />
       </div>

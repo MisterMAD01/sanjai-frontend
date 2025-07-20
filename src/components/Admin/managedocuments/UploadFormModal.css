@@ -116,3 +116,44 @@
 .form-buttons button:hover {
   background: #960019;
 }
+@media (max-width: 600px) {
+  .upload-modal {
+    padding: 16px;
+    width: 95%;
+    max-height: 85vh;
+    margin-top: 4rem;
+  }
+
+  .filter-row,
+  .select-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .select-controls button {
+    width: 100%;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-buttons button {
+    width: 100%;
+  }
+
+  .member-checkbox-table th,
+  .member-checkbox-table td {
+    font-size: 13px;
+    padding: 6px;
+  }
+
+  .upload-modal input[type="text"],
+  .upload-modal textarea,
+  .upload-modal input[type="file"],
+  .upload-modal select {
+    font-size: 13px;
+    padding: 6px;
+  }
+}

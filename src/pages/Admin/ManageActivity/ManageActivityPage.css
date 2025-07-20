@@ -194,3 +194,40 @@ img {
   font-weight: bold;
   cursor: default;
 }
+/* Responsive for tablets and small desktops */
+@media (max-width: 1024px) {
+  .activity-card {
+    padding: 1rem;
+  }
+
+  .activity-form input[type="text"],
+  .activity-form input[type="date"],
+  .activity-form textarea,
+  .activity-form input[type="file"] {
+    font-size: 0.9rem;
+  }
+
+  .activity-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+  }
+}
+
+/* Responsive for mobile phones */
+@media (max-width: 480px) {
+  .activity-btn {
+    width: 100%;
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .activity-card {
+    padding: 1rem;
+  }
+
+  .activity-form input,
+  .activity-form textarea {
+    font-size: 0.95rem;
+  }
+}

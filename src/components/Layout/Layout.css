@@ -1,17 +1,74 @@
-.app-layout {
-  display: flex;
+/* ปุ่ม toggle สำหรับ mobile: ซ่อนใน desktop */
+.mobile-toggle-btn {
+  display: none;
 }
 
-.sidebar-collapsed .layout-main {
-  margin-left: 80px;
+/* ----------- DESKTOP ---------- */
+.sidebar {
+  width: 250px;
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #b0001c;
+  color: white;
+  transition: transform 0.3s ease, width 0.3s ease;
+  z-index: 999;
 }
 
+/* Sidebar ย่อบน desktop */
+.sidebar.collapsed {
+  width: 60px;
+}
+
+/* เนื้อหาเลื่อนตาม sidebar */
 .layout-main {
-  flex-grow: 1;
   margin-left: 250px;
   transition: margin-left 0.3s ease;
 }
 
-.layout-content {
-  padding: 1rem;
+/* ถ้า sidebar ย่อ */
+.sidebar-collapsed .layout-main {
+  margin-left: 60px;
+}
+
+/* ----------- MOBILE & TABLET ---------- */
+/* ----------- MOBILE & TABLET ---------- */
+@media (max-width: 768px) {
+  /* SidebarMobile */
+  .sm-sidebar-mobile {
+    position: fixed;
+    top: 60px; /* ให้เริ่มใต้ MobileHeader ที่สูง 60px */
+    left: 0;
+    width: 250px;
+    height: calc(100vh - 60px);
+    background-color: #b0001c;
+    color: white;
+    transition: transform 0.3s ease;
+    z-index: 1200;
+    overflow-y: auto;
+    transform: translateX(-100%);
+  }
+
+  .sm-sidebar-mobile.sm-open {
+    transform: translateX(0);
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
+  }
+
+  /* MobileHeader */
+  .mobile-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1300; /* ให้อยู่บนสุด */
+  }
+
+  /* เนื้อหาหลัก เว้นพื้นที่ด้านบนและซ้ายไม่ถูก sidebar ทับ */
+  .layout-main {
+    margin-left: 0 !important;
+    margin-top: 60px; /* เว้น header */
+    height: calc(100vh - 60px);
+  }
 }
