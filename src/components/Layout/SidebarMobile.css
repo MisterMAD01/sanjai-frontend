@@ -1,0 +1,90 @@
+.sm-sidebar-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80vw;
+  height: 100vh;
+  background-color: #b0001c;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  padding: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  /* เพิ่ม transition ให้ซ่อน/แสดงแบบนุ่มนวล */
+  transition: transform 0.3s ease-in-out;
+  /* เริ่มต้นเลื่อนออกนอกจอ */
+  transform: translateX(-100%);
+}
+
+.sm-sidebar-mobile.sm-open {
+  /* เลื่อนเข้ามาแสดง */
+  transform: translateX(0);
+}
+
+.sm-sidebar-mobile.sm-closed {
+  /* เลื่อนออกไปซ้าย */
+  transform: translateX(-100%);
+}
+
+.sm-sidebar-mobile nav {
+  flex-grow: 1; /* ให้เนื้อหาขยายเต็มความสูง */
+  overflow-y: auto; /* ให้เลื่อนแค่เนื้อหาภายใน */
+  -webkit-overflow-scrolling: touch; /* smooth scroll บน iOS */
+}
+
+.sm-open {
+  left: 0;
+}
+
+.sm-closed {
+  left: -100%;
+}
+
+.sm-section-title {
+  font-size: 0.75rem;
+  color: #ffeef1;
+  margin: 0.5rem 1rem;
+  text-transform: uppercase;
+}
+
+/* ปุ่มเมนูทั่วไป */
+.sm-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  border: none;
+  background-color: #b0001c; /* พื้นหลังแดง */
+  color: #fff; /* ตัวอักษรขาว */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sm-button svg {
+  margin-right: 0.5rem;
+  color: inherit;
+}
+
+/* ปุ่ม active */
+.sm-button.sm-active {
+  background-color: #fff; /* พื้นหลังขาว */
+  color: #b0001c; /* ตัวอักษรแดง */
+}
+
+/* hover เหมือน active */
+.sm-button:hover {
+  background-color: #fff;
+  color: #b0001c;
+}
+/* ซ่อนไปในหน้าจอ desktop */
+@media (min-width: 769px) {
+  .mobile-header {
+    display: none;
+  }
+}

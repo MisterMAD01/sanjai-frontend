@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./UploadFormModal.css";
 
@@ -12,12 +12,18 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
     graduation_year: "",
     type: "",
   });
+  const [searchTerm, setSearchTerm] = useState("");
 
   const unique = (key) => [
     ...new Set(members.map((m) => m[key]).filter(Boolean)),
   ];
 
+  // combined search + filter
   const filtered = members.filter((m) => {
+    const term = searchTerm.toLowerCase();
+    const matchesSearch =
+      m.full_name.toLowerCase().includes(term) ||
+      m.member_id.toString().toLowerCase().includes(term);
     const matchDistrict = filter.district
       ? m.district === filter.district
       : true;
@@ -25,7 +31,7 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
       ? String(m.graduation_year) === filter.graduation_year
       : true;
     const matchType = filter.type ? m.type === filter.type : true;
-    return matchDistrict && matchGeneration && matchType;
+    return matchesSearch && matchDistrict && matchGeneration && matchType;
   });
 
   const toggleSelect = (id) => {
@@ -34,11 +40,7 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
     );
   };
 
-  const selectAll = () => {
-    const all = filtered.map((m) => m.member_id);
-    setSelectedIds(all);
-  };
-
+  const selectAll = () => setSelectedIds(filtered.map((m) => m.member_id));
   const clearAll = () => setSelectedIds([]);
 
   const handleSubmit = (e) => {
@@ -61,6 +63,7 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
     <div className="upload-modal-overlay" onClick={onClose}>
       <div className="upload-modal" onClick={(e) => e.stopPropagation()}>
         <h3>อัปโหลดเอกสาร</h3>
+
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -125,6 +128,15 @@ const UploadFormModal = ({ onClose, onSubmit, members = [] }) => {
             </select>
           </div>
 
+          {/* Search Box under filters */}
+          <input
+            type="text"
+            placeholder="ค้นหาชื่อ หรือ เลขที่สมาชิก..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="upload-search"
+          />
+
           <div className="select-controls">
             <button type="button" onClick={selectAll}>
               เลือกทั้งหมด
@@ -185,7 +197,8 @@ UploadFormModal.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(
     PropTypes.shape({
-      member_id: PropTypes.string.isRequired,
+      member_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        .isRequired,
       full_name: PropTypes.string,
       district: PropTypes.string,
       graduation_year: PropTypes.oneOfType([

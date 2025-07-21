@@ -136,3 +136,49 @@
   text-align: center;
   margin-bottom: 1rem;
 }
+@media (max-width: 768px) {
+  .mmi-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .mmi-avatar {
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
+  }
+
+  .mmi-name {
+    font-size: 1.4rem;
+  }
+
+  .mmi-id {
+    font-size: 1rem;
+    justify-content: center;
+  }
+
+  .mmi-body {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .mmi-section {
+    flex: 1 1 100%;
+  }
+
+  .mmi-section p {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+
+  .mmi-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .mmi-edit-btn {
+    width: 100%;
+    font-size: 1rem;
+  }
+}

@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   font-family: "Kanit", sans-serif;
+  padding: 20px;
 }
 
 /* กล่อง login */
@@ -13,10 +14,11 @@
   background: white;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  padding: 40px;
+  padding: 40px 30px;
   max-width: 420px;
-  width: 90%;
+  width: 100%;
   text-align: center;
+  box-sizing: border-box;
 }
 
 /* โลโก้และชื่อระบบ */
@@ -37,6 +39,7 @@
   font-size: 20px;
   font-weight: 600;
   color: #b0001c;
+  margin-bottom: 4px;
 }
 
 .login-app-desc {
@@ -49,6 +52,7 @@
   font-size: 22px;
   color: #333;
   margin-bottom: 24px;
+  font-weight: 600;
 }
 
 /* ช่องกรอก */
@@ -64,23 +68,27 @@
   border-radius: 10px;
   font-size: 16px;
   transition: border 0.2s;
+  box-sizing: border-box;
 }
 
 .login-input:focus {
   border-color: #b0001c;
   outline: none;
-  box-shadow: 0 0 0 2px rgba(176, 0, 28, 0.1);
+  box-shadow: 0 0 0 2px rgba(176, 0, 28, 0.15);
 }
 
+/* ไอคอนในช่องกรอก */
 .login-input-icon {
   position: absolute;
   top: 50%;
   left: 12px;
   transform: translateY(-50%);
   color: #999;
-  font-size: 14px;
+  font-size: 16px;
+  pointer-events: none;
 }
 
+/* ปุ่มโชว์/ซ่อนรหัสผ่าน */
 .login-input-eye {
   position: absolute;
   top: 50%;
@@ -88,7 +96,8 @@
   transform: translateY(-50%);
   cursor: pointer;
   color: #999;
-  font-size: 14px;
+  font-size: 16px;
+  user-select: none;
 }
 
 /* ปุ่มเข้าสู่ระบบ */
@@ -103,9 +112,10 @@
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.2s;
+  user-select: none;
 }
 
-.login-btn:hover {
+.login-btn:hover:not(:disabled) {
   background-color: #9c0019;
 }
 
@@ -119,4 +129,26 @@
   margin-top: 16px;
   color: red;
   font-size: 14px;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 30px 20px;
+    max-width: 100%;
+    border-radius: 12px;
+  }
+
+  .login-title {
+    font-size: 20px;
+  }
+
+  .login-input {
+    font-size: 14px;
+  }
+
+  .login-btn {
+    font-size: 14px;
+  }
 }

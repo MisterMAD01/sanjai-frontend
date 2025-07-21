@@ -9,15 +9,15 @@ const groupBy = (arr = [], key) =>
     return acc;
   }, {});
 
-// ตารางแต่ละกลุ่ม
-const TableSection = ({ title, data }) => (
+// ตารางแต่ละกลุ่ม (ปรับเพิ่ม prop columnTitle)
+const TableSection = ({ title, data, columnTitle }) => (
   <div className="member-table-section">
     <h3>{title}</h3>
     <table className="member-table">
       <thead>
         <tr>
           <th>ลำดับ</th>
-          <th>ประเภท</th>
+          <th>{columnTitle}</th>
           <th>จำนวน</th>
         </tr>
       </thead>
@@ -34,7 +34,7 @@ const TableSection = ({ title, data }) => (
   </div>
 );
 
-// ✅ Component หลัก
+// Component หลัก
 const MemberTable = ({ members = [], selectedType = "ทั้งหมด" }) => {
   const filtered =
     selectedType === "ทั้งหมด"
@@ -47,9 +47,9 @@ const MemberTable = ({ members = [], selectedType = "ทั้งหมด" }) =
 
   return (
     <div className="member-table-container">
-      <TableSection title="ตามอำเภอ" data={byDistrict} />
-      <TableSection title="ตามรุ่น" data={byGeneration} />
-      <TableSection title="ตามเพศ" data={byGender} />
+      <TableSection title="ตามอำเภอ" data={byDistrict} columnTitle="อำเภอ" />
+      <TableSection title="ตามรุ่น" data={byGeneration} columnTitle="รุ่น" />
+      <TableSection title="ตามเพศ" data={byGender} columnTitle="เพศ" />
     </div>
   );
 };

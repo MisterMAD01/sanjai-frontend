@@ -11,11 +11,13 @@ import Profile from "../pages/user/MyProfileuser";
 import MyMemberInfo from "../pages/user/MyMemberInfo";
 import Settings from "../pages/SettingsPage";
 import MyDocuments from "../pages/user/MyDocuments";
+import MyActivity from "../pages/user/MyActivity/MyActivityPage";
 
 import ManageAccounts from "../pages/Admin/ManageAccounts";
 import ManageMember from "../pages/Admin/ManageMember";
 import ManageDocuments from "../pages/Admin/ManageDocuments";
 import DataManagement from "../pages/Admin/DataManagement";
+import ManageActivity from "../pages/Admin/ManageActivity/ManageActivityPage";
 
 import Layout from "../components/Layout/Layout";
 
@@ -40,6 +42,7 @@ export default function AppRoutes() {
                 <Route path="my-member-info" element={<MyMemberInfo />} />
                 <Route path="settings" element={<Settings />} />
                 <Route path="my-documents" element={<MyDocuments />} />
+                <Route path="my-activity" element={<MyActivity />} />
 
                 {/* Admin-only */}
                 <Route
@@ -71,6 +74,14 @@ export default function AppRoutes() {
                   element={
                     <AdminRoute>
                       <ManageDocuments />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="manage-activity"
+                  element={
+                    <AdminRoute>
+                      <ManageActivity />
                     </AdminRoute>
                   }
                 />

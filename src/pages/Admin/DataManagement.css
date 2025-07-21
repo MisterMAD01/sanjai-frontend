@@ -270,3 +270,12 @@
   color: #777;
   font-style: italic;
 }
+@media (max-width: 768px) {
+  .summary-cards {
+    flex-direction: column;
+  }
+
+  .summary-cards .card {
+    width: 100%;
+  }
+}
