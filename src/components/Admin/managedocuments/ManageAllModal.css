@@ -207,8 +207,9 @@
   .mam-modal-content.mam-manage-all {
     width: 95%;
     padding: 1rem 0.75rem;
-    max-height: 90vh;
-    margin-top: 4rem;
+    max-height: calc(100vh - 5rem); /* ✅ ปรับตรงนี้ */
+    margin-top: 6rem;
+    margin-bottom: 2rem; /* ✅ เพิ่มตรงนี้ */
   }
 
   .mam-modal-header h4 {

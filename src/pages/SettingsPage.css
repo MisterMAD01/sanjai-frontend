@@ -160,7 +160,13 @@
   .sps-grid {
     grid-template-columns: 1fr;
   }
-  .sps-heading {
-    font-size: 1.25rem;
+
+  .sps-grid {
+    padding: 0 1rem;
+  }
+
+  .sps-field input {
+    width: 100%; /* เต็มความกว้าง container */
+    max-width: 100%; /* ลบข้อจำกัด max-width */
   }
 }

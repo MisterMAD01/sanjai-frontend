@@ -112,7 +112,11 @@ const EditActivityModal = ({ formData, setFormData, onSubmit, onClose }) => {
             {formData.id ? "บันทึกการแก้ไข" : "สร้างกิจกรรม"}
           </button>
 
-          <button type="button" onClick={onClose} style={{ marginLeft: 10 }}>
+          <button
+            type="button"
+            onClick={onClose}
+            className="activity-btn create"
+          >
             ยกเลิก
           </button>
         </form>

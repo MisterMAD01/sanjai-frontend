@@ -106,10 +106,14 @@
 }
 
 /* ปรับขนาดบนหน้าจอแคบ */
-@media (max-width: 480px) {
+@media (max-width: 580px) {
+  .mfm-overlay {
+    padding-top: 5rem;
+  }
   .mfm-modal {
     width: 95%;
     padding: 1rem;
+    max-height: calc(100vh - 6rem);
   }
   .mfm-form {
     gap: 0.75rem;

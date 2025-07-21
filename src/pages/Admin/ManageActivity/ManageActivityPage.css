@@ -231,3 +231,18 @@ img {
     font-size: 0.95rem;
   }
 }
+@media (max-width: 600px) {
+  .modal-overlay {
+    margin-top: 1rem; /* ขยับ modal ลงสำหรับมือถือ */
+  }
+
+  .modal-content {
+    padding: 16px 20px;
+    width: 94%;
+    margin-top: 2rem;
+  }
+
+  .activity-btn.create {
+    margin-bottom: 0.75rem;
+  }
+}

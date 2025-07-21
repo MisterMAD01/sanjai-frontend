@@ -59,7 +59,7 @@ const ActivityList = ({
 
           <button
             className="activity-btn delete"
-            style={{ backgroundColor: "red", color: "white", marginLeft: 10 }}
+            style={{ backgroundColor: "red", color: "white" }}
             onClick={() => onDelete(activity.id, activity.name)}
           >
             ลบกิจกรรม

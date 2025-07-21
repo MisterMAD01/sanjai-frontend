@@ -32,19 +32,13 @@ const SidebarMobile = ({ role, isOpen, setIsOpen }) => {
 
   const isActive = (path) => location.pathname.startsWith(path);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-    closeSidebar();
-  };
-
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
         isOpen &&
         sidebarRef.current &&
         !sidebarRef.current.contains(e.target) &&
-        e.target.closest(".mobile-toggle-btn") === null
+        e.target.closest(".mobile-menu-btn") === null
       ) {
         setIsOpen(false);
       }

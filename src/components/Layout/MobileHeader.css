@@ -12,14 +12,19 @@
   left: 0;
   z-index: 1100;
   gap: 12px; /* เว้นระยะระหว่างปุ่มเมนู กับ title */
+  padding-left: 50px;
 }
 
 .mobile-menu-btn {
+  position: fixed; /* ตำแหน่งคงที่ */
+  top: 12px; /* ระยะจากบน */
+  left: 16px; /* ระยะจากซ้าย */
   font-size: 1.5rem;
   background: none;
   border: none;
   color: white;
   cursor: pointer;
+  z-index: 1300; /* ให้อยู่บนสุด */
   flex-shrink: 0;
 }
 
@@ -33,10 +38,11 @@
 }
 
 .mobile-logo {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 6px;
   object-fit: cover;
+  margin-bottom: 8px;
 }
 
 .mobile-profile {

@@ -8,9 +8,24 @@
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   padding: 1rem;
-  overflow: hidden; /* ซ่อน scroll ที่ Sidebar ตัวเอง */
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+
+  /* เพิ่ม transition ให้ซ่อน/แสดงแบบนุ่มนวล */
+  transition: transform 0.3s ease-in-out;
+  /* เริ่มต้นเลื่อนออกนอกจอ */
+  transform: translateX(-100%);
+}
+
+.sm-sidebar-mobile.sm-open {
+  /* เลื่อนเข้ามาแสดง */
+  transform: translateX(0);
+}
+
+.sm-sidebar-mobile.sm-closed {
+  /* เลื่อนออกไปซ้าย */
+  transform: translateX(-100%);
 }
 
 .sm-sidebar-mobile nav {
