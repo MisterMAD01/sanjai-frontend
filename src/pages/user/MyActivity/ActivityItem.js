@@ -15,28 +15,40 @@ const ActivityItem = ({
     return `${day}/${month}/${year}`;
   })();
 
+  const isRegistrationClosed = activity.register_open === 0;
+
   return (
     <li className="activity-item">
       <div className="activity-info">
         <h3>{activity.name}</h3>
         <p>วันที่จัด: {formattedDate}</p>
         <p>สถานที่: {activity.location}</p>
-        <p>{activity.detail}</p>
+        <p>รายละเอียด: {activity.detail}</p>
+
+        {/* สถานะกิจกรรม */}
+        <p className={`status ${isRegistrationClosed ? "closed" : "open"}`}>
+          สถานะ: {isRegistrationClosed ? "ปิดรับสมัคร" : "เปิดรับสมัคร"}
+        </p>
 
         <div className="button-group">
-          <button
-            disabled={isRegistering || isRegistered}
-            onClick={() => onRegisterClick(activity.id)}
-          >
-            {isRegistered
-              ? "สมัครแล้ว"
-              : isRegistering
-              ? "กำลังลงทะเบียน..."
-              : "สมัครกิจกรรม"}
-          </button>
+          {/* เงื่อนไขแสดงปุ่มสมัคร */}
+          {!isRegistrationClosed && (
+            <button
+              disabled={isRegistering || isRegistered}
+              onClick={() => onRegisterClick(activity.id)}
+            >
+              {isRegistered
+                ? "สมัครแล้ว"
+                : isRegistering
+                ? "กำลังลงทะเบียน..."
+                : "สมัครกิจกรรม"}
+            </button>
+          )}
+
           <button onClick={() => onOpenModal("schedule", activity)}>
             กำหนดการ
           </button>
+
           {isRegistered && (
             <button onClick={() => onOpenModal("qr", activity)}>
               QR code เข้าไลน์กลุ่ม

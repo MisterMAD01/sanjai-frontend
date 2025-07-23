@@ -8,11 +8,16 @@ const ActivityList = ({
   onRegisterClick,
   onOpenModal,
 }) => {
-  if (activities.length === 0) return <p>ไม่มีกิจกรรมเปิดรับสมัครในขณะนี้</p>;
+  if (activities.length === 0) return <p>ยังไม่มีกิจกรรม</p>;
+
+  // เรียงกิจกรรมตามวันที่ (ใหม่สุดอยู่บน)
+  const sortedActivities = [...activities].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
 
   return (
     <ul>
-      {activities.map((activity) => (
+      {sortedActivities.map((activity) => (
         <ActivityItem
           key={activity.id}
           activity={activity}

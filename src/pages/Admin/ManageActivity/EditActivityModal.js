@@ -54,7 +54,7 @@ const EditActivityModal = ({ formData, setFormData, onSubmit, onClose }) => {
             }
           />
 
-          <label>แนบไฟล์กำหนดการ (PDF)</label>
+          <label>แนบไฟล์กำหนดการ (PDF/PNG)</label>
           <input
             type="file"
             name="schedule"
